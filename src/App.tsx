@@ -25,6 +25,9 @@ const App = () => (
           <Route path="/rafiki" element={<RafikiPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/messages" element={<MessagesPage />} />
+          <Route path="/learn" element={<TopicPage />} />
+          <Route path="/glossary" element={<TopicPage />} />
+          <Route path="/quiz" element={<TopicPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

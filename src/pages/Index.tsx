@@ -1,12 +1,14 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { CreatePostBox } from "@/components/post/CreatePostBox";
 import { PostCard } from "@/components/post/PostCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ChartBar, ArrowRight, TrendingUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Mock data for initial rendering
 const mockPosts = [
@@ -58,6 +60,19 @@ const mockPosts = [
   },
 ];
 
+const topicsList = [
+  { name: "STOCKS", slug: "stocks" },
+  { name: "SACCOS", slug: "saccos" },
+  { name: "CRYPTOCURRENCIES", slug: "crypto" },
+  { name: "BANKS", slug: "banks" },
+  { name: "TBILLS", slug: "bills-bonds" },
+  { name: "MMFS", slug: "mmfs" },
+  { name: "FUNDS", slug: "funds" },
+  { name: "INDICES", slug: "indices" },
+  { name: "VENTURE CAPITAL", slug: "vc" },
+  { name: "INSURANCE", slug: "insurance" }
+];
+
 const trendingTopics = [
   { name: "STOCKS", posts: 120 },
   { name: "SACCOS", posts: 85 },
@@ -67,12 +82,34 @@ const trendingTopics = [
 ];
 
 const Index = () => {
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const handleTopicClick = (topicSlug: string) => {
+    navigate(`/topics/${topicSlug}`);
+  };
+
   return (
     <AppLayout>
       <div className="max-w-3xl mx-auto">
         <div className="mb-6">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home</h1>
           <p className="text-muted-foreground">Your investment community feed</p>
+        </div>
+
+        <div className="mb-6 overflow-auto pb-2">
+          <div className="flex gap-2 min-w-max">
+            {topicsList.map((topic) => (
+              <Badge
+                key={topic.name}
+                variant={selectedTopic === topic.slug ? "default" : "outline"}
+                className="cursor-pointer hover:scale-105 transition-transform px-3 py-1 text-sm"
+                onClick={() => handleTopicClick(topic.slug)}
+              >
+                #{topic.name}
+              </Badge>
+            ))}
+          </div>
         </div>
 
         <Tabs defaultValue="for-you" className="mb-6">

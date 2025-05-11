@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Home, Briefcase, Users, Book, Coins, Heart, ChartBar, FileText, Info, HandCoins, Currency, Search } from "lucide-react";
+import { Home, Briefcase, Book, FileText, HelpCircle, ListTodo } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SidebarProps {
@@ -68,16 +68,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
         <nav className="space-y-1">
           <NavItem icon={<Home className="w-4 h-4" />} label="Home" href="/" active />
           <NavItem icon={<Briefcase className="w-4 h-4" />} label="Jobs" href="/topics/jobs" />
-          <NavItem icon={<Users className="w-4 h-4" />} label="SACCOs" href="/topics/saccos" />
-          <NavItem icon={<Coins className="w-4 h-4" />} label="MMFs" href="/topics/mmfs" />
-          <NavItem icon={<ChartBar className="w-4 h-4" />} label="Stocks" href="/topics/stocks" />
-          <NavItem icon={<Currency className="w-4 h-4" />} label="Funds" href="/topics/funds" />
-          <NavItem icon={<Heart className="w-4 h-4" />} label="Banks" href="/topics/banks" />
-          <NavItem icon={<HandCoins className="w-4 h-4" />} label="Indices" href="/topics/indices" />
-          <NavItem icon={<FileText className="w-4 h-4" />} label="T-Bills & Bonds" href="/topics/bills-bonds" />
-          <NavItem icon={<Briefcase className="w-4 h-4" />} label="Venture Capital" href="/topics/vc" />
-          <NavItem icon={<Currency className="w-4 h-4" />} label="Insurance" href="/topics/insurance" />
-          <NavItem icon={<Coins className="w-4 h-4" />} label="Cryptocurrencies" href="/topics/crypto" />
+          <NavItem icon={<Book className="w-4 h-4" />} label="Learn" href="/learn" />
+          <NavItem icon={<FileText className="w-4 h-4" />} label="Glossary" href="/glossary" />
+          <NavItem icon={<ListTodo className="w-4 h-4" />} label="Quiz" href="/quiz" />
         </nav>
 
         <div className="mt-6 border-t border-border pt-4">
@@ -86,7 +79,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
             size="sm"
             className="w-full justify-start gap-3 font-normal hover:bg-primary/10 hover:text-primary"
           >
-            <Search className="w-4 h-4" /> Explore Topics
+            <HelpCircle className="w-4 h-4" /> Help Center
           </Button>
         </div>
 
@@ -120,7 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
           </div>
         ) : (
           <Button size="icon" variant="ghost" className="hover:bg-primary/10 hover:text-primary">
-            <Info className="w-4 h-4" />
+            <HelpCircle className="w-4 h-4" />
           </Button>
         )}
       </div>
