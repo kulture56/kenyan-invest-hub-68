@@ -6,6 +6,7 @@ import { PostCard } from "@/components/post/PostCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ChartBar, ArrowRight, TrendingUp } from "lucide-react";
 
 // Mock data for initial rendering
 const mockPosts = [
@@ -70,16 +71,26 @@ const Index = () => {
     <AppLayout>
       <div className="max-w-3xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground">Home</h1>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home</h1>
           <p className="text-muted-foreground">Your investment community feed</p>
         </div>
 
         <Tabs defaultValue="for-you" className="mb-6">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="for-you">For You</TabsTrigger>
-            <TabsTrigger value="following">Following</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 p-1 bg-secondary/50">
+            <TabsTrigger 
+              value="for-you"
+              className="data-[state=active]:bg-primary data-[state=active]:text-white"
+            >
+              For You
+            </TabsTrigger>
+            <TabsTrigger 
+              value="following" 
+              className="data-[state=active]:bg-primary data-[state=active]:text-white"
+            >
+              Following
+            </TabsTrigger>
           </TabsList>
-          <TabsContent value="for-you" className="mt-4">
+          <TabsContent value="for-you" className="mt-4 animate-fade-in">
             <CreatePostBox />
             
             <div className="space-y-4">
@@ -88,54 +99,64 @@ const Index = () => {
               ))}
             </div>
           </TabsContent>
-          <TabsContent value="following" className="mt-4">
+          <TabsContent value="following" className="mt-4 animate-fade-in">
             <div className="flex flex-col items-center justify-center py-12">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                <TrendingUp className="h-8 w-8 text-primary" />
+              </div>
               <h3 className="text-lg font-medium mb-2">Find investors to follow</h3>
-              <p className="text-sm text-muted-foreground mb-4 text-center">
+              <p className="text-sm text-muted-foreground mb-4 text-center max-w-md">
                 Follow other investors to customize your feed with insights that matter to you
               </p>
-              <Button>Discover Users</Button>
+              <Button className="bg-primary hover:bg-primary/90 transition-colors">
+                Discover Users
+              </Button>
             </div>
           </TabsContent>
         </Tabs>
       </div>
       
-      <div className="fixed right-6 top-24 w-64 hidden lg:block">
-        <Card>
+      <div className="fixed right-6 top-24 w-72 hidden lg:block">
+        <Card className="border border-primary/10 shadow-sm hover:shadow-md transition-all">
           <CardContent className="p-4">
-            <h3 className="font-medium mb-3">Trending Topics</h3>
-            <ul className="space-y-2">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-medium text-primary">Trending Topics</h3>
+              <ChartBar className="h-4 w-4 text-primary" />
+            </div>
+            <ul className="space-y-3">
               {trendingTopics.map((topic) => (
-                <li key={topic.name}>
+                <li key={topic.name} className="hover-scale">
                   <a 
                     href={`/topics/${topic.name.toLowerCase()}`}
-                    className="flex items-center justify-between text-sm hover:text-primary"
+                    className="flex items-center justify-between text-sm p-2 rounded-md hover:bg-primary/5 transition-colors"
                   >
-                    <span>#{topic.name}</span>
-                    <span className="text-xs text-muted-foreground">{topic.posts} posts</span>
+                    <span className="text-foreground font-medium">#{topic.name}</span>
+                    <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">{topic.posts}</span>
                   </a>
                 </li>
               ))}
             </ul>
-            <Button variant="link" className="px-0 mt-2 text-sm">
-              View all topics
+            <Button variant="ghost" className="px-0 mt-4 text-sm text-primary hover:text-accent transition-colors w-full flex justify-between items-center">
+              <span>View all topics</span>
+              <ArrowRight className="h-3 w-3" />
             </Button>
           </CardContent>
         </Card>
         
-        <Card className="mt-4">
+        <Card className="mt-4 border border-primary/10 shadow-sm hover:shadow-md transition-all bg-gradient-to-br from-primary/5 to-accent/5">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center">
-                <span className="text-xs font-bold">R</span>
+              <div className="w-8 h-8 rounded-full purple-gradient flex items-center justify-center animate-float">
+                <span className="text-xs font-bold text-white">R</span>
               </div>
-              <h3 className="font-medium">Rafiki Says</h3>
+              <h3 className="font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Rafiki Says</h3>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground bg-white/50 p-3 rounded-lg border border-primary/10">
               "Treasury bills yield has increased by 0.3% this week, creating an opportunity for short-term investments."
             </p>
-            <Button variant="link" className="px-0 mt-2 text-sm">
-              Ask Rafiki
+            <Button variant="ghost" className="px-0 mt-4 text-sm text-primary hover:text-accent transition-colors w-full flex justify-between items-center">
+              <span>Ask Rafiki</span>
+              <ArrowRight className="h-3 w-3" />
             </Button>
           </CardContent>
         </Card>

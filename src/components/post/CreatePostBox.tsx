@@ -35,36 +35,36 @@ export const CreatePostBox: React.FC<CreatePostBoxProps> = ({
   };
 
   return (
-    <Card className="mb-6">
+    <Card className="mb-6 bg-card shadow-sm hover:shadow-md transition-all border border-primary/10">
       <CardContent className="pt-4">
         <div className="flex gap-3">
-          <Avatar className="h-10 w-10">
+          <Avatar className="h-10 w-10 border-2 border-primary/20">
             <AvatarImage src="/placeholder.svg" alt="User" />
-            <AvatarFallback>U</AvatarFallback>
+            <AvatarFallback className="bg-primary/10 text-primary">U</AvatarFallback>
           </Avatar>
           <div className="flex-1">
             <Textarea
               placeholder={placeholder}
-              className="min-h-[80px] resize-none border-none focus-visible:ring-0 p-0 text-base"
+              className="min-h-[80px] resize-none border-none focus-visible:ring-0 p-0 text-base bg-transparent"
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex flex-wrap items-center justify-between gap-2 pt-0">
+      <CardFooter className="flex flex-wrap items-center justify-between gap-2 pt-0 border-t border-border/50">
         <div className="flex gap-2">
-          <Button type="button" size="sm" variant="ghost">
+          <Button type="button" size="sm" variant="ghost" className="hover:bg-primary/10 hover:text-primary">
             <Image className="h-4 w-4 mr-2" />
             <span>Media</span>
           </Button>
           
-          <Button type="button" size="sm" variant="ghost">
+          <Button type="button" size="sm" variant="ghost" className="hover:bg-primary/10 hover:text-primary">
             <Tag className="h-4 w-4 mr-2" />
             <span>Topic</span>
           </Button>
           
-          <Button type="button" size="sm" variant="ghost">
+          <Button type="button" size="sm" variant="ghost" className="hover:bg-primary/10 hover:text-primary">
             <Users className="h-4 w-4 mr-2" />
             <span>Mention</span>
           </Button>
@@ -73,7 +73,7 @@ export const CreatePostBox: React.FC<CreatePostBoxProps> = ({
           onClick={handleSubmit} 
           disabled={!content.trim() || isSubmitting}
           size="sm"
-          className="bg-gelt-green hover:bg-gelt-green/90"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground transition-colors"
         >
           {isSubmitting ? "Posting..." : "Post"}
         </Button>

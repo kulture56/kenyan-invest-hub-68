@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Heart, MessageSquare, Repeat2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 
 interface PostAuthor {
   id: string;
@@ -51,15 +52,15 @@ export const PostCard: React.FC<PostProps> = ({
   };
 
   return (
-    <Card className="post-card mb-4 animate-fade-in">
+    <Card className="mb-4 animate-fade-in border border-primary/10 hover:border-primary/30 transition-all">
       <CardHeader className="pb-2 pt-4 px-4 flex flex-row gap-3">
-        <Avatar>
+        <Avatar className="border-2 border-primary/20 hover:border-primary/50 transition-colors">
           <AvatarImage src={author.avatar} alt={author.name} />
-          <AvatarFallback>{author.name[0]}</AvatarFallback>
+          <AvatarFallback className="bg-primary/10 text-primary">{author.name[0]}</AvatarFallback>
         </Avatar>
         <div>
           <div className="flex items-center gap-2">
-            <a href={`/profile/${author.id}`} className="font-medium hover:underline">
+            <a href={`/profile/${author.id}`} className="font-medium hover:underline text-foreground hover:text-primary transition-colors">
               {author.name}
             </a>
             <span className="text-sm text-muted-foreground">@{author.username}</span>
@@ -69,8 +70,10 @@ export const PostCard: React.FC<PostProps> = ({
             {topic && (
               <>
                 <span>•</span>
-                <a href={`/topics/${topic.toLowerCase()}`} className="text-primary hover:underline">
-                  #{topic}
+                <a href={`/topics/${topic.toLowerCase()}`}>
+                  <Badge variant="outline" className="bg-primary/5 hover:bg-primary/10 text-primary border-primary/20 hover:border-primary/30 transition-colors text-xs py-0 px-2">
+                    #{topic}
+                  </Badge>
                 </a>
               </>
             )}
@@ -80,26 +83,34 @@ export const PostCard: React.FC<PostProps> = ({
       <CardContent className="px-4 py-2">
         <p className="whitespace-pre-line">{content}</p>
         {image && (
-          <div className="mt-3 rounded-md overflow-hidden">
-            <img src={image} alt="Post attachment" className="w-full h-auto" />
+          <div className="mt-3 rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <img src={image} alt="Post attachment" className="w-full h-auto hover:scale-[1.01] transition-transform" />
           </div>
         )}
       </CardContent>
-      <CardFooter className="px-4 py-2 flex gap-4 text-muted-foreground">
+      <CardFooter className="px-4 py-2 flex gap-6 text-muted-foreground">
         <Button
           variant="ghost"
           size="sm"
-          className={`flex items-center gap-1 text-sm ${liked ? "text-gelt-orange" : ""}`}
+          className={`flex items-center gap-1 text-sm rounded-full px-3 ${liked ? "text-accent bg-accent/10 hover:bg-accent/20" : "hover:bg-primary/10"}`}
           onClick={handleLike}
         >
-          <Heart className={`h-4 w-4 ${liked ? "fill-gelt-orange text-gelt-orange" : ""}`} />
+          <Heart className={`h-4 w-4 ${liked ? "fill-accent text-accent" : ""}`} />
           <span>{likeCount}</span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex items-center gap-1 text-sm">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="flex items-center gap-1 text-sm rounded-full px-3 hover:bg-primary/10"
+        >
           <MessageSquare className="h-4 w-4" />
           <span>{comments}</span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex items-center gap-1 text-sm">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="flex items-center gap-1 text-sm rounded-full px-3 hover:bg-primary/10"
+        >
           <Repeat2 className="h-4 w-4" />
           <span>{shares}</span>
         </Button>

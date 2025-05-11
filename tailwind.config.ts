@@ -68,11 +68,13 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				gelt: {
-					green: '#1A5D1A',
-					teal: '#347571',
-					orange: '#F39C12',
+					green: '#5B21B6', // Changed to purple
+					teal: '#7C3AED', // Changed to lighter purple
+					orange: '#9333EA', // Changed to deep purple
 					lightgray: '#F8F9FA',
 					darkgray: '#495057',
+					purple: '#8B5CF6',
+					lavender: '#C4B5FD',
 				}
 			},
 			borderRadius: {
@@ -107,11 +109,29 @@ export default {
 						transform: 'translateY(0)'
 					}
 				},
+				'pulse-gentle': {
+					'0%, 100%': {
+						opacity: '1'
+					},
+					'50%': {
+						opacity: '0.8'
+					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0)'
+					},
+					'50%': {
+						transform: 'translateY(-5px)'
+					}
+				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
+				'pulse-gentle': 'pulse-gentle 3s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite'
 			}
 		}
 	},
