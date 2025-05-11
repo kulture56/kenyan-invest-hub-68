@@ -2,9 +2,18 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, Bell, MessageSquare } from "lucide-react";
+import { Search, Menu, Bell, MessageSquare, UserRound, Settings, HelpCircle, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -23,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         )}
         <div className="mr-auto flex items-center">
           <Button variant="ghost" className="hidden md:flex" asChild>
-            <a href="/" className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">GELT</a>
+            <Link to="/" className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">GELT</Link>
           </Button>
         </div>
 
@@ -43,10 +52,38 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
           <Button variant="ghost" size="icon" className="hover:bg-secondary/50">
             <MessageSquare className="h-5 w-5 text-foreground/80" />
           </Button>
-          <Avatar className="h-9 w-9 border-2 border-primary/20 hover:border-primary/50 transition-colors cursor-pointer">
-            <AvatarImage src="/placeholder.svg" alt="User" />
-            <AvatarFallback className="bg-primary/10 text-primary">U</AvatarFallback>
-          </Avatar>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Avatar className="h-9 w-9 border-2 border-primary/20 hover:border-primary/50 transition-colors cursor-pointer">
+                <AvatarImage src="/placeholder.svg" alt="User" />
+                <AvatarFallback className="bg-primary/10 text-primary">U</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/profile" className="cursor-pointer flex items-center gap-2">
+                  <UserRound className="h-4 w-4" /> Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/profile?tab=settings" className="cursor-pointer flex items-center gap-2">
+                  <Settings className="h-4 w-4" /> Settings
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/profile?tab=help" className="cursor-pointer flex items-center gap-2">
+                  <HelpCircle className="h-4 w-4" /> Help
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer flex items-center gap-2 text-red-500">
+                <LogOut className="h-4 w-4" /> Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
