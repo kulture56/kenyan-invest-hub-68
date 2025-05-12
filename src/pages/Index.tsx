@@ -68,6 +68,7 @@ const topicsList = [
   { name: "TBILLS", slug: "bills-bonds" },
   { name: "MMFS", slug: "mmfs" },
   { name: "FUNDS", slug: "funds" },
+  { name: "FOREX", slug: "forex" },
   { name: "INDICES", slug: "indices" },
   { name: "VENTURE CAPITAL", slug: "vc" },
   { name: "INSURANCE", slug: "insurance" }
@@ -77,6 +78,7 @@ const trendingTopics = [
   { name: "STOCKS", posts: 120 },
   { name: "SACCOS", posts: 85 },
   { name: "CRYPTOCURRENCIES", posts: 67 },
+  { name: "FOREX", posts: 53 },
   { name: "BANKS", posts: 45 },
   { name: "TBILLS", posts: 32 },
 ];
@@ -97,13 +99,13 @@ const Index = () => {
           <p className="text-muted-foreground">Your investment community feed</p>
         </div>
 
-        <div className="mb-6 overflow-auto pb-2">
-          <div className="flex gap-2 min-w-max">
+        <div className="mb-6 overflow-x-auto pb-2 no-scrollbar">
+          <div className="flex flex-wrap gap-2 min-w-max">
             {topicsList.map((topic) => (
               <Badge
                 key={topic.name}
                 variant={selectedTopic === topic.slug ? "default" : "outline"}
-                className="cursor-pointer hover:scale-105 transition-transform px-3 py-1 text-sm"
+                className="cursor-pointer hover:scale-105 transition-transform px-2 py-0.5 text-xs"
                 onClick={() => handleTopicClick(topic.slug)}
               >
                 #{topic.name}
