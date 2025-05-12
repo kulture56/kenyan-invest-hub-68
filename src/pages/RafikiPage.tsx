@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -29,44 +29,44 @@ const RafikiPage = () => {
   const { toast } = useToast();
 
   // Fetch chat history when component mounts
-  useEffect(() => {
-    const fetchChatHistory = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('rafiki_chat_history')
-          .select('*')
-          .order('created_at', { ascending: true });
+  const fetchChatHistory = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('rafiki_chat_history')
+        .select('*')
+        .order('created_at', { ascending: true });
 
-        if (error) {
-          console.error('Error fetching chat history:', error);
-          return;
-        }
-
-        if (data && data.length > 0) {
-          const historyMessages: Message[] = data.flatMap(item => [
-            {
-              id: `user-${item.id}`,
-              content: item.message,
-              isUser: true,
-              timestamp: new Date(item.created_at),
-            },
-            {
-              id: `rafiki-${item.id}`,
-              content: item.response,
-              isUser: false,
-              timestamp: new Date(item.created_at),
-            }
-          ]);
-          
-          setMessages([initialMessages[0], ...historyMessages]);
-        }
-      } catch (error) {
-        console.error('Error in fetching chat history:', error);
+      if (error) {
+        console.error('Error fetching chat history:', error);
+        return;
       }
-    };
 
-    fetchChatHistory();
+      if (data && data.length > 0) {
+        const historyMessages: Message[] = data.flatMap(item => [
+          {
+            id: `user-${item.id}`,
+            content: item.message,
+            isUser: true,
+            timestamp: new Date(item.created_at),
+          },
+          {
+            id: `rafiki-${item.id}`,
+            content: item.response,
+            isUser: false,
+            timestamp: new Date(item.created_at),
+          }
+        ]);
+        
+        setMessages([initialMessages[0], ...historyMessages]);
+      }
+    } catch (error) {
+      console.error('Error in fetching chat history:', error);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchChatHistory();
+  }, [fetchChatHistory]);
 
   const handleSendMessage = async (input: string) => {
     const userMessage: Message = {
@@ -141,11 +141,11 @@ const RafikiPage = () => {
 
   return (
     <AppLayout>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
         <RafikiHeader />
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="md:col-span-3">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="lg:col-span-3">
             <RafikiChatInterface 
               messages={messages}
               isLoading={isLoading}
@@ -153,7 +153,7 @@ const RafikiPage = () => {
             />
           </div>
 
-          <div>
+          <div className="lg:order-last order-first">
             <RafikiSidebar onQuestionSelected={handleQuestionSelected} />
           </div>
         </div>

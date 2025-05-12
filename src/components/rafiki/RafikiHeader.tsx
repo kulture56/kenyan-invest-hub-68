@@ -3,10 +3,10 @@ import React from "react";
 
 const RafikiHeader = () => {
   return (
-    <div className="mb-6">
+    <div className="mb-6 py-4">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
-          <span className="font-bold text-lg">R</span>
+        <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shrink-0">
+          <span className="font-bold text-lg text-white">R</span>
         </div>
         <div>
           <h1 className="text-2xl font-bold">Rafiki</h1>

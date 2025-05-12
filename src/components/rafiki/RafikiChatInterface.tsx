@@ -1,8 +1,9 @@
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import RafikiChatMessage from "./RafikiChatMessage";
 import RafikiLoadingIndicator from "./RafikiLoadingIndicator";
 
@@ -25,6 +26,15 @@ const RafikiChatInterface = ({
   onSendMessage 
 }: RafikiChatInterfaceProps) => {
   const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
 
   const handleSendMessage = () => {
     if (!input.trim()) return;
@@ -34,15 +44,18 @@ const RafikiChatInterface = ({
 
   return (
     <>
-      <Card className="mb-4">
-        <CardContent className="p-4">
-          <div className="space-y-6 py-2">
-            {messages.map((message) => (
-              <RafikiChatMessage key={message.id} message={message} />
-            ))}
+      <Card className="mb-4 h-[60vh] flex flex-col">
+        <CardContent className="p-4 flex-grow overflow-hidden">
+          <ScrollArea className="h-full pr-4">
+            <div className="space-y-6 py-2">
+              {messages.map((message) => (
+                <RafikiChatMessage key={message.id} message={message} />
+              ))}
 
-            {isLoading && <RafikiLoadingIndicator />}
-          </div>
+              {isLoading && <RafikiLoadingIndicator />}
+              <div ref={messagesEndRef} />
+            </div>
+          </ScrollArea>
         </CardContent>
       </Card>
 
@@ -51,7 +64,7 @@ const RafikiChatInterface = ({
           placeholder="Ask Rafiki about investments, market trends, or financial advice..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="resize-none"
+          className="resize-none min-h-[80px]"
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
@@ -62,7 +75,7 @@ const RafikiChatInterface = ({
         <Button 
           onClick={handleSendMessage} 
           disabled={!input.trim() || isLoading}
-          className="bg-gelt-green hover:bg-gelt-green/90"
+          className="bg-gelt-green hover:bg-gelt-green/90 h-auto"
         >
           Send
         </Button>
