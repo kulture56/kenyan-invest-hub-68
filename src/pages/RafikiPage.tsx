@@ -1,11 +1,13 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Briefcase, ChartBar, Coins, FileText } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   id: string;
@@ -27,8 +29,49 @@ const RafikiPage = () => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSendMessage = () => {
+  // Fetch chat history when component mounts
+  useEffect(() => {
+    const fetchChatHistory = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('rafiki_chat_history')
+          .select('*')
+          .order('created_at', { ascending: true });
+
+        if (error) {
+          console.error('Error fetching chat history:', error);
+          return;
+        }
+
+        if (data && data.length > 0) {
+          const historyMessages: Message[] = data.flatMap(item => [
+            {
+              id: `user-${item.id}`,
+              content: item.message,
+              isUser: true,
+              timestamp: new Date(item.created_at),
+            },
+            {
+              id: `rafiki-${item.id}`,
+              content: item.response,
+              isUser: false,
+              timestamp: new Date(item.created_at),
+            }
+          ]);
+          
+          setMessages([initialMessages[0], ...historyMessages]);
+        }
+      } catch (error) {
+        console.error('Error in fetching chat history:', error);
+      }
+    };
+
+    fetchChatHistory();
+  }, []);
+
+  const handleSendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage: Message = {
@@ -42,41 +85,60 @@ const RafikiPage = () => {
     setInput("");
     setIsLoading(true);
 
-    // Simulate Rafiki's response
-    setTimeout(() => {
+    try {
+      // Call Supabase Edge Function to get response from OpenAI
+      const { data, error } = await supabase.functions.invoke('rafiki-chat', {
+        body: { query: input }
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
       const rafikiResponse: Message = {
         id: `rafiki-${Date.now()}`,
-        content: generateRafikiResponse(input),
+        content: data.response,
         isUser: false,
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, rafikiResponse]);
+
+      // Store conversation in database
+      const { error: insertError } = await supabase
+        .from('rafiki_chat_history')
+        .insert({
+          message: input,
+          response: data.response,
+        });
+
+      if (insertError) {
+        console.error('Error storing chat history:', insertError);
+        toast({
+          title: "Error",
+          description: "Failed to save conversation. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get response from Rafiki. Please try again.",
+        variant: "destructive",
+      });
+
+      const errorResponse: Message = {
+        id: `rafiki-error-${Date.now()}`,
+        content: "I'm sorry, I encountered an error while processing your request. Please try again later.",
+        isUser: false,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, errorResponse]);
+    } finally {
       setIsLoading(false);
-    }, 1500);
-  };
-
-  const generateRafikiResponse = (query: string): string => {
-    // This is a simple mock AI - in a real app this would be connected to an actual AI service
-    const lowerQuery = query.toLowerCase();
-    
-    if (lowerQuery.includes("stocks") || lowerQuery.includes("nse")) {
-      return "The Nairobi Securities Exchange (NSE) has been showing moderate growth this quarter. Top performing sectors include banking, telecommunications, and energy. I recommend diversifying your portfolio across these sectors for balanced exposure. Would you like specific stock recommendations?";
     }
-    
-    if (lowerQuery.includes("sacco") || lowerQuery.includes("saving")) {
-      return "SACCOs in Kenya offer competitive returns compared to traditional savings accounts, with annual dividend rates ranging from 8% to 14%. The most stable SACCOs include Stima, Mwalimu, and Harambee. When choosing a SACCO, consider their historical dividend rates, loan terms, and digital banking capabilities.";
-    }
-    
-    if (lowerQuery.includes("treasury") || lowerQuery.includes("t-bill") || lowerQuery.includes("bonds")) {
-      return "Current Treasury Bills rates in Kenya: 91-day (9.2%), 182-day (10.1%), and 364-day (10.8%). Government bonds offer higher yields for longer lock-in periods. These are low-risk investments backed by the Kenyan government and provide a stable income stream through interest payments.";
-    }
-    
-    if (lowerQuery.includes("crypto") || lowerQuery.includes("bitcoin")) {
-      return "Cryptocurrency investments in Kenya exist in a regulatory grey area. While there's growing adoption, be aware of the high volatility and regulatory uncertainty. If investing in crypto, consider limiting it to a small percentage of your overall portfolio (5-10%). Always use reputable exchanges like Binance or local options like Chipper Cash.";
-    }
-
-    return "That's an interesting question about the Kenyan investment landscape. To give you the most accurate information, could you provide more specific details about the investment type, your goals, or the timeframe you're considering?";
   };
 
   return (
