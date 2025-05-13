@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -8,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Briefcase, Users, Coins, ChartBar, Currency, Heart, HandCoins, FileText, Info } from "lucide-react";
+import StockTicker from "@/components/stocks/StockTicker";
 
 // A simple map of topic slugs to display names and icons
 const topicInfo = {
@@ -104,8 +104,18 @@ const TopicPage = () => {
   
   const posts = mockPostsByTopic[topicSlug as keyof typeof mockPostsByTopic] || mockPostsByTopic.default;
 
+  // Show stock ticker prominently for stock-related topics
+  const shouldShowProminentTicker = topicSlug === 'stocks';
+
   return (
     <AppLayout>
+      {/* Display the stock ticker prominently for stocks topic */}
+      {shouldShowProminentTicker && (
+        <div className="mb-6 max-w-3xl mx-auto">
+          <StockTicker />
+        </div>
+      )}
+      
       <div className="max-w-3xl mx-auto">
         <div className="mb-6 flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -116,6 +126,13 @@ const TopicPage = () => {
             <p className="text-muted-foreground">Insights and discussions</p>
           </div>
         </div>
+
+        {/* Show compact ticker for non-stock topics */}
+        {!shouldShowProminentTicker && (
+          <div className="mb-6">
+            <StockTicker compact={true} />
+          </div>
+        )}
 
         <Tabs defaultValue="latest" className="mb-6">
           <TabsList className="grid w-full grid-cols-3">
@@ -195,6 +212,11 @@ const TopicPage = () => {
             </Button>
           </CardContent>
         </Card>
+
+        {/* Add a compact stock ticker to the sidebar for all pages */}
+        <div className="mt-4">
+          <StockTicker compact={true} />
+        </div>
       </div>
     </AppLayout>
   );

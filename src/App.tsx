@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import MessagesPage from "./pages/MessagesPage";
 import NotFound from "./pages/NotFound";
 import RafikiChatWidget from "./components/rafiki/RafikiChatWidget";
+import LearningHubPage from "./pages/LearningHubPage";
 
 const queryClient = new QueryClient();
 
@@ -24,9 +25,10 @@ const App = () => (
           <Route path="/rafiki" element={<RafikiPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/messages" element={<MessagesPage />} />
-          <Route path="/learn" element={<TopicPage />} />
-          <Route path="/glossary" element={<TopicPage />} />
-          <Route path="/quiz" element={<TopicPage />} />
+          <Route path="/learn" element={<LearningHubPage />} />
+          <Route path="/learning-hub" element={<LearningHubPage />} />
+          <Route path="/glossary" element={<LearningHubPage />} />
+          <Route path="/quiz" element={<LearningHubPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <RafikiChatWidget />
