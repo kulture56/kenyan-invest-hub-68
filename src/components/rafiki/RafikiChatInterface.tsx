@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import RafikiChatMessage from "./RafikiChatMessage";
 import RafikiLoadingIndicator from "./RafikiLoadingIndicator";
-import { Tag, Image as ImageIcon, BarChart3, Poll } from "lucide-react";
+import { Tag, Image as ImageIcon, BarChart3, LineChart } from "lucide-react";
 
 interface Message {
   id: string;
@@ -125,7 +125,7 @@ const RafikiChatInterface = ({
               className="h-8"
               onClick={() => handleInsertTag("poll")}
             >
-              <Poll className="h-4 w-4 mr-1" />
+              <LineChart className="h-4 w-4 mr-1" />
               <span className="text-xs">Poll</span>
             </Button>
             

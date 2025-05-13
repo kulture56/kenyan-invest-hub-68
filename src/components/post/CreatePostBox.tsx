@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Image, Users, Tag, Poll, BarChart3, ChartBar } from "lucide-react";
+import { Image, Users, Tag, BarChart3, ChartBar, LineChart } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -128,7 +128,7 @@ export const CreatePostBox: React.FC<CreatePostBoxProps> = ({
             {isAddingPoll && (
               <div className="mt-4 border rounded-md p-3 bg-background/50">
                 <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
-                  <Poll className="h-4 w-4" /> Create Poll
+                  <LineChart className="h-4 w-4" /> Create Poll
                 </h4>
                 <div className="space-y-2">
                   {pollOptions.map((option, index) => (
@@ -268,7 +268,7 @@ export const CreatePostBox: React.FC<CreatePostBoxProps> = ({
               if (!isAddingPoll) setIsAddingChart(false);
             }}
           >
-            <Poll className="h-4 w-4 mr-2" />
+            <LineChart className="h-4 w-4 mr-2" />
             <span>Poll</span>
           </Button>
           
