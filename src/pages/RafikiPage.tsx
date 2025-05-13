@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import RafikiHeader from "@/components/rafiki/RafikiHeader";
 import RafikiChatInterface from "@/components/rafiki/RafikiChatInterface";
 import RafikiSidebar from "@/components/rafiki/RafikiSidebar";
+import { useLocation } from "react-router-dom";
 
 interface Message {
   id: string;
@@ -27,6 +28,7 @@ const RafikiPage = () => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const location = useLocation();
 
   // Fetch chat history when component mounts
   const fetchChatHistory = useCallback(async () => {
@@ -66,7 +68,15 @@ const RafikiPage = () => {
 
   useEffect(() => {
     fetchChatHistory();
-  }, [fetchChatHistory]);
+    
+    // Check for suggested question from location state (coming from widget)
+    if (location.state?.suggestedQuestion) {
+      const question = location.state.suggestedQuestion;
+      handleSendMessage(question);
+      // Clear the location state to prevent asking the same question on page refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [fetchChatHistory, location.state]);
 
   const handleSendMessage = async (input: string) => {
     const userMessage: Message = {
@@ -80,9 +90,26 @@ const RafikiPage = () => {
     setIsLoading(true);
 
     try {
+      // Get the current topic context if any
+      const path = location.pathname;
+      const topicMatch = path.match(/\/topics\/([^\/]+)/);
+      const contextPrompt = topicMatch ? 
+        `The user is currently browsing the ${topicMatch[1]} topic. Consider this context when responding.` : "";
+      
+      // Parse for special formatting
+      const hasPoll = input.includes('[POLL]');
+      const hasChart = input.includes('[CHART:');
+      
       // Call Supabase Edge Function to get response from OpenAI
       const { data, error } = await supabase.functions.invoke('rafiki-chat', {
-        body: { query: input }
+        body: { 
+          query: input,
+          contextPrompt,
+          formatting: {
+            hasPoll,
+            hasChart
+          }
+        }
       });
 
       if (error) {

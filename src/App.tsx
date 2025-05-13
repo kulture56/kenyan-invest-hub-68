@@ -10,6 +10,7 @@ import RafikiPage from "./pages/RafikiPage";
 import ProfilePage from "./pages/ProfilePage";
 import MessagesPage from "./pages/MessagesPage";
 import NotFound from "./pages/NotFound";
+import RafikiChatWidget from "./components/rafiki/RafikiChatWidget";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/quiz" element={<TopicPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <RafikiChatWidget />
       </BrowserRouter>
       <Toaster />
       <Sonner />

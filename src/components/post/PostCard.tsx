@@ -1,17 +1,27 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Heart, MessageSquare, Repeat2 } from "lucide-react";
+import { Heart, MessageSquare } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import ReplyBox from "./ReplyBox";
+import { PostReply } from "./PostReply";
 
 interface PostAuthor {
   id: string;
   name: string;
   avatar: string;
   username: string;
+}
+
+interface ReplyData {
+  id: string;
+  author: PostAuthor;
+  content: string;
+  createdAt: Date;
+  likes: number;
 }
 
 interface PostProps {
@@ -25,6 +35,7 @@ interface PostProps {
   comments: number;
   shares: number;
   isLiked?: boolean;
+  replies?: ReplyData[];
 }
 
 export const PostCard: React.FC<PostProps> = ({
@@ -38,9 +49,13 @@ export const PostCard: React.FC<PostProps> = ({
   comments,
   shares,
   isLiked = false,
+  replies = [],
 }) => {
-  const [liked, setLiked] = React.useState(isLiked);
-  const [likeCount, setLikeCount] = React.useState(likes);
+  const [liked, setLiked] = useState(isLiked);
+  const [likeCount, setLikeCount] = useState(likes);
+  const [showReplies, setShowReplies] = useState(false);
+  const [showReplyBox, setShowReplyBox] = useState(false);
+  const [postReplies, setPostReplies] = useState<ReplyData[]>(replies);
 
   const handleLike = () => {
     if (liked) {
@@ -49,6 +64,27 @@ export const PostCard: React.FC<PostProps> = ({
       setLikeCount((prev) => prev + 1);
     }
     setLiked(!liked);
+  };
+
+  const handleReply = (content: string) => {
+    // Create a new reply
+    const newReply: ReplyData = {
+      id: `reply-${Date.now()}`,
+      author: {
+        // Mock current user data - in a real app, this would come from auth context
+        id: "current-user",
+        name: "Current User",
+        username: "currentuser",
+        avatar: "/placeholder.svg"
+      },
+      content,
+      createdAt: new Date(),
+      likes: 0
+    };
+
+    setPostReplies((prev) => [...prev, newReply]);
+    setShowReplies(true);
+    setShowReplyBox(false);
   };
 
   return (
@@ -88,7 +124,7 @@ export const PostCard: React.FC<PostProps> = ({
           </div>
         )}
       </CardContent>
-      <CardFooter className="px-4 py-2 flex gap-6 text-muted-foreground">
+      <CardFooter className="px-4 py-2 flex gap-6 text-muted-foreground flex-wrap">
         <Button
           variant="ghost"
           size="sm"
@@ -102,19 +138,58 @@ export const PostCard: React.FC<PostProps> = ({
           variant="ghost" 
           size="sm" 
           className="flex items-center gap-1 text-sm rounded-full px-3 hover:bg-primary/10"
+          onClick={() => {
+            setShowReplyBox(!showReplyBox);
+            if (!showReplies && postReplies.length > 0) {
+              setShowReplies(true);
+            }
+          }}
         >
           <MessageSquare className="h-4 w-4" />
-          <span>{comments}</span>
+          <span>{postReplies.length}</span>
         </Button>
         <Button 
           variant="ghost" 
           size="sm" 
           className="flex items-center gap-1 text-sm rounded-full px-3 hover:bg-primary/10"
         >
-          <Repeat2 className="h-4 w-4" />
+          <img 
+            src="/lovable-uploads/96b01e1d-9a8b-4ba8-92d9-c3afa72dde4e.png" 
+            alt="Repost" 
+            className="h-4 w-4" 
+          />
           <span>{shares}</span>
         </Button>
       </CardFooter>
+      
+      {showReplyBox && (
+        <div className="px-4 pb-2">
+          <ReplyBox onSubmit={handleReply} />
+        </div>
+      )}
+      
+      {showReplies && postReplies.length > 0 && (
+        <div className="px-4 pb-4 pt-1 border-t border-border/30 mt-1">
+          <div className="pl-6 border-l border-primary/10">
+            {postReplies.map((reply) => (
+              <PostReply key={reply.id} reply={reply} />
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {!showReplies && postReplies.length > 0 && (
+        <div className="px-4 pb-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs text-primary hover:text-primary/80"
+            onClick={() => setShowReplies(true)}
+          >
+            Show {postReplies.length} {postReplies.length === 1 ? "reply" : "replies"}
+          </Button>
+        </div>
+      )}
     </Card>
   );
 };
