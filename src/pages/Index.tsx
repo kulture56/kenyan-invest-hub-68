@@ -1,14 +1,16 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { CreatePostBox } from "@/components/post/CreatePostBox";
 import { PostCard } from "@/components/post/PostCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChartBar, ArrowRight, TrendingUp } from "lucide-react";
+import { ChartBar, ArrowRight, TrendingUp, Sparkles, MessageSquare, Bell, User, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import OnboardingFlow from "@/components/onboarding/OnboardingFlow";
 
 // Mock data for initial rendering
 const mockPosts = [
@@ -83,12 +85,58 @@ const trendingTopics = [
   { name: "TBILLS", posts: 32 },
 ];
 
+const suggestedQuestions = [
+  "What are the best investment options for beginners in Kenya?",
+  "How do I start investing in the Nairobi Stock Exchange?",
+  "What are the current Treasury bill rates?",
+  "Which SACCOs offer the best returns right now?",
+];
+
+const topInsights = [
+  {
+    id: "1",
+    title: "Banking sector shows 12% growth in Q1",
+    source: "Financial Analysis",
+    topic: "BANKS",
+    date: "2 hours ago",
+  },
+  {
+    id: "2",
+    title: "T-Bills yield rises to 10.8% - highest in 6 months",
+    source: "Market Trends",
+    topic: "TBILLS",
+    date: "Yesterday",
+  },
+  {
+    id: "3",
+    title: "Safaricom shares expected to rise 15% following expansion",
+    source: "Market Forecast",
+    topic: "STOCKS",
+    date: "3 days ago",
+  },
+];
+
 const Index = () => {
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
+
+  // Check if user is new (would be connected to auth in a real app)
+  useEffect(() => {
+    const isNewUser = localStorage.getItem("onboardingComplete") !== "true";
+    if (isNewUser) {
+      setShowOnboarding(true);
+    }
+  }, []);
 
   const handleTopicClick = (topicSlug: string) => {
     navigate(`/topics/${topicSlug}`);
+  };
+
+  const completeOnboarding = () => {
+    localStorage.setItem("onboardingComplete", "true");
+    setShowOnboarding(false);
   };
 
   return (
@@ -99,6 +147,7 @@ const Index = () => {
           <p className="text-muted-foreground">Your investment community feed</p>
         </div>
 
+        {/* Topics Bar */}
         <div className="mb-6 overflow-x-auto pb-2 no-scrollbar">
           <div className="flex flex-wrap gap-2 min-w-max">
             {topicsList.map((topic) => (
@@ -114,6 +163,44 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Top Insights Section */}
+        <Card className="mb-6 border border-primary/10">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-md flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary" />
+                Top Insights
+              </CardTitle>
+              <Button variant="ghost" size="sm" className="h-8 gap-1 text-xs text-primary">
+                View all <ArrowRight className="h-3 w-3" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {topInsights.map((insight) => (
+                <div 
+                  key={insight.id} 
+                  className="p-2 hover:bg-primary/5 rounded-md cursor-pointer transition-colors"
+                  onClick={() => navigate(`/topics/${insight.topic.toLowerCase()}`)}
+                >
+                  <div className="flex justify-between items-center">
+                    <h3 className="font-medium text-sm">{insight.title}</h3>
+                    <Badge variant="outline" className="text-[10px] h-5">
+                      {insight.topic}
+                    </Badge>
+                  </div>
+                  <div className="flex justify-between items-center text-xs text-muted-foreground mt-1">
+                    <span>{insight.source}</span>
+                    <span>{insight.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Feed Tabs */}
         <Tabs defaultValue="for-you" className="mb-6">
           <TabsList className="grid w-full grid-cols-2 p-1 bg-secondary/50">
             <TabsTrigger 
@@ -155,6 +242,7 @@ const Index = () => {
         </Tabs>
       </div>
       
+      {/* Right sidebar content */}
       <div className="fixed right-6 top-24 w-72 hidden lg:block">
         <Card className="border border-primary/10 shadow-sm hover:shadow-md transition-all">
           <CardContent className="p-4">
@@ -185,7 +273,7 @@ const Index = () => {
         <Card className="mt-4 border border-primary/10 shadow-sm hover:shadow-md transition-all bg-gradient-to-br from-primary/5 to-accent/5">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-full purple-gradient flex items-center justify-center animate-float">
+              <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center animate-float">
                 <span className="text-xs font-bold text-white">R</span>
               </div>
               <h3 className="font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Rafiki Says</h3>
@@ -193,13 +281,71 @@ const Index = () => {
             <p className="text-sm text-foreground bg-white/50 p-3 rounded-lg border border-primary/10">
               "Treasury bills yield has increased by 0.3% this week, creating an opportunity for short-term investments."
             </p>
-            <Button variant="ghost" className="px-0 mt-4 text-sm text-primary hover:text-accent transition-colors w-full flex justify-between items-center">
+            <h4 className="text-sm font-medium mt-4 mb-2">Ask Rafiki about:</h4>
+            <div className="space-y-2">
+              {suggestedQuestions.map((question, index) => (
+                <Button 
+                  key={index} 
+                  variant="outline" 
+                  size="sm" 
+                  className="text-xs justify-start w-full h-auto py-1.5 hover:bg-primary/5"
+                  onClick={() => navigate('/rafiki', { state: { suggestedQuestion: question } })}
+                >
+                  <span className="truncate">{question}</span>
+                </Button>
+              ))}
+            </div>
+            <Button 
+              variant="ghost" 
+              className="px-0 mt-4 text-sm text-primary hover:text-accent transition-colors w-full flex justify-between items-center"
+              onClick={() => navigate('/rafiki')}
+            >
               <span>Ask Rafiki</span>
               <ArrowRight className="h-3 w-3" />
             </Button>
           </CardContent>
         </Card>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      {isMobile && (
+        <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border z-40 px-2 py-2">
+          <div className="flex justify-around">
+            <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-14 w-16">
+              <Home className="h-5 w-5" />
+              <span className="text-xs">Home</span>
+            </Button>
+            <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-14 w-16">
+              <TrendingUp className="h-5 w-5" />
+              <span className="text-xs">Trending</span>
+            </Button>
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="flex flex-col gap-1 h-14 w-16 rounded-full bg-primary"
+              onClick={() => navigate('/rafiki')}
+            >
+              <MessageSquare className="h-5 w-5" />
+              <span className="text-xs">Rafiki</span>
+            </Button>
+            <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-14 w-16">
+              <Bell className="h-5 w-5" />
+              <span className="text-xs">Alerts</span>
+            </Button>
+            <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-14 w-16">
+              <User className="h-5 w-5" />
+              <span className="text-xs">Profile</span>
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Onboarding Flow */}
+      <Drawer open={showOnboarding} onOpenChange={setShowOnboarding}>
+        <DrawerContent className="max-h-[90vh]">
+          <OnboardingFlow completeOnboarding={completeOnboarding} />
+        </DrawerContent>
+      </Drawer>
     </AppLayout>
   );
 };
