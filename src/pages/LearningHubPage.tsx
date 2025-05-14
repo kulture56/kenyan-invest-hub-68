@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -262,7 +261,7 @@ const LearningHubPage = () => {
                     value={searchTerm}
                     onChange={handleSearch}
                     className="max-w-sm"
-                    prefix={<Search className="h-4 w-4 text-muted-foreground" />}
+                    icon={<Search className="h-4 w-4 text-muted-foreground" />}
                   />
                 </div>
               </CardHeader>
