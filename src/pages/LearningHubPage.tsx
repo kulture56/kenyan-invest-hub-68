@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,7 +19,10 @@ import {
   Play, 
   CheckCircle2, 
   Lock,
-  ChevronRight
+  ChevronRight,
+  Zap,
+  Calendar,
+  Target
 } from "lucide-react";
 import StockTicker from "@/components/stocks/StockTicker";
 
@@ -101,32 +105,67 @@ const glossaryTerms = [
   }
 ];
 
-// Mock quiz data
-const sampleQuiz = {
-  title: "Investment Basics Quiz",
-  description: "Test your knowledge on investment fundamentals",
-  questions: [
+// Mock data for streaks
+const streaksData = {
+  currentStreak: 8,
+  longestStreak: 14,
+  thisWeek: 5,
+  completedChallenges: 12,
+  dailyGoal: 75,
+  weeklyPoints: [120, 80, 150, 90, 110, 70, 0],
+  upcomingChallenges: [
     {
-      question: "Which of the following is generally considered the least risky investment?",
-      options: ["Stocks", "Treasury Bills", "Real Estate", "Cryptocurrency"],
-      correctAnswer: 1
+      id: "challenge1",
+      title: "Quiz Master",
+      description: "Complete 3 investment quizzes",
+      progress: 2,
+      total: 3,
+      reward: "50 points",
+      deadline: "Today"
     },
     {
-      question: "What does NSE stand for?",
-      options: ["National Stock Exchange", "Nairobi Securities Exchange", "New Stock Equity", "National Securities Equity"],
-      correctAnswer: 1
+      id: "challenge2",
+      title: "Market Analyst",
+      description: "Track 5 stocks for a week",
+      progress: 3,
+      total: 5,
+      reward: "100 points",
+      deadline: "3 days left"
     },
     {
-      question: "Which of these is NOT a common investment goal?",
-      options: ["Retirement", "Capital appreciation", "Tax maximization", "Income generation"],
-      correctAnswer: 2
+      id: "challenge3",
+      title: "Knowledge Builder",
+      description: "Read 4 articles from the learning hub",
+      progress: 1,
+      total: 4,
+      reward: "75 points",
+      deadline: "5 days left"
     }
   ]
 };
 
-const LearningHubPage = () => {
+// Weekly labels for the streak chart
+const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+interface LearningHubPageProps {
+  initialTab?: string;
+}
+
+const LearningHubPage: React.FC<LearningHubPageProps> = ({ initialTab }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredTerms, setFilteredTerms] = useState(glossaryTerms);
+  const [activeTab, setActiveTab] = useState(initialTab || "learn");
+  const location = useLocation();
+  
+  // Set activeTab based on URL path
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === "/glossary") {
+      setActiveTab("glossary");
+    } else if (path === "/streaks") {
+      setActiveTab("streaks");
+    }
+  }, [location]);
   
   // Filter glossary terms based on search
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,7 +185,7 @@ const LearningHubPage = () => {
   
   return (
     <AppLayout>
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4 pb-16">
         <div className="mb-6">
           <StockTicker compact={true} />
         </div>
@@ -194,8 +233,8 @@ const LearningHubPage = () => {
           </div>
         </div>
         
-        <Tabs defaultValue="learn" className="space-y-4">
-          <TabsList>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+          <TabsList className="overflow-x-auto flex w-full no-scrollbar p-1">
             <TabsTrigger value="learn" className="flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
               <span>Learning Paths</span>
@@ -204,14 +243,14 @@ const LearningHubPage = () => {
               <FileText className="h-4 w-4" />
               <span>Glossary</span>
             </TabsTrigger>
-            <TabsTrigger value="quizzes" className="flex items-center gap-2">
-              <GraduationCap className="h-4 w-4" />
-              <span>Quizzes</span>
+            <TabsTrigger value="streaks" className="flex items-center gap-2">
+              <Zap className="h-4 w-4" />
+              <span>Streaks</span>
             </TabsTrigger>
           </TabsList>
           
           <TabsContent value="learn" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {learningPaths.map(path => (
                 <Card key={path.id} className={`overflow-hidden ${path.featured ? 'border-primary/50' : ''}`}>
                   <div className="h-32 bg-muted flex items-center justify-center">
@@ -235,7 +274,7 @@ const LearningHubPage = () => {
                     </div>
                     <Progress value={path.progress} className="h-2" />
                     
-                    <div className="flex gap-2 mt-3">
+                    <div className="flex gap-2 mt-3 flex-wrap">
                       {path.tags.map(tag => (
                         <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
                       ))}
@@ -255,14 +294,16 @@ const LearningHubPage = () => {
           <TabsContent value="glossary">
             <Card>
               <CardHeader>
-                <div className="flex items-center gap-4">
-                  <Input
-                    placeholder="Search terms..."
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    className="max-w-sm"
-                    icon={<Search className="h-4 w-4 text-muted-foreground" />}
-                  />
+                <div className="flex items-center gap-4 flex-wrap">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                    <Input
+                      placeholder="Search terms..."
+                      value={searchTerm}
+                      onChange={handleSearch}
+                      className="max-w-sm pl-10"
+                    />
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -292,64 +333,130 @@ const LearningHubPage = () => {
             </Card>
           </TabsContent>
           
-          <TabsContent value="quizzes">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Investment Basics Quiz</CardTitle>
-                  <CardDescription>Test your knowledge on investment fundamentals</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-2 text-sm">
-                    <GraduationCap className="h-4 w-4" />
-                    <span>10 questions</span>
-                    <Separator orientation="vertical" className="h-4 mx-2" />
-                    <span>Beginner level</span>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button className="w-full">Start Quiz</Button>
-                </CardFooter>
-              </Card>
+          <TabsContent value="streaks">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-1">
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Zap className="h-5 w-5 text-amber-500" />
+                      Your Streaks
+                    </CardTitle>
+                    <CardDescription>Keep learning daily to build streaks</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex justify-between items-center gap-4 mt-2">
+                      <div className="text-center">
+                        <div className="text-3xl font-bold">{streaksData.currentStreak}</div>
+                        <div className="text-sm text-muted-foreground">Current Streak</div>
+                      </div>
+                      <Separator orientation="vertical" className="h-12" />
+                      <div className="text-center">
+                        <div className="text-3xl font-bold">{streaksData.longestStreak}</div>
+                        <div className="text-sm text-muted-foreground">Longest Streak</div>
+                      </div>
+                      <Separator orientation="vertical" className="h-12" />
+                      <div className="text-center">
+                        <div className="text-3xl font-bold">{streaksData.thisWeek}</div>
+                        <div className="text-sm text-muted-foreground">This Week</div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">Today's Goal</span>
+                        <Badge variant="outline">{streaksData.dailyGoal} points</Badge>
+                      </div>
+                      <Progress value={65} className="h-2" />
+                    </div>
+                    
+                    <div className="mt-6">
+                      <h4 className="text-sm font-medium mb-3">This Week</h4>
+                      <div className="flex justify-between">
+                        {weekDays.map((day, index) => (
+                          <div key={day} className="flex flex-col items-center">
+                            <div className="text-xs text-muted-foreground">{day}</div>
+                            <div 
+                              className={`w-6 h-${Math.max(streaksData.weeklyPoints[index] / 20, 1)} mt-1 rounded-sm ${
+                                streaksData.weeklyPoints[index] > 0 ? 'bg-primary' : 'bg-muted'
+                              }`}
+                              style={{ height: `${Math.max(streaksData.weeklyPoints[index] / 5, 4)}px` }}
+                            ></div>
+                            <div className="text-xs mt-1">{streaksData.weeklyPoints[index]}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
               
-              <Card>
-                <CardHeader>
-                  <CardTitle>NSE Investing Quiz</CardTitle>
-                  <CardDescription>Test your stock market knowledge</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-2 text-sm">
-                    <GraduationCap className="h-4 w-4" />
-                    <span>12 questions</span>
-                    <Separator orientation="vertical" className="h-4 mx-2" />
-                    <span>Intermediate level</span>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button className="w-full">Start Quiz</Button>
-                </CardFooter>
-              </Card>
-              
-              <Card className="bg-muted/40">
-                <CardHeader>
-                  <div className="flex justify-between items-center">
-                    <CardTitle>Advanced Market Analysis</CardTitle>
-                    <Lock className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                  <CardDescription>Complete beginner quizzes to unlock</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-2 text-sm">
-                    <GraduationCap className="h-4 w-4" />
-                    <span>15 questions</span>
-                    <Separator orientation="vertical" className="h-4 mx-2" />
-                    <span>Advanced level</span>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button className="w-full" disabled>Locked</Button>
-                </CardFooter>
-              </Card>
+              <div className="lg:col-span-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Target className="h-5 w-5 text-primary" />
+                      Challenges
+                    </CardTitle>
+                    <CardDescription>Complete challenges to earn points and badges</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pb-2">
+                    <div className="space-y-4">
+                      {streaksData.upcomingChallenges.map((challenge) => (
+                        <div key={challenge.id} className="border rounded-lg p-4">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <h4 className="font-medium">{challenge.title}</h4>
+                              <p className="text-sm text-muted-foreground">{challenge.description}</p>
+                            </div>
+                            <Badge variant="secondary">{challenge.deadline}</Badge>
+                          </div>
+                          
+                          <div className="mt-3">
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>{challenge.progress}/{challenge.total} completed</span>
+                              <span className="text-primary">{challenge.reward}</span>
+                            </div>
+                            <Progress value={challenge.progress / challenge.total * 100} className="h-2" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="pt-2">
+                    <Button variant="outline" className="w-full mt-2">View All Challenges</Button>
+                  </CardFooter>
+                </Card>
+                
+                <Card className="mt-6">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg">Achievement Badges</CardTitle>
+                    <CardDescription>Badges you've earned through learning</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      <div className="flex flex-col items-center">
+                        <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                          <Award className="h-8 w-8 text-primary" />
+                        </div>
+                        <span className="text-sm mt-2">First Quiz</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                          <Calendar className="h-8 w-8 text-primary" />
+                        </div>
+                        <span className="text-sm mt-2">7-Day Streak</span>
+                      </div>
+                      <div className="flex flex-col items-center opacity-40">
+                        <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
+                          <Lock className="h-8 w-8" />
+                        </div>
+                        <span className="text-sm mt-2">Locked</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </TabsContent>
         </Tabs>
@@ -360,7 +467,7 @@ const LearningHubPage = () => {
             Recommended for You
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card>
               <div className="h-24 bg-muted relative">
                 <div className="absolute inset-0 flex items-center justify-center">

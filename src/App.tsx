@@ -27,8 +27,8 @@ const App = () => (
           <Route path="/messages" element={<MessagesPage />} />
           <Route path="/learn" element={<LearningHubPage />} />
           <Route path="/learning-hub" element={<LearningHubPage />} />
-          <Route path="/glossary" element={<LearningHubPage />} />
-          <Route path="/quiz" element={<LearningHubPage />} />
+          <Route path="/glossary" element={<LearningHubPage initialTab="glossary" />} />
+          <Route path="/streaks" element={<LearningHubPage initialTab="streaks" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <RafikiChatWidget />

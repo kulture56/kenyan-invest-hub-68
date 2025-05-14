@@ -8,8 +8,12 @@ const RafikiHeader = () => {
     <div className="mb-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shrink-0">
-            <span className="font-bold text-lg text-white">R</span>
+          <div className="w-10 h-10 rounded-full bg-accent overflow-hidden flex items-center justify-center shrink-0">
+            <img 
+              src="/lovable-uploads/93b40e8a-192d-4ff9-9614-6ad174a7617b.png" 
+              alt="Rafiki" 
+              className="w-full h-full object-cover"
+            />
           </div>
           <div>
             <h1 className="text-2xl font-bold">Rafiki</h1>

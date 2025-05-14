@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, Bell, MessageSquare, UserRound, Settings, HelpCircle, LogOut } from "lucide-react";
+import { Search, Menu, Bell, MessageSquare, UserRound, Settings, HelpCircle, LogOut, Bookmark } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
@@ -45,6 +45,9 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         </div>
 
         <div className="flex items-center gap-3">
+          <Button variant="ghost" size="icon" className="hover:bg-secondary/50">
+            <Bookmark className="h-5 w-5 text-foreground/80" />
+          </Button>
           <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50">
             <Bell className="h-5 w-5 text-foreground/80" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full animate-pulse-gentle"></span>

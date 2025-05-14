@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Home, Briefcase, Book, FileText, HelpCircle, ListTodo } from "lucide-react";
+import { Home, Briefcase, Book, FileText, HelpCircle, Zap } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SidebarProps {
@@ -70,7 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
           <NavItem icon={<Briefcase className="w-4 h-4" />} label="Jobs" href="/topics/jobs" />
           <NavItem icon={<Book className="w-4 h-4" />} label="Learn" href="/learn" />
           <NavItem icon={<FileText className="w-4 h-4" />} label="Glossary" href="/glossary" />
-          <NavItem icon={<ListTodo className="w-4 h-4" />} label="Quiz" href="/quiz" />
+          <NavItem icon={<Zap className="w-4 h-4" />} label="Streaks" href="/streaks" />
         </nav>
 
         <div className="mt-6 border-t border-border pt-4">
@@ -86,7 +86,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
         <div className="mt-6 border-t border-border pt-4">
           <div className="flex items-center gap-2 px-3 py-2">
             <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-              <span className="text-xs font-bold text-accent">R</span>
+              <img 
+                src="/lovable-uploads/93b40e8a-192d-4ff9-9614-6ad174a7617b.png" 
+                alt="Rafiki" 
+                className="w-8 h-8 rounded-full"
+              />
             </div>
             <div>
               <h4 className="text-sm font-medium">Rafiki</h4>

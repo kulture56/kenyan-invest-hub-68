@@ -159,10 +159,14 @@ const RafikiChatWidget: React.FC = () => {
   if (!isOpen) {
     return (
       <Button
-        className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-accent hover:bg-accent/90 z-50 flex items-center justify-center"
+        className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-accent hover:bg-accent/90 z-50 flex items-center justify-center p-0 overflow-hidden"
         onClick={() => setIsOpen(true)}
       >
-        <MessageSquareText className="h-6 w-6" />
+        <img 
+          src="/lovable-uploads/93b40e8a-192d-4ff9-9614-6ad174a7617b.png" 
+          alt="Rafiki" 
+          className="w-full h-full object-cover"
+        />
       </Button>
     );
   }
@@ -172,8 +176,12 @@ const RafikiChatWidget: React.FC = () => {
       <Card className={`w-80 md:w-96 shadow-lg transition-all duration-300 ease-in-out ${isMinimized ? 'h-14' : 'h-[500px]'}`}>
         <CardHeader className="p-3 border-b flex flex-row items-center justify-between space-y-0">
           <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8 bg-accent">
-              <AvatarFallback className="text-white font-bold">R</AvatarFallback>
+            <Avatar className="h-8 w-8 bg-accent p-0 overflow-hidden">
+              <img 
+                src="/lovable-uploads/93b40e8a-192d-4ff9-9614-6ad174a7617b.png" 
+                alt="Rafiki" 
+                className="w-full h-full object-cover"
+              />
             </Avatar>
             <CardTitle className="text-sm">Rafiki Assistant</CardTitle>
           </div>
