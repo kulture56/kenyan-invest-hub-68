@@ -24,7 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
 
   return (
     <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border h-16 flex items-center px-4">
-      <div className="flex items-center gap-2 md:gap-4 w-full">
+      <div className="flex items-center gap-2 md:gap-4 w-full max-w-full">
         {isMobile && (
           <Button variant="ghost" size="icon" onClick={toggleSidebar}>
             <Menu className="h-5 w-5" />
@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
           />
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 md:gap-3">
           <Button variant="ghost" size="icon" className="hover:bg-secondary/50">
             <Bookmark className="h-5 w-5 text-foreground/80" />
           </Button>

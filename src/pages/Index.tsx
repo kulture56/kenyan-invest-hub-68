@@ -35,28 +35,33 @@ const Index = () => {
 
   return (
     <AppLayout>
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home</h1>
-          <p className="text-muted-foreground">Your investment community feed</p>
+      <div className="md:grid md:grid-cols-12 gap-6">
+        {/* Main content - spans more columns on larger screens */}
+        <div className="md:col-span-12 lg:col-span-8 xl:col-span-9 space-y-6">
+          <div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home</h1>
+            <p className="text-muted-foreground">Your investment community feed</p>
+          </div>
+
+          {/* Topics Bar */}
+          <TopicsBar topics={topics} selectedTopic={selectedTopic} />
+
+          {/* Top Insights Section */}
+          <TopInsightsCard insights={topInsights} />
+
+          {/* Feed Tabs */}
+          <FeedTabs posts={posts} />
         </div>
-
-        {/* Topics Bar */}
-        <TopicsBar topics={topics} selectedTopic={selectedTopic} />
-
-        {/* Top Insights Section */}
-        <TopInsightsCard insights={topInsights} />
-
-        {/* Feed Tabs */}
-        <FeedTabs posts={posts} />
+        
+        {/* Right sidebar content - only visible on larger screens */}
+        <div className="hidden lg:block lg:col-span-4 xl:col-span-3">
+          <TrendingSidebar 
+            trendingTopics={trendingTopics} 
+            suggestedQuestions={suggestedQuestions} 
+          />
+        </div>
       </div>
       
-      {/* Right sidebar content */}
-      <TrendingSidebar 
-        trendingTopics={trendingTopics} 
-        suggestedQuestions={suggestedQuestions} 
-      />
-
       {/* Mobile Bottom Navigation */}
       {isMobile && <MobileNavigation />}
 
