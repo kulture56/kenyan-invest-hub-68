@@ -23,14 +23,14 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({ trendingTopics, sugge
   const navigate = useNavigate();
 
   return (
-    <div className="fixed right-6 top-24 w-72 hidden lg:block">
+    <div className="sticky top-24 w-72 hidden lg:block">
       <Card className="border border-primary/10 shadow-sm hover:shadow-md transition-all">
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-medium text-primary">Trending Topics</h3>
             <ChartBar className="h-4 w-4 text-primary" />
           </div>
-          <ul className="space-y-3">
+          <ul className="space-y-2">
             {trendingTopics.map((topic) => (
               <li key={topic.name} className="hover-scale">
                 <a 
@@ -43,7 +43,7 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({ trendingTopics, sugge
               </li>
             ))}
           </ul>
-          <Button variant="ghost" className="px-0 mt-4 text-sm text-primary hover:text-accent transition-colors w-full flex justify-between items-center">
+          <Button variant="ghost" className="px-0 mt-3 text-sm text-primary hover:text-accent transition-colors w-full flex justify-between items-center">
             <span>View all topics</span>
             <ArrowRight className="h-3 w-3" />
           </Button>
@@ -61,7 +61,7 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({ trendingTopics, sugge
           <p className="text-sm text-foreground bg-white/50 p-3 rounded-lg border border-primary/10">
             "Treasury bills yield has increased by 0.3% this week, creating an opportunity for short-term investments."
           </p>
-          <h4 className="text-sm font-medium mt-4 mb-2">Ask Rafiki about:</h4>
+          <h4 className="text-sm font-medium mt-3 mb-2">Ask Rafiki about:</h4>
           <div className="space-y-2">
             {suggestedQuestions.map((question, index) => (
               <Button 
@@ -77,7 +77,7 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({ trendingTopics, sugge
           </div>
           <Button 
             variant="ghost" 
-            className="px-0 mt-4 text-sm text-primary hover:text-accent transition-colors w-full flex justify-between items-center"
+            className="px-0 mt-3 text-sm text-primary hover:text-accent transition-colors w-full flex justify-between items-center"
             onClick={() => navigate('/rafiki')}
           >
             <span>Ask Rafiki</span>

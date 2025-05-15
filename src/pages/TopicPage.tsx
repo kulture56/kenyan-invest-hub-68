@@ -11,17 +11,17 @@ import StockTicker from "@/components/stocks/StockTicker";
 
 // A simple map of topic slugs to display names and icons
 const topicInfo = {
-  jobs: { name: "Jobs", icon: <Briefcase className="h-5 w-5" /> },
-  saccos: { name: "SACCOs", icon: <Users className="h-5 w-5" /> },
-  mmfs: { name: "Money Market Funds", icon: <Coins className="h-5 w-5" /> },
-  stocks: { name: "Stocks", icon: <ChartBar className="h-5 w-5" /> },
-  funds: { name: "Funds", icon: <Currency className="h-5 w-5" /> },
-  banks: { name: "Banks", icon: <Heart className="h-5 w-5" /> },
-  indices: { name: "Indices", icon: <HandCoins className="h-5 w-5" /> },
-  "bills-bonds": { name: "T-Bills & Bonds", icon: <FileText className="h-5 w-5" /> },
-  vc: { name: "Venture Capital", icon: <Briefcase className="h-5 w-5" /> },
-  insurance: { name: "Insurance", icon: <Currency className="h-5 w-5" /> },
-  crypto: { name: "Cryptocurrencies", icon: <Coins className="h-5 w-5" /> },
+  jobs: { name: "Jobs", icon: <Briefcase className="h-5 w-5 text-primary" /> },
+  saccos: { name: "SACCOs", icon: <Users className="h-5 w-5 text-primary" /> },
+  mmfs: { name: "Money Market Funds", icon: <Coins className="h-5 w-5 text-primary" /> },
+  stocks: { name: "Stocks", icon: <ChartBar className="h-5 w-5 text-primary" /> },
+  funds: { name: "Funds", icon: <Currency className="h-5 w-5 text-primary" /> },
+  banks: { name: "Banks", icon: <Heart className="h-5 w-5 text-primary" /> },
+  indices: { name: "Indices", icon: <HandCoins className="h-5 w-5 text-primary" /> },
+  "bills-bonds": { name: "T-Bills & Bonds", icon: <FileText className="h-5 w-5 text-primary" /> },
+  vc: { name: "Venture Capital", icon: <Briefcase className="h-5 w-5 text-primary" /> },
+  insurance: { name: "Insurance", icon: <Currency className="h-5 w-5 text-primary" /> },
+  crypto: { name: "Cryptocurrencies", icon: <Coins className="h-5 w-5 text-primary" /> },
 };
 
 // Mock data for different topics
@@ -99,7 +99,7 @@ const TopicPage = () => {
   const { topicSlug } = useParams<{ topicSlug: string }>();
   const topic = topicInfo[topicSlug as keyof typeof topicInfo] || { 
     name: topicSlug?.charAt(0).toUpperCase() + topicSlug?.slice(1), 
-    icon: <Info className="h-5 w-5" /> 
+    icon: <Info className="h-5 w-5 text-primary" /> 
   };
   
   const posts = mockPostsByTopic[topicSlug as keyof typeof mockPostsByTopic] || mockPostsByTopic.default;
@@ -111,13 +111,13 @@ const TopicPage = () => {
     <AppLayout>
       {/* Display the stock ticker prominently for stocks topic */}
       {shouldShowProminentTicker && (
-        <div className="mb-6 max-w-3xl mx-auto">
+        <div className="mb-4 max-w-3xl mx-auto">
           <StockTicker />
         </div>
       )}
       
       <div className="max-w-3xl mx-auto">
-        <div className="mb-6 flex items-center gap-3">
+        <div className="mb-4 flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
             {topic.icon}
           </div>
@@ -129,29 +129,29 @@ const TopicPage = () => {
 
         {/* Show compact ticker for non-stock topics */}
         {!shouldShowProminentTicker && (
-          <div className="mb-6">
+          <div className="mb-4">
             <StockTicker compact={true} />
           </div>
         )}
 
-        <Tabs defaultValue="latest" className="mb-6">
+        <Tabs defaultValue="latest" className="mb-4">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="latest">Latest</TabsTrigger>
             <TabsTrigger value="popular">Popular</TabsTrigger>
             <TabsTrigger value="resources">Resources</TabsTrigger>
           </TabsList>
-          <TabsContent value="latest" className="mt-4">
+          <TabsContent value="latest" className="mt-3">
             <CreatePostBox defaultTopic={topic.name.toUpperCase()} />
             
             {posts.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-4 mt-4">
                 {posts.map((post) => (
                   <PostCard key={post.id} {...post} />
                 ))}
               </div>
             ) : (
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
+              <Card className="mt-4">
+                <CardContent className="flex flex-col items-center justify-center py-8">
                   <h3 className="text-lg font-medium mb-2">No posts yet</h3>
                   <p className="text-sm text-muted-foreground mb-4 text-center">
                     Be the first to start a discussion about {topic.name}
@@ -161,8 +161,8 @@ const TopicPage = () => {
             )}
           </TabsContent>
           <TabsContent value="popular">
-            <Card>
-              <CardContent className="flex flex-col items-center justify-center py-12">
+            <Card className="mt-3">
+              <CardContent className="flex flex-col items-center justify-center py-8">
                 <h3 className="text-lg font-medium mb-2">Popular posts</h3>
                 <p className="text-sm text-muted-foreground mb-4 text-center">
                   The most engaging posts about {topic.name} will appear here
@@ -171,8 +171,8 @@ const TopicPage = () => {
             </Card>
           </TabsContent>
           <TabsContent value="resources">
-            <Card>
-              <CardContent className="flex flex-col items-center justify-center py-12">
+            <Card className="mt-3">
+              <CardContent className="flex flex-col items-center justify-center py-8">
                 <h3 className="text-lg font-medium mb-2">Resources</h3>
                 <p className="text-sm text-muted-foreground mb-4 text-center">
                   Helpful resources about {topic.name} will appear here
@@ -183,14 +183,14 @@ const TopicPage = () => {
         </Tabs>
       </div>
       
-      <div className="fixed right-6 top-24 w-64 hidden lg:block">
+      <div className="sticky right-6 top-24 w-64 hidden lg:block float-right mr-6 max-w-[25%]">
         <Card>
           <CardContent className="p-4">
-            <h3 className="font-medium mb-3">About {topic.name}</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <h3 className="font-medium mb-2 text-primary">About {topic.name}</h3>
+            <p className="text-sm text-muted-foreground mb-3">
               {getTopicDescription(topicSlug)}
             </p>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full text-primary">
               Follow Topic
             </Button>
           </CardContent>
@@ -198,16 +198,16 @@ const TopicPage = () => {
         
         <Card className="mt-4">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center">
-                <span className="text-xs font-bold">R</span>
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-xs font-bold text-primary-foreground">R</span>
               </div>
-              <h3 className="font-medium">Rafiki's Insights</h3>
+              <h3 className="font-medium text-primary">Rafiki's Insights</h3>
             </div>
             <p className="text-sm text-muted-foreground">
               {getRafikiInsight(topicSlug)}
             </p>
-            <Button variant="link" className="px-0 mt-2 text-sm">
+            <Button variant="link" className="px-0 mt-2 text-sm text-primary">
               Get more insights
             </Button>
           </CardContent>
