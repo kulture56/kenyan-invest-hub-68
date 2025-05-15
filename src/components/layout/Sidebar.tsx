@@ -1,18 +1,22 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Home, Briefcase, Book, FileText, HelpCircle, Zap, ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { Home, FileText, HelpCircle, Zap, ChevronLeft, ChevronRight, Menu } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+
 interface SidebarProps {
   isOpen: boolean;
   toggle: () => void;
 }
+
 interface NavItemProps {
   icon: React.ReactNode;
   label: string;
   href: string;
   active?: boolean;
 }
+
 const NavItem: React.FC<NavItemProps> = ({
   icon,
   label,
@@ -24,16 +28,19 @@ const NavItem: React.FC<NavItemProps> = ({
     </div>
     <span className="text-sm">{label}</span>
   </a>;
+
 export const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
   toggle
 }) => {
   const isMobile = useIsMobile();
+  
   if (isMobile && !isOpen) {
     return <Button variant="outline" size="icon" className="fixed left-4 bottom-20 z-50 rounded-full shadow-lg bg-background text-primary" onClick={toggle}>
         <Menu className="h-4 w-4 text-primary" />
       </Button>;
   }
+  
   return <>
       <div className={cn("fixed inset-y-0 left-0 z-40 flex flex-col w-64 bg-card border-r border-border transition-all duration-300 overflow-hidden", isMobile && !isOpen && "-translate-x-full", isMobile && "absolute shadow-xl", !isMobile && !isOpen && "w-16")}>
         <div className="flex items-center h-16 px-4 border-b border-border justify-between">
@@ -41,7 +48,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center">
               <span className="font-bold text-primary-foreground">G</span>
             </div>
-            {(isOpen || isMobile) && <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">GELT</span>}
+            {(isOpen || isMobile) && (
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">GELT</span>
+                <img 
+                  src="/lovable-uploads/a48a1151-7e0c-4824-9523-a1f04c863334.png" 
+                  alt="Kenya Flag" 
+                  className="h-4 w-6 object-cover"
+                />
+              </div>
+            )}
           </a>
           
           <Button variant="ghost" size="icon" onClick={toggle} className={cn("text-primary", !isOpen && !isMobile && "hidden")}>
@@ -56,10 +72,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className={cn("flex-1 overflow-auto py-4 px-3 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent hover:scrollbar-thumb-primary/30", !isOpen && !isMobile && "px-2")}>
           <nav className="space-y-1">
             <NavItem icon={<Home className="w-4 h-4 text-primary" />} label={isOpen || isMobile ? "Home" : ""} href="/" active />
-            <NavItem icon={<Briefcase className="w-4 h-4 text-primary" />} label={isOpen || isMobile ? "Jobs" : ""} href="/topics/jobs" />
-            <NavItem icon={<Book className="w-4 h-4 text-primary" />} label={isOpen || isMobile ? "Learn" : ""} href="/learn" />
+            <NavItem 
+              icon={<img src="/lovable-uploads/8b623f45-b9b4-48ee-a02a-8e8ebd58c7e0.png" alt="Jobs" className="w-4 h-4" />} 
+              label={isOpen || isMobile ? "Jobs" : ""} 
+              href="/topics/jobs" 
+            />
+            <NavItem 
+              icon={<img src="/lovable-uploads/800e50e9-0765-41ca-9728-eb655c16f679.png" alt="Learn" className="w-4 h-4" />} 
+              label={isOpen || isMobile ? "Learn" : ""} 
+              href="/learn" 
+            />
             <NavItem icon={<FileText className="w-4 h-4 text-primary" />} label={isOpen || isMobile ? "Glossary" : ""} href="/glossary" />
-            <NavItem icon={<Zap className="w-4 h-4 text-primary" />} label={isOpen || isMobile ? "Streaks" : ""} href="/streaks" />
+            <NavItem 
+              icon={<img src="/lovable-uploads/83f25885-3df9-41ea-9f73-30dc81a20434.png" alt="Streaks" className="w-4 h-4" />} 
+              label={isOpen || isMobile ? "Streaks" : ""} 
+              href="/streaks" 
+            />
           </nav>
 
           {(isOpen || isMobile) && <>
@@ -68,8 +96,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <HelpCircle className="w-4 h-4 text-primary" /> Help Center
                 </Button>
               </div>
-
-              
             </>}
         </div>
 

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
-  Zap, 
   Target, 
   Award, 
   Calendar, 
@@ -136,7 +134,13 @@ const StreaksTab: React.FC<StreaksTabProps> = ({ streaksData, weekDays }) => {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2">
-              <Zap className="h-5 w-5 text-amber-500" />
+              <div className="h-5 w-5 text-amber-500">
+                <img 
+                  src="/lovable-uploads/83f25885-3df9-41ea-9f73-30dc81a20434.png" 
+                  alt="Streaks" 
+                  className="h-full w-full object-contain"
+                />
+              </div>
               Your Streaks
             </CardTitle>
             <CardDescription>Keep learning daily to build streaks</CardDescription>

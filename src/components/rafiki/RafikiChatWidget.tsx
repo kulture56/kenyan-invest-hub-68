@@ -3,11 +3,12 @@ import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { X, MessageSquareText, Send, MinusCircle, Info } from "lucide-react";
+import { X, Send, MinusCircle, Info } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+
 interface Message {
   id: string;
   content: string;
@@ -145,7 +146,7 @@ const RafikiChatWidget: React.FC = () => {
   };
   if (!isOpen) {
     return <Button className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-accent hover:bg-accent/90 z-50 flex items-center justify-center p-0 overflow-hidden" onClick={() => setIsOpen(true)}>
-        <img src="/lovable-uploads/93b40e8a-192d-4ff9-9614-6ad174a7617b.png" alt="Rafiki" className="w-full h-full object-cover" />
+        <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover" />
       </Button>;
   }
   return <div className="fixed bottom-6 right-6 z-50 transition-all duration-200 ease-in-out">
@@ -153,7 +154,7 @@ const RafikiChatWidget: React.FC = () => {
         <CardHeader className="p-3 border-b flex flex-row items-center justify-between space-y-0">
           <div className="flex items-center gap-2">
             <Avatar className="h-8 w-8 bg-accent p-0 overflow-hidden">
-              <img src="/lovable-uploads/93b40e8a-192d-4ff9-9614-6ad174a7617b.png" alt="Rafiki" className="w-full h-full object-cover" />
+              <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover" />
             </Avatar>
             <CardTitle className="text-sm">®️Rafiki Assistant</CardTitle>
           </div>

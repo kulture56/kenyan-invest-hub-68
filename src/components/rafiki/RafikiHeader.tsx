@@ -10,7 +10,7 @@ const RafikiHeader = () => {
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-accent overflow-hidden flex items-center justify-center shrink-0">
             <img 
-              src="/lovable-uploads/93b40e8a-192d-4ff9-9614-6ad174a7617b.png" 
+              src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" 
               alt="Rafiki" 
               className="w-full h-full object-cover"
             />

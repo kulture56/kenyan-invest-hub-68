@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileText, ChartBar, Briefcase, Coins } from "lucide-react";
+import { FileText, ChartBar, Coins } from "lucide-react";
 
 interface RafikiSidebarProps {
   onQuestionSelected: (question: string) => void;
@@ -19,7 +19,7 @@ const RafikiSidebar = ({ onQuestionSelected }: RafikiSidebarProps) => {
             className="w-full justify-start text-left" 
             onClick={() => onQuestionSelected("What are the current T-Bill rates in Kenya?")}
           >
-            <FileText className="mr-2 h-4 w-4 shrink-0" />
+            <FileText className="mr-2 h-4 w-4 shrink-0 text-primary" />
             <span className="text-xs truncate">What are the current T-Bill rates?</span>
           </Button>
           
@@ -28,7 +28,7 @@ const RafikiSidebar = ({ onQuestionSelected }: RafikiSidebarProps) => {
             className="w-full justify-start text-left" 
             onClick={() => onQuestionSelected("Which stocks on NSE have the highest growth potential?")}
           >
-            <ChartBar className="mr-2 h-4 w-4 shrink-0" />
+            <ChartBar className="mr-2 h-4 w-4 shrink-0 text-primary" />
             <span className="text-xs truncate">Best NSE stocks to buy now?</span>
           </Button>
           
@@ -37,7 +37,11 @@ const RafikiSidebar = ({ onQuestionSelected }: RafikiSidebarProps) => {
             className="w-full justify-start text-left" 
             onClick={() => onQuestionSelected("Which SACCOs in Kenya offer the best dividend rates?")}
           >
-            <Briefcase className="mr-2 h-4 w-4 shrink-0" />
+            <img 
+              src="/lovable-uploads/8b623f45-b9b4-48ee-a02a-8e8ebd58c7e0.png" 
+              alt="Jobs" 
+              className="mr-2 h-4 w-4 shrink-0"
+            />
             <span className="text-xs truncate">Best SACCOs by dividend rates?</span>
           </Button>
           
@@ -46,7 +50,7 @@ const RafikiSidebar = ({ onQuestionSelected }: RafikiSidebarProps) => {
             className="w-full justify-start text-left" 
             onClick={() => onQuestionSelected("Is cryptocurrency a good investment in Kenya?")}
           >
-            <Coins className="mr-2 h-4 w-4 shrink-0" />
+            <Coins className="mr-2 h-4 w-4 shrink-0 text-primary" />
             <span className="text-xs truncate">Cryptocurrency in Kenya?</span>
           </Button>
         </div>
