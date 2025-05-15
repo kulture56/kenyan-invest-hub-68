@@ -41,12 +41,10 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         <div className="flex flex-col md:flex-row gap-6 mb-6">
           <div className="md:w-2/3">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <GraduationCap className="h-5 w-5" />
-              </div>
+              
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Learning Hub📖</h1>
-                <p className="text-muted-foreground">Learn, earn badges, and become a smarter investor.</p>
+                
+                
               </div>
             </div>
           </div>
