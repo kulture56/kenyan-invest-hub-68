@@ -57,26 +57,7 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({
       </Card>
       
       <Card className="mt-4 border border-primary/10 shadow-sm hover:shadow-md transition-all bg-gradient-to-br from-primary/5 to-accent/5">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center animate-float">
-              <span className="text-xs font-bold text-white">R</span>
-            </div>
-            <h3 className="font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Rafiki®️ </h3>
-          </div>
-          
-          <h4 className="text-sm font-medium mt-3 mb-2">Ask Rafiki about:</h4>
-          <div className="space-y-2">
-            {suggestedQuestions.map((question, index) => <Button key={index} variant="outline" size="sm" className="text-xs justify-start w-full h-auto py-1.5 hover:bg-primary/5" onClick={() => navigate('/rafiki', {
-            state: {
-              suggestedQuestion: question
-            }
-          })}>
-                <span className="truncate">{question}</span>
-              </Button>)}
-          </div>
-          
-        </CardContent>
+        
       </Card>
     </div>;
 };
