@@ -28,7 +28,11 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen bg-background flex">
       <Sidebar isOpen={sidebarOpen} toggle={toggleSidebar} />
-      <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${sidebarOpen && !isMobile ? 'ml-64' : ''}`}>
+      <div 
+        className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${
+          sidebarOpen && !isMobile ? 'ml-64' : !sidebarOpen && !isMobile ? 'ml-16' : ''
+        }`}
+      >
         <Navbar toggleSidebar={toggleSidebar} />
         <main className="flex-1 p-4 md:p-6 overflow-auto pb-20 md:pb-6 max-w-full">
           {children}
