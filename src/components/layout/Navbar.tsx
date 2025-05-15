@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,16 +6,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-
 interface NavbarProps {
   toggleSidebar: () => void;
 }
-
 export const Navbar: React.FC<NavbarProps> = ({
   toggleSidebar
 }) => {
   const isMobile = useIsMobile();
-  
   return <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border h-16 flex items-center px-4">
       <div className="flex items-center gap-2 md:gap-4 w-full max-w-full">
         {isMobile && <Button variant="ghost" size="icon" onClick={toggleSidebar}>
@@ -24,7 +20,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </Button>}
         <div className="mr-auto flex items-center">
           <Button variant="ghost" className="hidden md:flex" asChild>
-            <Link to="/" className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">GELT</Link>
+            
           </Button>
         </div>
 
