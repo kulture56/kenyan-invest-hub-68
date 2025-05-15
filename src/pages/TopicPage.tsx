@@ -11,110 +11,134 @@ import StockTicker from "@/components/stocks/StockTicker";
 
 // A simple map of topic slugs to display names and icons
 const topicInfo = {
-  jobs: { name: "Jobs", icon: <Briefcase className="h-5 w-5 text-primary" /> },
-  saccos: { name: "SACCOs", icon: <Users className="h-5 w-5 text-primary" /> },
-  mmfs: { name: "Money Market Funds", icon: <Coins className="h-5 w-5 text-primary" /> },
-  stocks: { name: "Stocks", icon: <ChartBar className="h-5 w-5 text-primary" /> },
-  funds: { name: "Funds", icon: <Currency className="h-5 w-5 text-primary" /> },
-  banks: { name: "Banks", icon: <Heart className="h-5 w-5 text-primary" /> },
-  indices: { name: "Indices", icon: <HandCoins className="h-5 w-5 text-primary" /> },
-  "bills-bonds": { name: "T-Bills & Bonds", icon: <FileText className="h-5 w-5 text-primary" /> },
-  vc: { name: "Venture Capital", icon: <Briefcase className="h-5 w-5 text-primary" /> },
-  insurance: { name: "Insurance", icon: <Currency className="h-5 w-5 text-primary" /> },
-  crypto: { name: "Cryptocurrencies", icon: <Coins className="h-5 w-5 text-primary" /> },
+  jobs: {
+    name: "Jobs",
+    icon: <Briefcase className="h-5 w-5 text-primary" />
+  },
+  saccos: {
+    name: "SACCOs",
+    icon: <Users className="h-5 w-5 text-primary" />
+  },
+  mmfs: {
+    name: "Money Market Funds",
+    icon: <Coins className="h-5 w-5 text-primary" />
+  },
+  stocks: {
+    name: "Stocks",
+    icon: <ChartBar className="h-5 w-5 text-primary" />
+  },
+  funds: {
+    name: "Funds",
+    icon: <Currency className="h-5 w-5 text-primary" />
+  },
+  banks: {
+    name: "Banks",
+    icon: <Heart className="h-5 w-5 text-primary" />
+  },
+  indices: {
+    name: "Indices",
+    icon: <HandCoins className="h-5 w-5 text-primary" />
+  },
+  "bills-bonds": {
+    name: "T-Bills & Bonds",
+    icon: <FileText className="h-5 w-5 text-primary" />
+  },
+  vc: {
+    name: "Venture Capital",
+    icon: <Briefcase className="h-5 w-5 text-primary" />
+  },
+  insurance: {
+    name: "Insurance",
+    icon: <Currency className="h-5 w-5 text-primary" />
+  },
+  crypto: {
+    name: "Cryptocurrencies",
+    icon: <Coins className="h-5 w-5 text-primary" />
+  }
 };
 
 // Mock data for different topics
 const mockPostsByTopic = {
-  stocks: [
-    {
-      id: "s1",
-      author: {
-        id: "user1",
-        name: "James Mwangi",
-        username: "jamesmwangi",
-        avatar: "/placeholder.svg",
-      },
-      content: "Safaricom shares are up 2.3% today following the announcement of their new mobile banking initiative. This could be a game changer for their fintech division.",
-      topic: "STOCKS",
-      createdAt: new Date(Date.now() - 1000000),
-      likes: 34,
-      comments: 12,
-      shares: 5,
+  stocks: [{
+    id: "s1",
+    author: {
+      id: "user1",
+      name: "James Mwangi",
+      username: "jamesmwangi",
+      avatar: "/placeholder.svg"
     },
-    {
-      id: "s2",
-      author: {
-        id: "user4",
-        name: "Peter Njoroge",
-        username: "pnjoroge",
-        avatar: "/placeholder.svg",
-      },
-      content: "What are your thoughts on KCB's new rights issue? I'm considering participating but want to hear from others who follow banking stocks closely.",
-      topic: "STOCKS",
-      createdAt: new Date(Date.now() - 8000000),
-      likes: 21,
-      comments: 18,
-      shares: 2,
+    content: "Safaricom shares are up 2.3% today following the announcement of their new mobile banking initiative. This could be a game changer for their fintech division.",
+    topic: "STOCKS",
+    createdAt: new Date(Date.now() - 1000000),
+    likes: 34,
+    comments: 12,
+    shares: 5
+  }, {
+    id: "s2",
+    author: {
+      id: "user4",
+      name: "Peter Njoroge",
+      username: "pnjoroge",
+      avatar: "/placeholder.svg"
     },
-  ],
-  banks: [
-    {
-      id: "b1",
-      author: {
-        id: "user2",
-        name: "Sarah Kamau",
-        username: "sarahk",
-        avatar: "/placeholder.svg",
-      },
-      content: "Equity Bank has just announced a new SME loan package with reduced interest rates. This could be great for small business owners looking to scale.",
-      topic: "BANKS",
-      createdAt: new Date(Date.now() - 3000000),
-      likes: 27,
-      comments: 9,
-      shares: 6,
-    }
-  ],
-  crypto: [
-    {
-      id: "c1",
-      author: {
-        id: "user5",
-        name: "David Mutua",
-        username: "davemutua",
-        avatar: "/placeholder.svg",
-      },
-      content: "With the new Central Bank directive on cryptocurrency, what's everyone's take on the future of Bitcoin and other cryptocurrencies in Kenya?",
-      topic: "CRYPTOCURRENCIES",
-      createdAt: new Date(Date.now() - 4000000),
-      likes: 45,
-      comments: 32,
-      shares: 7,
-    }
-  ],
+    content: "What are your thoughts on KCB's new rights issue? I'm considering participating but want to hear from others who follow banking stocks closely.",
+    topic: "STOCKS",
+    createdAt: new Date(Date.now() - 8000000),
+    likes: 21,
+    comments: 18,
+    shares: 2
+  }],
+  banks: [{
+    id: "b1",
+    author: {
+      id: "user2",
+      name: "Sarah Kamau",
+      username: "sarahk",
+      avatar: "/placeholder.svg"
+    },
+    content: "Equity Bank has just announced a new SME loan package with reduced interest rates. This could be great for small business owners looking to scale.",
+    topic: "BANKS",
+    createdAt: new Date(Date.now() - 3000000),
+    likes: 27,
+    comments: 9,
+    shares: 6
+  }],
+  crypto: [{
+    id: "c1",
+    author: {
+      id: "user5",
+      name: "David Mutua",
+      username: "davemutua",
+      avatar: "/placeholder.svg"
+    },
+    content: "With the new Central Bank directive on cryptocurrency, what's everyone's take on the future of Bitcoin and other cryptocurrencies in Kenya?",
+    topic: "CRYPTOCURRENCIES",
+    createdAt: new Date(Date.now() - 4000000),
+    likes: 45,
+    comments: 32,
+    shares: 7
+  }],
   default: []
 };
-
 const TopicPage = () => {
-  const { topicSlug } = useParams<{ topicSlug: string }>();
-  const topic = topicInfo[topicSlug as keyof typeof topicInfo] || { 
-    name: topicSlug?.charAt(0).toUpperCase() + topicSlug?.slice(1), 
-    icon: <Info className="h-5 w-5 text-primary" /> 
+  const {
+    topicSlug
+  } = useParams<{
+    topicSlug: string;
+  }>();
+  const topic = topicInfo[topicSlug as keyof typeof topicInfo] || {
+    name: topicSlug?.charAt(0).toUpperCase() + topicSlug?.slice(1),
+    icon: <Info className="h-5 w-5 text-primary" />
   };
-  
   const posts = mockPostsByTopic[topicSlug as keyof typeof mockPostsByTopic] || mockPostsByTopic.default;
 
   // Show stock ticker prominently for stock-related topics
   const shouldShowProminentTicker = topicSlug === 'stocks';
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       {/* Display the stock ticker prominently for stocks topic */}
-      {shouldShowProminentTicker && (
-        <div className="mb-4 max-w-3xl mx-auto">
+      {shouldShowProminentTicker && <div className="mb-4 max-w-3xl mx-auto">
           <StockTicker />
-        </div>
-      )}
+        </div>}
       
       <div className="max-w-3xl mx-auto">
         <div className="mb-4 flex items-center gap-3">
@@ -128,37 +152,23 @@ const TopicPage = () => {
         </div>
 
         {/* Show compact ticker for non-stock topics */}
-        {!shouldShowProminentTicker && (
-          <div className="mb-4">
+        {!shouldShowProminentTicker && <div className="mb-4">
             <StockTicker compact={true} />
-          </div>
-        )}
+          </div>}
 
         <Tabs defaultValue="latest" className="mb-4">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="latest">Latest</TabsTrigger>
-            <TabsTrigger value="popular">Popular</TabsTrigger>
-            <TabsTrigger value="resources">Resources</TabsTrigger>
-          </TabsList>
+          
           <TabsContent value="latest" className="mt-3">
             <CreatePostBox defaultTopic={topic.name.toUpperCase()} />
             
-            {posts.length > 0 ? (
-              <div className="space-y-4 mt-4">
-                {posts.map((post) => (
-                  <PostCard key={post.id} {...post} />
-                ))}
-              </div>
-            ) : (
-              <Card className="mt-4">
+            {posts.length > 0 ? <div className="space-y-4 mt-4">
+                {posts.map(post => <PostCard key={post.id} {...post} />)}
+              </div> : <Card className="mt-4">
                 <CardContent className="flex flex-col items-center justify-center py-8">
-                  <h3 className="text-lg font-medium mb-2">No posts yet</h3>
-                  <p className="text-sm text-muted-foreground mb-4 text-center">
-                    Be the first to start a discussion about {topic.name}
-                  </p>
+                  <h3 className="text-lg font-medium mb-2">No jobs yet</h3>
+                  
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
           </TabsContent>
           <TabsContent value="popular">
             <Card className="mt-3">
@@ -218,10 +228,8 @@ const TopicPage = () => {
           <StockTicker compact={true} />
         </div>
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 function getTopicDescription(topicSlug?: string): string {
   switch (topicSlug) {
     case 'stocks':
@@ -238,7 +246,6 @@ function getTopicDescription(topicSlug?: string): string {
       return 'Join discussions, share insights, and discover investment opportunities in this topic.';
   }
 }
-
 function getRafikiInsight(topicSlug?: string): string {
   switch (topicSlug) {
     case 'stocks':
@@ -255,5 +262,4 @@ function getRafikiInsight(topicSlug?: string): string {
       return 'Market trends show positive movement in this sector. Ask me for more specific insights!';
   }
 }
-
 export default TopicPage;

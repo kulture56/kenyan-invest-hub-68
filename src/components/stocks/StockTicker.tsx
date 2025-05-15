@@ -92,44 +92,7 @@ export const StockTicker: React.FC<StockTickerProps> = ({
   return <Card className={cn("overflow-hidden relative", className)}>
       
       
-      <div className="relative overflow-hidden whitespace-nowrap py-2">
-        <div className="animate-marquee inline-block">
-          {!isLoading && tickerItems.map((stock, index) => <div key={stock.symbol} className="inline-flex items-center mx-4">
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">{stock.symbol}</span>
-                {!compact && <span className="text-[10px] text-muted-foreground">{stock.name}</span>}
-              </div>
-              
-              <span className="mx-2 text-sm font-medium">{stock.price.toFixed(2)}</span>
-              
-              <div className={cn("flex items-center text-xs", stock.change >= 0 ? "text-green-600" : "text-red-500")}>
-                {stock.change >= 0 ? <TrendingUp className="h-3 w-3 mr-1" /> : <TrendingDown className="h-3 w-3 mr-1" />}
-                <span>{stock.change >= 0 ? "+" : ""}{stock.change.toFixed(2)} ({stock.change >= 0 ? "+" : ""}{stock.changePercent.toFixed(2)}%)</span>
-              </div>
-              
-              {index < tickerItems.length - 1 && <ArrowRight className="h-3 w-3 mx-4 text-muted-foreground/50" />}
-            </div>)}
-        </div>
-        
-        {/* Duplicate the ticker items to create a seamless loop */}
-        <div className="animate-marquee2 inline-block">
-          {!isLoading && tickerItems.map((stock, index) => <div key={`${stock.symbol}-dup`} className="inline-flex items-center mx-4">
-              <div className="flex flex-col">
-                <span className="text-xs font-semibold">{stock.symbol}</span>
-                {!compact && <span className="text-[10px] text-muted-foreground">{stock.name}</span>}
-              </div>
-              
-              <span className="mx-2 text-sm font-medium">{stock.price.toFixed(2)}</span>
-              
-              <div className={cn("flex items-center text-xs", stock.change >= 0 ? "text-green-600" : "text-red-500")}>
-                {stock.change >= 0 ? <TrendingUp className="h-3 w-3 mr-1" /> : <TrendingDown className="h-3 w-3 mr-1" />}
-                <span>{stock.change >= 0 ? "+" : ""}{stock.change.toFixed(2)} ({stock.change >= 0 ? "+" : ""}{stock.changePercent.toFixed(2)}%)</span>
-              </div>
-              
-              {index < tickerItems.length - 1 && <ArrowRight className="h-3 w-3 mx-4 text-muted-foreground/50" />}
-            </div>)}
-        </div>
-      </div>
+      
     </Card>;
 };
 export default StockTicker;
