@@ -45,8 +45,8 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
                 <GraduationCap className="h-5 w-5" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Learning Hub</h1>
-                <p className="text-muted-foreground">Learn, earn badges, and become a smarter investor</p>
+                <h1 className="text-2xl font-bold text-foreground">Learning Hub📖</h1>
+                <p className="text-muted-foreground">Learn, earn badges, and become a smarter investor.</p>
               </div>
             </div>
           </div>
