@@ -8,7 +8,7 @@ const RafikiHeader = () => {
     <div className="mb-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-accent overflow-hidden flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-full bg-white overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
             <img 
               src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" 
               alt="Rafiki" 

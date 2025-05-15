@@ -1,18 +1,22 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, Bell, MessageSquare, UserRound, Settings, HelpCircle, LogOut, Bookmark } from "lucide-react";
+import { Search, Menu, Bell, MessageSquare, Settings, HelpCircle, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+
 interface NavbarProps {
   toggleSidebar: () => void;
 }
+
 export const Navbar: React.FC<NavbarProps> = ({
   toggleSidebar
 }) => {
   const isMobile = useIsMobile();
+  
   return <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border h-16 flex items-center px-4">
       <div className="flex items-center gap-2 md:gap-4 w-full max-w-full">
         {isMobile && <Button variant="ghost" size="icon" onClick={toggleSidebar}>
@@ -31,20 +35,20 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         <div className="flex items-center gap-1 md:gap-3">
           <Button variant="ghost" size="icon" className="hover:bg-secondary/50">
-            <Bookmark className="h-5 w-5 text-foreground/80" />
+            <img src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" alt="Bookmarks" className="h-5 w-5 text-foreground/80" />
           </Button>
           <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50">
-            <Bell className="h-5 w-5 text-foreground/80" />
+            <img src="/lovable-uploads/a348bf95-7056-4dd8-af62-6662214bf070.png" alt="Notifications" className="h-5 w-5 text-foreground/80" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full animate-pulse-gentle"></span>
           </Button>
           <Button variant="ghost" size="icon" className="hover:bg-secondary/50">
-            <MessageSquare className="h-5 w-5 text-foreground/80" />
+            <img src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" alt="Messages" className="h-5 w-5 text-foreground/80" />
           </Button>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="h-9 w-9 border-2 border-primary/20 hover:border-primary/50 transition-colors cursor-pointer">
-                <AvatarImage src="/placeholder.svg" alt="User" />
+                <AvatarImage src="/lovable-uploads/92d3bdce-9360-486e-8617-373fba41fb1f.png" alt="User" />
                 <AvatarFallback className="bg-primary/10 text-primary">U</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
@@ -53,22 +57,22 @@ export const Navbar: React.FC<NavbarProps> = ({
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link to="/profile" className="cursor-pointer flex items-center gap-2">
-                  <UserRound className="h-4 w-4" /> Profile
+                  <img src="/lovable-uploads/82820a12-afcc-4c47-bce5-7898436e3135.png" className="h-4 w-4" /> Profile
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/profile?tab=settings" className="cursor-pointer flex items-center gap-2">
-                  <Settings className="h-4 w-4" /> Settings
+                  <img src="/lovable-uploads/5e177755-4876-42aa-953a-36cee4079784.png" className="h-4 w-4" /> Settings
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/profile?tab=help" className="cursor-pointer flex items-center gap-2">
-                  <HelpCircle className="h-4 w-4" /> Help
+                  <img src="/lovable-uploads/602cec52-f456-44c8-9fef-dc523c21efed.png" className="h-4 w-4" /> Help
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer flex items-center gap-2 text-red-500">
-                <LogOut className="h-4 w-4" /> Logout
+                <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-4 w-4" /> Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

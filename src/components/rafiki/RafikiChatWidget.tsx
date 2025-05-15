@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -66,9 +67,9 @@ const RafikiChatWidget: React.FC = () => {
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       const topic = getCurrentTopic();
-      let initialMessage = "Hello! I'm Rafiki, your AI investment assistant. How can I help you with your investment journey in Kenya today?";
+      let initialMessage = "Habari yako! I'm Rafiki, your AI investment assistant. How can I help you with your investment safari in Kenya today?";
       if (topic) {
-        initialMessage = `Hello! I see you're interested in ${topic}. I can provide information about this investment option or answer any other questions you might have.`;
+        initialMessage = `Habari yako! I see you're interested in ${topic}. I can provide information about this investment option or answer any other questions you might have.`;
       }
       setMessages([{
         id: "initial-message",
@@ -146,15 +147,15 @@ const RafikiChatWidget: React.FC = () => {
   };
   if (!isOpen) {
     return <Button className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-accent hover:bg-accent/90 z-50 flex items-center justify-center p-0 overflow-hidden" onClick={() => setIsOpen(true)}>
-        <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover" />
+        <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover bg-white rounded-full" />
       </Button>;
   }
   return <div className="fixed bottom-6 right-6 z-50 transition-all duration-200 ease-in-out">
       <Card className={`w-80 md:w-96 shadow-lg transition-all duration-300 ease-in-out ${isMinimized ? 'h-14' : 'h-[500px]'}`}>
         <CardHeader className="p-3 border-b flex flex-row items-center justify-between space-y-0">
           <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8 bg-accent p-0 overflow-hidden">
-              <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover" />
+            <Avatar className="h-8 w-8 bg-white p-0 overflow-hidden">
+              <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover bg-white rounded-full" />
             </Avatar>
             <CardTitle className="text-sm">®️Rafiki Assistant</CardTitle>
           </div>
