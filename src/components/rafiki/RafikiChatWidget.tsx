@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-
 interface Message {
   id: string;
   content: string;
@@ -157,7 +155,7 @@ const RafikiChatWidget: React.FC = () => {
             <Avatar className="h-8 w-8 bg-white p-0 overflow-hidden">
               <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover bg-white rounded-full" />
             </Avatar>
-            <CardTitle className="text-sm">®️Rafiki Assistant</CardTitle>
+            <CardTitle className="text-sm">®️Rafiki AI Assistant</CardTitle>
           </div>
           <div className="flex items-center gap-1">
             <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-full" onClick={() => setIsMinimized(!isMinimized)}>
