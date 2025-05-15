@@ -64,9 +64,7 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({
             </div>
             <h3 className="font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Rafiki Says</h3>
           </div>
-          <p className="text-sm text-foreground bg-white/50 p-3 rounded-lg border border-primary/10">
-            "Treasury bills yield has increased by 0.3% this week, creating an opportunity for short-term investments."
-          </p>
+          
           <h4 className="text-sm font-medium mt-3 mb-2">Ask Rafiki about:</h4>
           <div className="space-y-2">
             {suggestedQuestions.map((question, index) => <Button key={index} variant="outline" size="sm" className="text-xs justify-start w-full h-auto py-1.5 hover:bg-primary/5" onClick={() => navigate('/rafiki', {
