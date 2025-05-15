@@ -62,7 +62,7 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({
             <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center animate-float">
               <span className="text-xs font-bold text-white">R</span>
             </div>
-            <h3 className="font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Rafiki Says</h3>
+            <h3 className="font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Rafiki®️ </h3>
           </div>
           
           <h4 className="text-sm font-medium mt-3 mb-2">Ask Rafiki about:</h4>
