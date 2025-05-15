@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
@@ -11,7 +10,6 @@ import FeedTabs from "@/components/home/FeedTabs";
 import MobileNavigation from "@/components/home/MobileNavigation";
 import { useHomeData } from "@/hooks/useHomeData";
 import { useNavigate } from "react-router-dom";
-
 const Index = () => {
   const {
     posts,
@@ -25,22 +23,18 @@ const Index = () => {
     checkIfNewUser,
     completeOnboarding
   } = useHomeData();
-  
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-
   useEffect(() => {
     checkIfNewUser();
   }, []);
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="md:grid md:grid-cols-12 gap-6">
         {/* Main content - spans more columns on larger screens */}
         <div className="md:col-span-12 lg:col-span-8 xl:col-span-9 space-y-6">
           <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home</h1>
-            <p className="text-muted-foreground">Your investment community feed</p>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home🏠</h1>
+            <p className="text-muted-foreground">Your investment community feed💫</p>
           </div>
 
           {/* Topics Bar */}
@@ -55,10 +49,7 @@ const Index = () => {
         
         {/* Right sidebar content - only visible on larger screens */}
         <div className="hidden lg:block lg:col-span-4 xl:col-span-3">
-          <TrendingSidebar 
-            trendingTopics={trendingTopics} 
-            suggestedQuestions={suggestedQuestions} 
-          />
+          <TrendingSidebar trendingTopics={trendingTopics} suggestedQuestions={suggestedQuestions} />
         </div>
       </div>
       
@@ -71,8 +62,6 @@ const Index = () => {
           <OnboardingFlow completeOnboarding={completeOnboarding} />
         </DrawerContent>
       </Drawer>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default Index;
