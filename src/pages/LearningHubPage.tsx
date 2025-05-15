@@ -39,15 +39,7 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         </div>
         
         <div className="flex flex-col md:flex-row gap-6 mb-6">
-          <div className="md:w-2/3">
-            <div className="flex items-center gap-3 mb-4">
-              
-              <div>
-                
-                
-              </div>
-            </div>
-          </div>
+          
           
           <div className="md:w-1/3">
             <ProgressCard completedModules={5} totalModules={26} quizzesCompleted={4} badgesEarned={2} />
