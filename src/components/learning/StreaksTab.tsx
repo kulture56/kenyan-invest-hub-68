@@ -11,6 +11,7 @@ import { toast } from "@/hooks/use-toast";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
+
 interface Challenge {
   id: string;
   title: string;
@@ -471,8 +472,21 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
               }).map((_, i) => {
                 // Mock data: days 1-12 and 15-18 completed, day 13-14 missed
                 let status = "empty";
-                if (i < 12) status = "completed";else if (i < 14) status = "missed";else if (i < 18) status = "completed";
-                return;
+                if (i < 12) status = "completed";
+                else if (i < 14) status = "missed";
+                else if (i < 18) status = "completed";
+                
+                // Return a React node for each day
+                return (
+                  <div 
+                    key={i}
+                    className={`h-2 rounded-sm ${
+                      status === 'completed' ? 'bg-primary' : 
+                      status === 'missed' ? 'bg-destructive/30' : 
+                      'bg-muted'
+                    }`}
+                  />
+                );
               })}
               </div>
               

@@ -110,7 +110,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             />
             <NavItem 
               icon={<img src="/lovable-uploads/800e50e9-0765-41ca-9728-eb655c16f679.png" alt="Learn" className="w-4 h-4" />} 
-              label={isOpen || iMobile ? "Learning Center" : ""} 
+              label={isOpen || isMobile ? "Learning Center" : ""} 
               href="/learn" 
             />
             <NavItem 
