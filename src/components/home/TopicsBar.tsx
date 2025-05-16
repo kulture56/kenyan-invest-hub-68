@@ -49,7 +49,7 @@ const TopicsBar: React.FC<TopicsBarProps> = ({
   }];
   return <div className="mb-6 overflow-x-auto pb-2 no-scrollbar">
       <div className="flex flex-wrap gap-2">
-        {topicCategories.map(topic => <Badge key={topic.name} variant={selectedTopic === topic.slug ? "default" : "outline"} onClick={() => handleTopicClick(topic.slug)} className="cursor-pointer hover:scale-105 transition-transform px-3 py-1 text-xs whitespace-nowrap bg-purple-900">
+        {topicCategories.map(topic => <Badge key={topic.name} variant={selectedTopic === topic.slug ? "default" : "outline"} onClick={() => handleTopicClick(topic.slug)} className="cursor-pointer hover:scale-105 transition-transform px-3 py-1 text-xs whitespace-nowrap bg-yellow-500">
             {topic.name}
           </Badge>)}
       </div>

@@ -35,7 +35,7 @@ const TopInsightsCard: React.FC<TopInsightsCardProps> = ({
           {insights.map(insight => <div key={insight.id} className="p-2 hover:bg-primary/5 rounded-md cursor-pointer transition-colors" onClick={() => navigate(`/topics/${insight.topic.toLowerCase()}`)}>
               <div className="flex justify-between items-center">
                 <h3 className="font-medium text-sm text-zinc-950">{insight.title}</h3>
-                <Badge variant="outline" className="text-[10px] h-5 bg-purple-900">
+                <Badge variant="outline" className="text-[10px] h-5 bg-yellow-500">
                   {insight.topic}
                 </Badge>
               </div>
