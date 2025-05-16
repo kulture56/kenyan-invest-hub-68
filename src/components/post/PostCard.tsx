@@ -2,12 +2,21 @@ import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Heart, MessageSquare, Bookmark, Share } from "lucide-react";
+import { Heart, MessageSquare, Bookmark, Share, MoreHorizontal, VolumeX, Flag } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import ReplyBox from "./ReplyBox";
 import { PostReply } from "./PostReply";
 import { toast } from "@/hooks/use-toast";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
+import MuteDialog from "./MuteDialog";
+
 interface PostAuthor {
   id: string;
   name: string;
@@ -53,6 +62,10 @@ export const PostCard: React.FC<PostProps> = ({
   const [showReplyBox, setShowReplyBox] = useState(false);
   const [postReplies, setPostReplies] = useState<ReplyData[]>(replies);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [muteDialogOpen, setMuteDialogOpen] = useState(false);
+  
+  const navigate = useNavigate();
+
   const handleLike = () => {
     if (liked) {
       setLikeCount(prev => prev - 1);
@@ -94,33 +107,63 @@ export const PostCard: React.FC<PostProps> = ({
     setShowReplies(true);
     setShowReplyBox(false);
   };
+  const handleMuteClick = () => {
+    setMuteDialogOpen(true);
+  };
+  
+  const handleReportClick = () => {
+    navigate(`/report/${id}`);
+  };
+
   return <Card className="mb-4 animate-fade-in border border-primary/10 hover:border-primary/30 transition-all">
-      <CardHeader className="pb-2 pt-4 px-4 flex flex-row gap-3">
-        <Avatar className="border-2 border-primary/20 hover:border-primary/50 transition-colors">
-          <AvatarImage src={author.avatar} alt={author.name} />
-          <AvatarFallback className="bg-primary/10 text-primary">{author.name[0]}</AvatarFallback>
-        </Avatar>
-        <div>
-          <div className="flex items-center gap-2">
-            <a href={`/profile/${author.id}`} className="font-medium hover:underline text-foreground hover:text-primary transition-colors">
-              {author.name}
-            </a>
-            <span className="text-sm text-muted-foreground">@{author.username}</span>
-          </div>
-          <div className="flex gap-2 text-xs text-muted-foreground">
-            <span>{formatDistanceToNow(createdAt, {
-              addSuffix: true
-            })}</span>
-            {topic && <>
-                <span>•</span>
-                <a href={`/topics/${topic.toLowerCase()}`}>
-                  <Badge variant="outline" className="text-primary border-primary/20 hover:border-primary/30 transition-colors text-xs py-0 px-2 bg-yellow-500">
-                    #{topic}
-                  </Badge>
-                </a>
-              </>}
+      <CardHeader className="pb-2 pt-4 px-4 flex flex-row gap-3 justify-between">
+        <div className="flex gap-3">
+          <Avatar className="border-2 border-primary/20 hover:border-primary/50 transition-colors">
+            <AvatarImage src={author.avatar} alt={author.name} />
+            <AvatarFallback className="bg-primary/10 text-primary">{author.name[0]}</AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="flex items-center gap-2">
+              <a href={`/profile/${author.id}`} className="font-medium hover:underline text-foreground hover:text-primary transition-colors">
+                {author.name}
+              </a>
+              <span className="text-sm text-muted-foreground">@{author.username}</span>
+            </div>
+            <div className="flex gap-2 text-xs text-muted-foreground">
+              <span>{formatDistanceToNow(createdAt, {
+                addSuffix: true
+              })}</span>
+              {topic && <>
+                  <span>•</span>
+                  <a href={`/topics/${topic.toLowerCase()}`}>
+                    <Badge variant="outline" className="text-primary border-primary/20 hover:border-primary/30 transition-colors text-xs py-0 px-2 bg-yellow-500">
+                      #{topic}
+                    </Badge>
+                  </a>
+                </>}
+            </div>
           </div>
         </div>
+        
+        {/* Post Menu */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <MoreHorizontal className="h-4 w-4" />
+              <span className="sr-only">Post menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={handleMuteClick} className="cursor-pointer">
+              <VolumeX className="mr-2 h-4 w-4" />
+              <span>Mute</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleReportClick} className="cursor-pointer">
+              <Flag className="mr-2 h-4 w-4" />
+              <span>Report</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardHeader>
       
       <CardContent className="px-4 py-2">
@@ -176,5 +219,12 @@ export const PostCard: React.FC<PostProps> = ({
             Show {postReplies.length} {postReplies.length === 1 ? "reply" : "replies"}
           </Button>
         </div>}
+      
+      {/* Mute Dialog */}
+      <MuteDialog 
+        open={muteDialogOpen} 
+        onOpenChange={setMuteDialogOpen}
+        author={author}
+      />
     </Card>;
 };
