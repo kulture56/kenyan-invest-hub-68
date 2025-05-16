@@ -1,23 +1,31 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, Bell, MessageSquare, Settings, HelpCircle, LogOut } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+
 interface NavbarProps {
   toggleSidebar: () => void;
 }
+
 export const Navbar: React.FC<NavbarProps> = ({
   toggleSidebar
 }) => {
   const isMobile = useIsMobile();
-  return <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border h-16 flex items-center px-4">
+  
+  return (
+    <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border h-16 flex items-center px-4">
       <div className="flex items-center gap-2 md:gap-4 w-full max-w-full">
-        {isMobile && <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+        {isMobile && (
+          <Button variant="ghost" size="icon" onClick={toggleSidebar}>
             <Menu className="h-5 w-5" />
-          </Button>}
+          </Button>
+        )}
+        
         <div className="mr-auto flex items-center">
           <Button variant="ghost" className="hidden md:flex" asChild>
             
@@ -34,7 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <img src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" alt="Bookmarks" className="h-5 w-5 text-foreground/80" />
           </Button>
           <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50">
-            <img src="/lovable-uploads/a348bf95-7056-4dd8-af62-6662214bf070.png" alt="Notifications" className="h-5 w-5 text-foreground/80" />
+            <img src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" alt="Notifications" className="h-5 w-5 text-foreground/80" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full animate-pulse-gentle"></span>
           </Button>
           <Button variant="ghost" size="icon" className="hover:bg-secondary/50">
@@ -74,5 +82,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </DropdownMenu>
         </div>
       </div>
-    </header>;
+    </header>
+  );
 };
