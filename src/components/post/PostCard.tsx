@@ -114,7 +114,7 @@ export const PostCard: React.FC<PostProps> = ({
             {topic && <>
                 <span>•</span>
                 <a href={`/topics/${topic.toLowerCase()}`}>
-                  <Badge variant="outline" className="bg-primary/5 hover:bg-primary/10 text-primary border-primary/20 hover:border-primary/30 transition-colors text-xs py-0 px-2">
+                  <Badge variant="outline" className="text-primary border-primary/20 hover:border-primary/30 transition-colors text-xs py-0 px-2 bg-yellow-500">
                     #{topic}
                   </Badge>
                 </a>
