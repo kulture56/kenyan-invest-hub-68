@@ -72,13 +72,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <span className="font-bold text-primary-foreground">G</span>
             </div>
             {(isOpen || isMobile) && (
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col">
                 <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">GELT</span>
-                <img 
-                  src="/lovable-uploads/a48a1151-7e0c-4824-9523-a1f04c863334.png" 
-                  alt="Kenya Flag" 
-                  className="h-4 w-6 object-cover"
-                />
+                <span className="text-[10px] leading-tight text-muted-foreground">Grow. Empower. Learn. Thrive</span>
               </div>
             )}
           </a>
@@ -114,7 +110,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             />
             <NavItem 
               icon={<img src="/lovable-uploads/800e50e9-0765-41ca-9728-eb655c16f679.png" alt="Learn" className="w-4 h-4" />} 
-              label={isOpen || isMobile ? "Learning Center" : ""} 
+              label={isOpen || iMobile ? "Learning Center" : ""} 
               href="/learn" 
             />
             <NavItem 

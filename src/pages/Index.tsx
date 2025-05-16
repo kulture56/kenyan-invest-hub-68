@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+
+import React from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
-import OnboardingFlow from "@/components/onboarding/OnboardingFlow";
 import TopInsightsCard from "@/components/home/TopInsightsCard";
 import TopicsBar from "@/components/home/TopicsBar";
 import TrendingSidebar from "@/components/home/TrendingSidebar";
@@ -10,6 +9,7 @@ import FeedTabs from "@/components/home/FeedTabs";
 import MobileNavigation from "@/components/home/MobileNavigation";
 import { useHomeData } from "@/hooks/useHomeData";
 import { useNavigate } from "react-router-dom";
+
 const Index = () => {
   const {
     posts,
@@ -18,16 +18,10 @@ const Index = () => {
     suggestedQuestions,
     topInsights,
     selectedTopic,
-    showOnboarding,
-    setShowOnboarding,
-    checkIfNewUser,
-    completeOnboarding
   } = useHomeData();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  useEffect(() => {
-    checkIfNewUser();
-  }, []);
+
   return <AppLayout>
       <div className="md:grid md:grid-cols-12 gap-6">
         {/* Main content - spans more columns on larger screens */}
@@ -55,13 +49,7 @@ const Index = () => {
       
       {/* Mobile Bottom Navigation */}
       {isMobile && <MobileNavigation />}
-
-      {/* Onboarding Flow */}
-      <Drawer open={showOnboarding} onOpenChange={setShowOnboarding}>
-        <DrawerContent className="max-h-[90vh]">
-          <OnboardingFlow completeOnboarding={completeOnboarding} />
-        </DrawerContent>
-      </Drawer>
     </AppLayout>;
 };
+
 export default Index;
