@@ -43,8 +43,8 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ completeOnboarding }) =
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold text-center mb-2">Welcome to GELT</h2>
-      <p className="text-center text-muted-foreground mb-6">Let's personalize your experience</p>
+      <h2 className="text-2xl font-bold text-center mb-2">Personalize Your Experience</h2>
+      <p className="text-center text-muted-foreground mb-6">Help us tailor GELT to your investment preferences</p>
       
       <OnboardingStepIndicator currentStep={step} totalSteps={4} />
 
