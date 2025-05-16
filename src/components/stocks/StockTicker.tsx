@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
@@ -51,6 +52,7 @@ const initialStockData: StockData[] = [{
   change: 0.10,
   changePercent: 0.85
 }];
+
 const fetchStockData = async (): Promise<StockData[]> => {
   // In a real implementation, this would fetch data from an NSE API
   // For now, we're using mock data and adding small random fluctuations to simulate changes
@@ -61,15 +63,18 @@ const fetchStockData = async (): Promise<StockData[]> => {
     changePercent: parseFloat((stock.changePercent + (Math.random() * 0.3 - 0.15)).toFixed(2))
   }));
 };
+
 interface StockTickerProps {
   className?: string;
   compact?: boolean;
 }
+
 export const StockTicker: React.FC<StockTickerProps> = ({
   className,
   compact = false
 }) => {
   const [tickerItems, setTickerItems] = useState<StockData[]>(initialStockData);
+  
   const {
     data,
     isLoading,
@@ -77,18 +82,59 @@ export const StockTicker: React.FC<StockTickerProps> = ({
   } = useQuery({
     queryKey: ['nseStockData'],
     queryFn: fetchStockData,
-    refetchInterval: 15000,
-    // Refetch every 15 seconds
+    refetchInterval: 15000, // Refetch every 15 seconds
     enabled: true
   });
+  
   useEffect(() => {
     if (data) {
       setTickerItems(data);
     }
   }, [data]);
+  
   if (error) {
     console.error("Failed to fetch stock data:", error);
   }
-  return;
+  
+  // Add the return statement with JSX content
+  return (
+    <div className={cn("w-full overflow-hidden", className)}>
+      <Card className={cn("p-3", compact ? "p-2" : "p-3")}>
+        <div className="flex items-center mb-2">
+          <ChartBar className="h-4 w-4 text-primary mr-2" />
+          <span className="font-medium text-sm">NSE Market Update</span>
+        </div>
+        
+        <div className="flex overflow-hidden gap-3 animate-scroll">
+          {tickerItems.map((stock) => (
+            <div key={stock.symbol} className={cn(
+              "flex flex-col min-w-max",
+              compact ? "text-xs" : "text-sm"
+            )}>
+              <div className="flex items-center gap-1">
+                <span className="font-bold">{stock.symbol}</span>
+                <span className="text-muted-foreground hidden md:inline">({stock.name})</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span>KES {stock.price.toFixed(2)}</span>
+                <div className={cn(
+                  "flex items-center", 
+                  stock.change >= 0 ? "text-green-600" : "text-red-600"
+                )}>
+                  {stock.change >= 0 ? (
+                    <TrendingUp className="h-3 w-3 mr-1" />
+                  ) : (
+                    <TrendingDown className="h-3 w-3 mr-1" />
+                  )}
+                  <span>{stock.change.toFixed(2)} ({stock.changePercent.toFixed(2)}%)</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  );
 };
+
 export default StockTicker;
