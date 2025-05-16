@@ -195,32 +195,11 @@ const TopicPage = () => {
       
       <div className="sticky right-6 top-24 w-64 hidden lg:block float-right mr-6 max-w-[25%]">
         <Card>
-          <CardContent className="p-4">
-            <h3 className="font-medium mb-2 text-primary">About {topic.name}</h3>
-            <p className="text-sm text-muted-foreground mb-3">
-              {getTopicDescription(topicSlug)}
-            </p>
-            <Button variant="outline" className="w-full text-primary">
-              Follow Topic
-            </Button>
-          </CardContent>
+          
         </Card>
         
         <Card className="mt-4">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-xs font-bold text-primary-foreground">R</span>
-              </div>
-              <h3 className="font-medium text-primary">Rafiki's Insights</h3>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              {getRafikiInsight(topicSlug)}
-            </p>
-            <Button variant="link" className="px-0 mt-2 text-sm text-primary">
-              Get more insights
-            </Button>
-          </CardContent>
+          
         </Card>
 
         {/* Add a compact stock ticker to the sidebar for all pages */}
