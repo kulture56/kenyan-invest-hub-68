@@ -1,4 +1,3 @@
-
 import React from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -9,7 +8,6 @@ import FeedTabs from "@/components/home/FeedTabs";
 import MobileNavigation from "@/components/home/MobileNavigation";
 import { useHomeData } from "@/hooks/useHomeData";
 import { useNavigate } from "react-router-dom";
-
 const Index = () => {
   const {
     posts,
@@ -17,17 +15,16 @@ const Index = () => {
     trendingTopics,
     suggestedQuestions,
     topInsights,
-    selectedTopic,
+    selectedTopic
   } = useHomeData();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-
   return <AppLayout>
       <div className="md:grid md:grid-cols-12 gap-6">
         {/* Main content - spans more columns on larger screens */}
         <div className="md:col-span-12 lg:col-span-8 xl:col-span-9 space-y-6">
           <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home🏠</h1>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home</h1>
             <p className="text-muted-foreground">Your investment community feed💫</p>
           </div>
 
@@ -51,5 +48,4 @@ const Index = () => {
       {isMobile && <MobileNavigation />}
     </AppLayout>;
 };
-
 export default Index;
