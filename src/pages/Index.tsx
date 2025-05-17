@@ -24,8 +24,8 @@ const Index = () => {
         {/* Main content - spans more columns on larger screens */}
         <div className="md:col-span-12 lg:col-span-8 xl:col-span-9 space-y-6">
           <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Home</h1>
-            <p className="text-muted-foreground">Your investment community feed💫</p>
+            
+            
           </div>
 
           {/* Topics Bar */}
