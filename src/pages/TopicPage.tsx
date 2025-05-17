@@ -135,10 +135,9 @@ const TopicPage = () => {
 
   // Show stock ticker prominently for stock-related topics
   const shouldShowProminentTicker = topicSlug === 'stocks';
-  
+
   // Check if this is the jobs topic
   const isJobsTopic = topicSlug === 'jobs';
-
   return <AppLayout>
       {/* Display the stock ticker prominently for stocks topic */}
       {shouldShowProminentTicker && <div className="mb-4 max-w-3xl mx-auto">
@@ -162,23 +161,17 @@ const TopicPage = () => {
           </div>}
 
         {/* Show jobs filter if this is the jobs topic */}
-        {isJobsTopic && (
-          <div className="mb-4">
+        {isJobsTopic && <div className="mb-4">
             <Card>
               <CardContent className="p-4">
                 <h3 className="text-lg font-medium mb-3">Filter Jobs</h3>
                 <JobsFilter />
               </CardContent>
             </Card>
-          </div>
-        )}
+          </div>}
 
         <Tabs defaultValue="latest" className="mb-4">
-          <TabsList className="mb-2">
-            <TabsTrigger value="latest">Latest</TabsTrigger>
-            <TabsTrigger value="popular">Popular</TabsTrigger>
-            <TabsTrigger value="resources">Resources</TabsTrigger>
-          </TabsList>
+          
           
           <TabsContent value="latest" className="mt-3">
             <CreatePostBox defaultTopic={topic.name.toUpperCase()} />
