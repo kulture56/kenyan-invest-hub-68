@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,12 +8,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Settings, HelpCircle, LogOut, UserRound } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-
 const ProfilePage = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [activeTab, setActiveTab] = useState("profile");
   const [isLoggedIn, setIsLoggedIn] = useState(true); // For demo purposes
-  
+
   const handleLogout = () => {
     toast({
       title: "Logged out successfully",
@@ -22,7 +22,6 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(false);
   };
-
   const handleLogin = () => {
     toast({
       title: "Logged in successfully",
@@ -30,10 +29,8 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(true);
   };
-
   if (!isLoggedIn) {
-    return (
-      <AppLayout>
+    return <AppLayout>
         <div className="max-w-md mx-auto mt-10">
           <Card className="border-primary/20">
             <CardHeader>
@@ -56,12 +53,9 @@ const ProfilePage = () => {
             </CardFooter>
           </Card>
         </div>
-      </AppLayout>
-    );
+      </AppLayout>;
   }
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="container max-w-4xl mx-auto px-4 py-8">
         <div className="flex flex-col items-center gap-6 mb-8">
           <Avatar className="h-24 w-24 border-4 border-primary/20 shadow-lg">
@@ -82,22 +76,8 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        <Tabs 
-          value={activeTab} 
-          onValueChange={setActiveTab}
-          className="w-full"
-        >
-          <TabsList className="w-full mb-6 bg-secondary/70">
-            <TabsTrigger value="profile" className="flex items-center gap-2 flex-1">
-              <UserRound className="h-4 w-4" /> Profile
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2 flex-1">
-              <Settings className="h-4 w-4" /> Settings
-            </TabsTrigger>
-            <TabsTrigger value="help" className="flex items-center gap-2 flex-1">
-              <HelpCircle className="h-4 w-4" /> Help
-            </TabsTrigger>
-          </TabsList>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          
           
           <TabsContent value="profile">
             <Card>
@@ -206,8 +186,6 @@ const ProfilePage = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default ProfilePage;
