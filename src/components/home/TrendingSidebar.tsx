@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChartBar, ArrowRight, Menu } from "lucide-react";
+import { ArrowRight, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
@@ -43,7 +43,11 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({
           <div className="flex items-center justify-between p-4 border-b border-primary/10">
             <div className="flex items-center gap-2">
               <h3 className="font-medium text-primary">Trending Categories</h3>
-              <ChartBar className="h-4 w-4 text-primary" />
+              <img 
+                src="/lovable-uploads/a3315bc4-c6c6-43b0-9efa-afe9b490e170.png" 
+                alt="Trending" 
+                className="h-4 w-4 text-primary"
+              />
             </div>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
