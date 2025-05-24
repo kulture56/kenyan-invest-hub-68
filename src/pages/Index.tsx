@@ -1,4 +1,3 @@
-
 import React from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -9,7 +8,6 @@ import FeedTabs from "@/components/home/FeedTabs";
 import MobileNavigation from "@/components/home/MobileNavigation";
 import { useHomeData } from "@/hooks/useHomeData";
 import { useNavigate } from "react-router-dom";
-
 const Index = () => {
   const {
     posts,
@@ -19,12 +17,9 @@ const Index = () => {
     topInsights,
     selectedTopic
   } = useHomeData();
-  
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="max-w-7xl mx-auto">
         <div className="md:grid md:grid-cols-12 gap-4">
           {/* Main content - reduced width to make room for right sidebar */}
@@ -40,16 +35,12 @@ const Index = () => {
           </div>
           
           {/* Right sidebar content - now visible and properly positioned */}
-          <div className="hidden md:block md:col-span-4 space-y-4">
-            <TrendingSidebar trendingTopics={trendingTopics} suggestedQuestions={suggestedQuestions} />
-          </div>
+          
         </div>
       </div>
       
       {/* Mobile Bottom Navigation */}
       {isMobile && <MobileNavigation />}
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default Index;
