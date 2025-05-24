@@ -10,7 +10,7 @@ export const learningPaths = [
     estimatedTime: "4 weeks",
     difficulty: "Beginner",
     category: "Stocks",
-    completed: 5, // Changed from boolean to number
+    completed: 5,
     image: "/placeholder.svg",
     tags: ["stocks", "investing", "fundamentals"]
   },
@@ -24,7 +24,7 @@ export const learningPaths = [
     estimatedTime: "3 weeks",
     difficulty: "Intermediate",
     category: "SACCOs",
-    completed: 2, // Changed from boolean to number
+    completed: 2,
     image: "/placeholder.svg",
     tags: ["sacco", "cooperative", "savings"]
   },
@@ -38,7 +38,7 @@ export const learningPaths = [
     estimatedTime: "6 weeks", 
     difficulty: "Advanced",
     category: "Crypto",
-    completed: 0, // Changed from boolean to number
+    completed: 0,
     image: "/placeholder.svg",
     tags: ["crypto", "blockchain", "digital currency"]
   }
@@ -78,20 +78,18 @@ export const streaksData = {
     { day: "Sat", completed: false, activities: 0 },
     { day: "Sun", completed: true, activities: 2 }
   ],
-  thisWeek: 5, // Changed from object to number
+  thisWeek: 5,
   completedChallenges: 12,
-  dailyGoal: {
-    target: 3,
-    completed: 2,
-    remaining: 1
-  },
-  weeklyPoints: 150,
+  dailyGoal: 3,
+  weeklyPoints: [4, 3, 0, 5, 2, 0, 3],
   upcomingChallenges: [
     {
       id: "1",
       title: "Complete 3 Stock Analysis",
       description: "Analyze 3 different stocks using fundamental analysis",
-      points: 50,
+      progress: 1,
+      total: 3,
+      reward: "50 points",
       deadline: "2024-01-15"
     }
   ]
