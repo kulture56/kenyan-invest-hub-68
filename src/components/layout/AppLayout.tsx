@@ -5,6 +5,7 @@ import { Navbar } from "./Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
+import MobileNavigation from "@/components/home/MobileNavigation";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -34,10 +35,14 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         }`}
       >
         <Navbar toggleSidebar={toggleSidebar} />
-        <main className="flex-1 p-4 md:p-6 overflow-auto pb-20 md:pb-6 max-w-full">
+        <main className="flex-1 p-2 md:p-4 overflow-auto pb-20 md:pb-4 max-w-full">
           {children}
         </main>
       </div>
+      
+      {/* Mobile Bottom Navigation - now consistent across all pages */}
+      {isMobile && <MobileNavigation />}
+      
       <Toaster />
       <Sonner />
     </div>
