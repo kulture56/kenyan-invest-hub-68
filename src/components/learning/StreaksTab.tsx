@@ -11,6 +11,7 @@ import { toast } from "@/hooks/use-toast";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
+
 interface Challenge {
   id: string;
   title: string;
@@ -20,6 +21,7 @@ interface Challenge {
   reward: string;
   deadline: string;
 }
+
 interface StreaksData {
   currentStreak: number;
   longestStreak: number;
@@ -29,6 +31,7 @@ interface StreaksData {
   weeklyPoints: number[];
   upcomingChallenges: Challenge[];
 }
+
 interface StreaksTabProps {
   streaksData: StreaksData;
   weekDays: string[];
@@ -196,37 +199,38 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
       description: `Group invite shared via ${type}`
     });
   };
-  return <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <div className="lg:col-span-1 space-y-4">
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <div className="lg:col-span-1 space-y-3">
         <Card>
-          <CardHeader className="pb-2">
+          <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
               <div className="h-5 w-5 text-amber-500">
                 <img src="/lovable-uploads/83f25885-3df9-41ea-9f73-30dc81a20434.png" alt="Streaks" className="h-full w-full object-contain" />
               </div>
-              Your Streaks
+              Streaks
             </CardTitle>
             <CardDescription>Keep learning daily to build streaks</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="flex justify-between items-center gap-4 mt-2">
+          <CardContent className="space-y-3">
+            <div className="flex justify-between items-center gap-4">
               <div className="text-center">
-                <div className="text-3xl font-bold">{streaksData.currentStreak}</div>
-                <div className="text-sm text-muted-foreground">Current Streak</div>
+                <div className="text-2xl lg:text-3xl font-bold">{streaksData.currentStreak}</div>
+                <div className="text-xs text-muted-foreground">Current Streak</div>
               </div>
-              <Separator orientation="vertical" className="h-12" />
+              <Separator orientation="vertical" className="h-10" />
               <div className="text-center">
-                <div className="text-3xl font-bold">{streaksData.longestStreak}</div>
-                <div className="text-sm text-muted-foreground">Longest Streak</div>
+                <div className="text-2xl lg:text-3xl font-bold">{streaksData.longestStreak}</div>
+                <div className="text-xs text-muted-foreground">Longest Streak</div>
               </div>
-              <Separator orientation="vertical" className="h-12" />
+              <Separator orientation="vertical" className="h-10" />
               <div className="text-center">
-                <div className="text-3xl font-bold">{streaksData.thisWeek}</div>
-                <div className="text-sm text-muted-foreground">This Week</div>
+                <div className="text-2xl lg:text-3xl font-bold">{streaksData.thisWeek}</div>
+                <div className="text-xs text-muted-foreground">This Week</div>
               </div>
             </div>
             
-            <div className="mt-4">
+            <div>
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-medium">Today's Goal</span>
                 <Badge variant="outline">{streaksData.dailyGoal} points</Badge>
@@ -234,45 +238,60 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
               <Progress value={65} className="h-2" />
             </div>
             
-            <div className="mt-4">
-              <h4 className="text-sm font-medium mb-3">This Week</h4>
+            <div>
+              <h4 className="text-sm font-medium mb-2">This Week</h4>
               <div className="flex justify-between">
-                {weekDays.map((day, index) => <div key={day} className="flex flex-col items-center">
+                {weekDays.map((day, index) => (
+                  <div key={day} className="flex flex-col items-center">
                     <div className="text-xs text-muted-foreground">{day}</div>
-                    <div className={`w-6 mt-1 rounded-sm ${streaksData.weeklyPoints[index] > 0 ? 'bg-primary' : 'bg-muted'}`} style={{
-                  height: `${Math.max(streaksData.weeklyPoints[index] / 5, 4)}px`
-                }}></div>
+                    <div 
+                      className={`w-6 mt-1 rounded-sm ${streaksData.weeklyPoints[index] > 0 ? 'bg-primary' : 'bg-muted'}`} 
+                      style={{
+                        height: `${Math.max(streaksData.weeklyPoints[index] / 5, 4)}px`
+                      }}
+                    ></div>
                     <div className="text-xs mt-1">{streaksData.weeklyPoints[index]}</div>
-                  </div>)}
+                  </div>
+                ))}
               </div>
             </div>
             
-            <Separator className="my-4" />
+            <Separator />
             
-            <div className="space-y-3">
+            <div className="space-y-2">
               <h4 className="text-sm font-medium">Daily Streak Questions (1 point each)</h4>
               <div className="space-y-2">
-                {dailyQuestions.map(question => <div key={question.id} className={`p-2 rounded-md text-xs ${question.completed ? 'bg-green-500/10 text-green-700 border border-green-200' : 'bg-muted/50 text-muted-foreground border border-muted'}`}>
+                {dailyQuestions.map(question => (
+                  <div 
+                    key={question.id} 
+                    className={`p-2 rounded-md text-xs ${question.completed ? 'bg-green-500/10 text-green-700 border border-green-200' : 'bg-muted/50 text-muted-foreground border border-muted'}`}
+                  >
                     <div className="flex items-start gap-2">
-                      {question.completed ? <Badge className="bg-green-500 mt-0.5">Complete</Badge> : <Badge variant="outline" className="mt-0.5">Pending</Badge>}
+                      {question.completed ? (
+                        <Badge className="bg-green-500 mt-0.5">Complete</Badge>
+                      ) : (
+                        <Badge variant="outline" className="mt-0.5">Pending</Badge>
+                      )}
                       <span>{question.text}</span>
                     </div>
-                  </div>)}
+                  </div>
+                ))}
               </div>
             </div>
           </CardContent>
         </Card>
         
         <Card>
-          <CardHeader>
+          <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
               <Users className="h-5 w-5 text-primary" />
               Group Streaks
             </CardTitle>
             <CardDescription>Create or join streak groups with friends</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {groupStreaks.map(group => <div key={group.id} className="p-3 rounded-md border border-primary/10 bg-primary/5">
+          <CardContent className="space-y-3">
+            {groupStreaks.map(group => (
+              <div key={group.id} className="p-3 rounded-md border border-primary/10 bg-primary/5">
                 <div className="flex justify-between items-center">
                   <h4 className="font-medium">{group.name}</h4>
                   <Badge className="bg-primary">{group.streak} day streak</Badge>
@@ -280,7 +299,8 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
                 <div className="text-xs text-muted-foreground mt-1">
                   {group.members} members participating
                 </div>
-              </div>)}
+              </div>
+            ))}
             
             <Drawer>
               <DrawerTrigger asChild>
@@ -335,15 +355,9 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
             </Drawer>
           </CardContent>
         </Card>
-
-        {/* This is where we add the Trending Categories */}
-        <Card>
-          
-          
-        </Card>
       </div>
       
-      <div className="lg:col-span-2 space-y-4">
+      <div className="lg:col-span-2 space-y-3">
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
@@ -354,7 +368,7 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="individuals" onValueChange={setLeaderboardTab}>
-              <TabsList className="grid grid-cols-2 mb-4">
+              <TabsList className="grid grid-cols-2 mb-3">
                 <TabsTrigger value="individuals">
                   <User className="h-4 w-4 mr-2" /> Individuals
                 </TabsTrigger>
@@ -373,7 +387,8 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {individualLeaderboard.map(user => <TableRow key={user.id}>
+                    {individualLeaderboard.map(user => (
+                      <TableRow key={user.id}>
                         <TableCell className="font-medium">
                           {user.position === 1 ? <span className="text-amber-500 font-bold flex items-center gap-1">
                               1 <Trophy className="h-4 w-4" />
@@ -391,7 +406,8 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
                         <TableCell className="text-right font-medium text-primary">
                           {user.points}
                         </TableCell>
-                      </TableRow>)}
+                      </TableRow>
+                    ))}
                     <TableRow className="bg-muted/30 border-t-2">
                       <TableCell className="font-medium">24</TableCell>
                       <TableCell>
@@ -421,7 +437,8 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {institutionLeaderboard.map(inst => <TableRow key={inst.id}>
+                    {institutionLeaderboard.map(inst => (
+                      <TableRow key={inst.id}>
                         <TableCell className="font-medium">
                           {inst.position === 1 ? <span className="text-amber-500 font-bold flex items-center gap-1">
                               1 <Trophy className="h-4 w-4" />
@@ -439,7 +456,8 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
                         <TableCell className="text-right font-medium text-primary">
                           {inst.points}
                         </TableCell>
-                      </TableRow>)}
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TabsContent>
@@ -461,24 +479,24 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
             <CardDescription>Complete challenges to earn points and badges</CardDescription>
           </CardHeader>
           <CardContent className="pb-2">
-            <div className="space-y-4">
-              {streaksData.upcomingChallenges.map(challenge => <div key={challenge.id} className="border rounded-lg p-4">
+            <div className="space-y-3">
+              {streaksData.upcomingChallenges.map(challenge => (
+                <div key={challenge.id} className="border rounded-lg p-3">
                   <div className="flex justify-between items-start">
                     <div>
-                      
+                      <h4 className="font-medium">{challenge.title}</h4>
                       <p className="text-sm text-muted-foreground">{challenge.description}</p>
                     </div>
                     <Badge variant="secondary">{challenge.deadline}</Badge>
                   </div>
-                  
-                  
-                </div>)}
+                </div>
+              ))}
             </div>
           </CardContent>
-          
         </Card>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 // Trophy icon component (same as before)

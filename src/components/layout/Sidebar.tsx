@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Home, ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { Home, ChevronLeft, ChevronRight, Menu, ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SidebarProps {
@@ -36,6 +36,14 @@ const NavItem: React.FC<NavItemProps> = ({
     <span className="text-sm">{label}</span>
   </a>
 );
+
+const trendingTopics = [
+  { name: "Investments", posts: 254 },
+  { name: "Financial Education", posts: 187 },
+  { name: "Market News", posts: 143 },
+  { name: "Technology", posts: 98 },
+  { name: "Trading", posts: 76 }
+];
 
 export const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
@@ -100,7 +108,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <div 
           className={cn(
-            "flex-1 overflow-auto py-4 px-3 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent hover:scrollbar-thumb-primary/30", 
+            "flex-1 overflow-auto py-3 px-3 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent hover:scrollbar-thumb-primary/30", 
             !isOpen && !isMobile && "px-2"
           )}
         >
@@ -134,11 +142,35 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </nav>
 
           {(isOpen || isMobile) && (
-            <>
-              <div className="mt-6 border-t border-border pt-4">
-                
+            <div className="mt-4 border-t border-border pt-3">
+              <div className="mb-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="font-medium text-primary text-sm">Trending Categories</h3>
+                  <img 
+                    src="/lovable-uploads/a3315bc4-c6c6-43b0-9efa-afe9b490e170.png" 
+                    alt="Trending" 
+                    className="h-4 w-4 text-primary"
+                  />
+                </div>
+                <ul className="space-y-1">
+                  {trendingTopics.slice(0, 4).map(topic => (
+                    <li key={topic.name}>
+                      <a 
+                        href={`/topics/${topic.name.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-')}`} 
+                        className="flex items-center justify-between text-xs p-2 rounded-md hover:bg-primary/5 transition-colors"
+                      >
+                        <span className="text-foreground font-medium">{topic.name}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">{topic.posts}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <Button variant="ghost" className="px-0 mt-2 text-xs text-primary hover:text-accent transition-colors w-full flex justify-between items-center">
+                  <span>View all categories</span>
+                  <ArrowRight className="h-3 w-3" />
+                </Button>
               </div>
-            </>
+            </div>
           )}
         </div>
 

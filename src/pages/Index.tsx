@@ -25,9 +25,9 @@ const Index = () => {
   
   return (
     <AppLayout>
-      <div className="md:grid md:grid-cols-12 gap-4">
+      <div className="md:grid md:grid-cols-12 gap-3">
         {/* Main content - spans more columns on larger screens */}
-        <div className="md:col-span-12 lg:col-span-8 xl:col-span-9 space-y-4">
+        <div className="md:col-span-12 lg:col-span-8 xl:col-span-9 space-y-3">
           {/* Topics Bar */}
           <TopicsBar topics={topics} selectedTopic={selectedTopic} />
 
