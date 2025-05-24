@@ -36,7 +36,7 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({ initialTab }) => {
   return (
     <AppLayout>
       {/* Optimized container with better spacing */}
-      <div className="max-w-4xl mx-auto space-y-3">
+      <div className="max-w-4xl mx-auto space-y-1">
         {/* Compact stock ticker */}
         <div className="w-full">
           <StockTicker compact={true} />
@@ -60,15 +60,15 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({ initialTab }) => {
             <TabsTrigger value="streaks">Streaks</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="learn" className="mt-3">
+          <TabsContent value="learn" className="mt-1">
             <LearningPathsTab learningPaths={learningPaths} />
           </TabsContent>
           
-          <TabsContent value="glossary" className="mt-3">
+          <TabsContent value="glossary" className="mt-1">
             <GlossaryTab glossaryTerms={glossaryTerms} />
           </TabsContent>
           
-          <TabsContent value="streaks" className="mt-3">
+          <TabsContent value="streaks" className="mt-1">
             <StreaksTab streaksData={streaksData} weekDays={weekDays} />
           </TabsContent>
         </Tabs>
