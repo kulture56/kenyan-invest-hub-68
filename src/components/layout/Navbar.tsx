@@ -32,9 +32,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           </Button>
         </div>
 
-        {/* Right side with search and user actions */}
-        <div className="flex items-center gap-3 ml-auto">
-          {/* Search bar moved to the right */}
+        {/* All items aligned to the right */}
+        <div className="flex items-center gap-3">
+          {/* Search bar */}
           <div className="hidden md:flex relative max-w-sm w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input placeholder="Search topics, posts, or users..." className="pl-10 bg-secondary/50 border-secondary focus:bg-background transition-colors" />

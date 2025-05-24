@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Message {
   id: string;
@@ -26,6 +27,7 @@ const RafikiChatWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   // Get the current topic from the URL, if any
   const getCurrentTopic = () => {
@@ -35,6 +37,11 @@ const RafikiChatWidget: React.FC = () => {
     }
     return null;
   };
+
+  // Hide the widget completely on mobile
+  if (isMobile) {
+    return null;
+  }
 
   // Set contextual tip based on current location
   useEffect(() => {

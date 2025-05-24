@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Home, TrendingUp, MessageSquare, Bell, User } from "lucide-react";
+import { Home, TrendingUp, Bell, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const MobileNavigation: React.FC = () => {
@@ -18,20 +18,11 @@ const MobileNavigation: React.FC = () => {
           <TrendingUp className="h-5 w-5" />
           <span className="text-xs">Trending</span>
         </Button>
-        <Button 
-          variant="default" 
-          size="sm" 
-          className="flex flex-col gap-1 h-14 w-16 rounded-full bg-primary"
-          onClick={() => navigate('/rafiki')}
-        >
-          <MessageSquare className="h-5 w-5" />
-          <span className="text-xs">Rafiki</span>
-        </Button>
         <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-14 w-16">
           <Bell className="h-5 w-5" />
           <span className="text-xs">Alerts</span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-14 w-16">
+        <Button variant="ghost" size="sm" className="flex flex-col gap-1 h-14 w-16" onClick={() => navigate('/profile')}>
           <User className="h-5 w-5" />
           <span className="text-xs">Profile</span>
         </Button>

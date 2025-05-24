@@ -26,7 +26,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex w-full">
       <Sidebar isOpen={sidebarOpen} toggle={toggleSidebar} />
       <div 
         className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${
