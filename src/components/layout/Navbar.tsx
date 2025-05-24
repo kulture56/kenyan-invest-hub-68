@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,25 +6,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-
 interface NavbarProps {
   toggleSidebar: () => void;
 }
-
 export const Navbar: React.FC<NavbarProps> = ({
   toggleSidebar
 }) => {
   const isMobile = useIsMobile();
-  
-  return (
-    <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border h-16 flex items-center px-4">
+  return <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border h-16 flex items-center px-px py-0 mx-0 my-0">
       <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
         <div className="flex items-center gap-2">
-          {isMobile && (
-            <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+          {isMobile && <Button variant="ghost" size="icon" onClick={toggleSidebar}>
               <Menu className="h-5 w-5" />
-            </Button>
-          )}
+            </Button>}
           
           <Button variant="ghost" className="hidden md:flex" asChild>
             
@@ -84,6 +77,5 @@ export const Navbar: React.FC<NavbarProps> = ({
           </DropdownMenu>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
