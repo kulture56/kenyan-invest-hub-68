@@ -35,38 +35,48 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({ initialTab }) => {
 
   return (
     <AppLayout>
-      <div className="max-w-full mx-auto pb-12">
-        <div className="mb-4">
+      {/* Optimized container with better spacing */}
+      <div className="max-w-4xl mx-auto space-y-4">
+        {/* Compact stock ticker */}
+        <div className="w-full">
           <StockTicker compact={true} />
         </div>
         
-        <div className="flex flex-col md:flex-row gap-4 mb-4 flex-wrap">
-          <div className="w-full md:w-auto md:flex-1">
-            <ProgressCard completedModules={5} totalModules={26} quizzesCompleted={4} badgesEarned={2} />
-          </div>
+        {/* Progress card with full width utilization */}
+        <div className="w-full">
+          <ProgressCard 
+            completedModules={5} 
+            totalModules={26} 
+            quizzesCompleted={4} 
+            badgesEarned={2} 
+          />
         </div>
         
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        {/* Main content tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="learn">Learning Paths</TabsTrigger>
             <TabsTrigger value="glossary">Glossary</TabsTrigger>
             <TabsTrigger value="streaks">Streaks</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="learn" className="space-y-4">
+          <TabsContent value="learn" className="mt-4">
             <LearningPathsTab learningPaths={learningPaths} />
           </TabsContent>
           
-          <TabsContent value="glossary">
+          <TabsContent value="glossary" className="mt-4">
             <GlossaryTab glossaryTerms={glossaryTerms} />
           </TabsContent>
           
-          <TabsContent value="streaks">
+          <TabsContent value="streaks" className="mt-4">
             <StreaksTab streaksData={streaksData} weekDays={weekDays} />
           </TabsContent>
         </Tabs>
         
-        <RecommendedContent />
+        {/* Recommended content aligned vertically */}
+        <div className="w-full">
+          <RecommendedContent />
+        </div>
       </div>
     </AppLayout>
   );

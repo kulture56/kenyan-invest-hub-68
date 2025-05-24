@@ -121,12 +121,9 @@ const mockPostsByTopic = {
   }],
   default: []
 };
+
 const TopicPage = () => {
-  const {
-    topicSlug
-  } = useParams<{
-    topicSlug: string;
-  }>();
+  const { topicSlug } = useParams<{ topicSlug: string; }>();
   const topic = topicInfo[topicSlug as keyof typeof topicInfo] || {
     name: topicSlug?.charAt(0).toUpperCase() + topicSlug?.slice(1),
     icon: <Info className="h-5 w-5 text-primary" />
@@ -138,92 +135,73 @@ const TopicPage = () => {
 
   // Check if this is the jobs topic
   const isJobsTopic = topicSlug === 'jobs';
-  return <AppLayout>
-      {/* Display the stock ticker prominently for stocks topic */}
-      {shouldShowProminentTicker && <div className="mb-4 max-w-3xl mx-auto">
-          <StockTicker />
-        </div>}
-      
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-4 flex items-center gap-3">
+
+  return (
+    <AppLayout>
+      {/* Optimized layout - removed unnecessary sidebar and improved spacing */}
+      <div className="max-w-4xl mx-auto space-y-4">
+        {/* Display the stock ticker prominently for stocks topic */}
+        {shouldShowProminentTicker && (
+          <div className="w-full">
+            <StockTicker />
+          </div>
+        )}
+        
+        {/* Topic header */}
+        <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
             {topic.icon}
           </div>
           <div>
             <h1 className="text-2xl font-bold text-foreground">{topic.name}</h1>
-            
           </div>
         </div>
 
         {/* Show compact ticker for non-stock topics */}
-        {!shouldShowProminentTicker && <div className="mb-4">
+        {!shouldShowProminentTicker && (
+          <div className="w-full">
             <StockTicker compact={true} />
-          </div>}
+          </div>
+        )}
 
         {/* Show jobs filter if this is the jobs topic */}
-        {isJobsTopic && <div className="mb-4">
-            <Card>
-              <CardContent className="p-4">
-                <h3 className="text-lg font-medium mb-3">Filter Jobs</h3>
-                <JobsFilter />
-              </CardContent>
-            </Card>
-          </div>}
+        {isJobsTopic && (
+          <Card>
+            <CardContent className="p-4">
+              <h3 className="text-lg font-medium mb-3">Filter Jobs</h3>
+              <JobsFilter />
+            </CardContent>
+          </Card>
+        )}
 
-        <Tabs defaultValue="latest" className="mb-4">
-          
-          
-          <TabsContent value="latest" className="mt-3">
+        {/* Main content tabs */}
+        <Tabs defaultValue="latest">
+          <TabsContent value="latest" className="space-y-4">
             <CreatePostBox defaultTopic={topic.name.toUpperCase()} />
             
-            {posts.length > 0 ? <div className="space-y-4 mt-4">
-                {posts.map(post => <PostCard key={post.id} {...post} />)}
-              </div> : <Card className="mt-4">
+            {posts.length > 0 ? (
+              <div className="space-y-4">
+                {posts.map(post => (
+                  <PostCard key={post.id} {...post} />
+                ))}
+              </div>
+            ) : (
+              <Card>
                 <CardContent className="flex flex-col items-center justify-center py-8">
-                  <h3 className="text-lg font-medium mb-2">No jobs yet</h3>
-                  
+                  <h3 className="text-lg font-medium mb-2">No posts yet</h3>
+                  <p className="text-sm text-muted-foreground text-center">
+                    Be the first to share something about {topic.name}
+                  </p>
                 </CardContent>
-              </Card>}
-          </TabsContent>
-          <TabsContent value="popular">
-            <Card className="mt-3">
-              <CardContent className="flex flex-col items-center justify-center py-8">
-                <h3 className="text-lg font-medium mb-2">Popular posts</h3>
-                <p className="text-sm text-muted-foreground mb-4 text-center">
-                  The most engaging posts about {topic.name} will appear here
-                </p>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          <TabsContent value="resources">
-            <Card className="mt-3">
-              <CardContent className="flex flex-col items-center justify-center py-8">
-                <h3 className="text-lg font-medium mb-2">Resources</h3>
-                <p className="text-sm text-muted-foreground mb-4 text-center">
-                  Helpful resources about {topic.name} will appear here
-                </p>
-              </CardContent>
-            </Card>
+              </Card>
+            )}
           </TabsContent>
         </Tabs>
       </div>
-      
-      <div className="sticky right-6 top-24 w-64 hidden lg:block float-right mr-6 max-w-[25%]">
-        <Card>
-          
-        </Card>
-        
-        <Card className="mt-4">
-          
-        </Card>
-
-        {/* Add a compact stock ticker to the sidebar for all pages */}
-        <div className="mt-4">
-          <StockTicker compact={true} />
-        </div>
-      </div>
-    </AppLayout>;
+    </AppLayout>
+  );
 };
+
 function getTopicDescription(topicSlug?: string): string {
   switch (topicSlug) {
     case 'stocks':
@@ -256,4 +234,5 @@ function getRafikiInsight(topicSlug?: string): string {
       return 'Market trends show positive movement in this sector. Ask me for more specific insights!';
   }
 }
+
 export default TopicPage;
