@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -14,11 +13,9 @@ import RecommendedContent from "@/components/learning/RecommendedContent";
 
 // Import mock data
 import { learningPaths, glossaryTerms, streaksData, weekDays } from "@/components/learning/mockData";
-
 interface LearningHubPageProps {
   initialTab?: string;
 }
-
 const LearningHubPage: React.FC<LearningHubPageProps> = ({
   initialTab
 }) => {
@@ -34,9 +31,7 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
       setActiveTab("streaks");
     }
   }, [location]);
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="max-w-full mx-auto pb-12">
         <div className="mb-4">
           <StockTicker compact={true} />
@@ -49,11 +44,7 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         </div>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid grid-cols-3 mb-2">
-            <TabsTrigger value="learn">Learning Paths</TabsTrigger>
-            <TabsTrigger value="glossary">Financial Glossary</TabsTrigger>
-            <TabsTrigger value="streaks">Streaks</TabsTrigger>
-          </TabsList>
+          
           
           <TabsContent value="learn" className="space-y-4">
             <LearningPathsTab learningPaths={learningPaths} />
@@ -70,8 +61,6 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         
         <RecommendedContent />
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default LearningHubPage;
