@@ -25,22 +25,24 @@ const Index = () => {
   
   return (
     <AppLayout>
-      <div className="md:grid md:grid-cols-12 gap-3">
-        {/* Main content - spans more columns on larger screens */}
-        <div className="md:col-span-12 lg:col-span-8 xl:col-span-9 space-y-3">
-          {/* Topics Bar */}
-          <TopicsBar topics={topics} selectedTopic={selectedTopic} />
+      <div className="max-w-7xl mx-auto">
+        <div className="md:grid md:grid-cols-12 gap-4">
+          {/* Main content - reduced width to make room for right sidebar */}
+          <div className="md:col-span-8 space-y-4">
+            {/* Topics Bar */}
+            <TopicsBar topics={topics} selectedTopic={selectedTopic} />
 
-          {/* Top Insights Section */}
-          <TopInsightsCard insights={topInsights} />
+            {/* Top Insights Section */}
+            <TopInsightsCard insights={topInsights} />
 
-          {/* Feed Tabs */}
-          <FeedTabs posts={posts} />
-        </div>
-        
-        {/* Right sidebar content - only visible on larger screens */}
-        <div className="hidden lg:block lg:col-span-4 xl:col-span-3">
-          <TrendingSidebar trendingTopics={trendingTopics} suggestedQuestions={suggestedQuestions} />
+            {/* Feed Tabs */}
+            <FeedTabs posts={posts} />
+          </div>
+          
+          {/* Right sidebar content - now visible and properly positioned */}
+          <div className="hidden md:block md:col-span-4 space-y-4">
+            <TrendingSidebar trendingTopics={trendingTopics} suggestedQuestions={suggestedQuestions} />
+          </div>
         </div>
       </div>
       

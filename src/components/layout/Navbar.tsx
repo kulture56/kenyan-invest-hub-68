@@ -19,25 +19,27 @@ export const Navbar: React.FC<NavbarProps> = ({
   
   return (
     <header className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border h-16 flex items-center px-4">
-      <div className="flex items-center gap-2 md:gap-4 w-full max-w-full">
-        {isMobile && (
-          <Button variant="ghost" size="icon" onClick={toggleSidebar}>
-            <Menu className="h-5 w-5" />
-          </Button>
-        )}
-        
-        <div className="mr-auto flex items-center">
+      <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
+        <div className="flex items-center gap-2">
+          {isMobile && (
+            <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+              <Menu className="h-5 w-5" />
+            </Button>
+          )}
+          
           <Button variant="ghost" className="hidden md:flex" asChild>
             
           </Button>
         </div>
 
-        <div className="hidden md:flex relative max-w-md w-full mr-4">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input placeholder="Search topics, posts, or users..." className="pl-10 bg-secondary/50 border-secondary focus:bg-background transition-colors" />
-        </div>
+        {/* Right side with search and user actions */}
+        <div className="flex items-center gap-3 ml-auto">
+          {/* Search bar moved to the right */}
+          <div className="hidden md:flex relative max-w-sm w-full">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input placeholder="Search topics, posts, or users..." className="pl-10 bg-secondary/50 border-secondary focus:bg-background transition-colors" />
+          </div>
 
-        <div className="flex items-center gap-1 md:gap-3">
           <Button variant="ghost" size="icon" className="hover:bg-secondary/50">
             <img src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" alt="Bookmarks" className="h-5 w-5 text-foreground/80" />
           </Button>
