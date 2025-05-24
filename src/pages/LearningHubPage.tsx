@@ -13,7 +13,7 @@ import ProgressCard from "@/components/learning/ProgressCard";
 import RecommendedContent from "@/components/learning/RecommendedContent";
 
 // Import mock data
-import { learningPaths, glossaryTerms, streaksData, weekDays } from "@/components/learning/mockData";
+import { learningPaths, streaksData, weekDays } from "@/components/learning/mockData";
 
 interface LearningHubPageProps {
   initialTab?: string;
@@ -58,7 +58,7 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({ initialTab }) => {
           </TabsContent>
           
           <TabsContent value="glossary">
-            <GlossaryTab glossaryTerms={glossaryTerms} />
+            <GlossaryTab />
           </TabsContent>
           
           <TabsContent value="streaks">
