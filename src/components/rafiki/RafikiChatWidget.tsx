@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { X, Send, MinusCircle, Info } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent } from "@/components/ui/card";
+import { MessageSquare, Send, X, Minimize2 } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,9 +17,8 @@ interface Message {
   timestamp: Date;
 }
 
-const RafikiChatWidget: React.FC = () => {
+const RafikiChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,218 +27,245 @@ const RafikiChatWidget: React.FC = () => {
   const { toast } = useToast();
   const location = useLocation();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   // Get the current topic from the URL, if any
   const getCurrentTopic = () => {
     const path = location.pathname;
-    if (path.startsWith('/topics/')) {
-      return path.split('/')[2];
+    const topicMatch = path.match(/\/topics\/([^\/]+)/);
+    if (topicMatch) {
+      return topicMatch[1].replace(/-/g, ' ');
     }
     return null;
   };
+
+  // Set contextual tip based on current location
+  useEffect(() => {
+    const currentTopic = getCurrentTopic();
+    if (currentTopic) {
+      setContextualTip(`Ask me about ${currentTopic} or any investment questions!`);
+    } else {
+      setContextualTip("Ask me about investments, market trends, or financial advice!");
+    }
+  }, [location.pathname]);
+
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   // Hide the widget completely on mobile
   if (isMobile) {
     return null;
   }
 
-  // Set contextual tip based on current location
-  useEffect(() => {
-    const topic = getCurrentTopic();
-    if (topic) {
-      switch (topic) {
-        case 'stocks':
-          setContextualTip("Ask me about stock market trends or company analysis on the NSE!");
-          break;
-        case 'banks':
-          setContextualTip("Want to know about the best banking options in Kenya? Ask me!");
-          break;
-        case 'saccos':
-          setContextualTip("SACCOs often have competitive rates. Ask me about MMF alternatives too!");
-          break;
-        case 'mmfs':
-          setContextualTip("Money Market Funds are a great low-risk investment. Ask me for the best rates!");
-          break;
-        default:
-          setContextualTip("How can I help with your investment decisions today?");
-      }
-    } else {
-      setContextualTip("Ask me anything about Kenyan investments!");
-    }
-  }, [location]);
-
-  // Initialize with a contextual greeting when opened
-  useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      const topic = getCurrentTopic();
-      let initialMessage = "Jambo I'm Rafiki, your AI investment assistant. How can I help you with your investment safari leo?";
-      
-      if (topic) {
-        initialMessage = `Jambo! I see you're interested in ${topic}. I can provide information about this investment option or answer any other questions you might have.`;
-      }
-      
-      setMessages([{
-        id: "initial-message",
-        content: initialMessage,
-        isUser: false,
-        timestamp: new Date()
-      }]);
-    }
-  }, [isOpen, messages.length, location]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
-
-  useEffect(() => {
-    if (isOpen && !isMinimized) {
-      scrollToBottom();
-    }
-  }, [messages, isOpen, isMinimized]);
-
   const handleSendMessage = async () => {
-    if (!input.trim() || isLoading) return;
-    const userMessage = {
+    if (!input.trim()) return;
+
+    const userMessage: Message = {
       id: `user-${Date.now()}`,
       content: input,
       isUser: true,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
-    setMessages(prev => [...prev, userMessage]);
+
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
-    try {
-      const topic = getCurrentTopic();
-      let contextPrompt = "";
-      if (topic) {
-        contextPrompt = `The user is currently browsing the ${topic} topic. Consider this context when responding.`;
-      }
 
-      // Call Supabase Edge Function to get response from OpenAI
-      const {
-        data,
-        error
-      } = await supabase.functions.invoke('rafiki-chat', {
-        body: {
+    try {
+      const currentTopic = getCurrentTopic();
+      const contextPrompt = currentTopic ? 
+        `The user is currently browsing the ${currentTopic} topic. Consider this context when responding.` : "";
+      
+      const { data, error } = await supabase.functions.invoke('rafiki-chat', {
+        body: { 
           query: input,
-          contextPrompt
+          contextPrompt 
         }
       });
+
       if (error) {
         throw new Error(error.message);
       }
-      const rafikiResponse = {
+
+      const rafikiResponse: Message = {
         id: `rafiki-${Date.now()}`,
         content: data.response,
         isUser: false,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, rafikiResponse]);
+
+      setMessages((prev) => [...prev, rafikiResponse]);
     } catch (error) {
       console.error('Error getting AI response:', error);
       toast({
         title: "Error",
         description: "Failed to get response from Rafiki. Please try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
-      const errorResponse = {
+
+      const errorResponse: Message = {
         id: `rafiki-error-${Date.now()}`,
-        content: "I'm sorry, I encountered an error while processing your request. Please try again later.",
+        content: "I'm sorry, I encountered an error. Please try again later.",
         isUser: false,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errorResponse]);
+
+      setMessages((prev) => [...prev, errorResponse]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  if (!isOpen) {
-    return (
-      <Button 
-        className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-accent hover:bg-accent/90 z-50 flex items-center justify-center p-0 overflow-hidden" 
-        onClick={() => setIsOpen(true)}
-      >
-        <img 
-          src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" 
-          alt="Rafiki" 
-          className="w-full h-full object-cover bg-white rounded-full" 
-        />
-      </Button>
-    );
-  }
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  const toggleWidget = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleQuickQuestion = (question: string) => {
+    setInput(question);
+  };
+
+  const handleViewFullChat = () => {
+    if (messages.length > 0) {
+      // If there are messages, navigate with the latest question
+      const lastUserMessage = messages.filter(m => m.isUser).pop();
+      if (lastUserMessage) {
+        navigate('/rafiki', { state: { suggestedQuestion: lastUserMessage.content } });
+      } else {
+        navigate('/rafiki');
+      }
+    } else {
+      navigate('/rafiki');
+    }
+    setIsOpen(false);
+  };
+
+  const quickQuestions = [
+    "What are the best investment options in Kenya?",
+    "How do I start investing with KES 10,000?",
+    "What's the current NSE performance?",
+    "Tell me about Treasury Bills",
+  ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 transition-all duration-200 ease-in-out">
-      <Card className={`w-80 md:w-96 shadow-lg transition-all duration-300 ease-in-out ${isMinimized ? 'h-14' : 'h-[500px]'}`}>
-        <CardHeader className="p-3 border-b flex flex-row items-center justify-between space-y-0">
-          <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8 bg-white p-0 overflow-hidden">
-              <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover bg-white rounded-full" />
-            </Avatar>
-            <CardTitle className="text-sm">®️Rafiki AI Assistant</CardTitle>
+    <>
+      {/* Floating Button */}
+      <Button
+        onClick={toggleWidget}
+        className="fixed bottom-4 right-4 z-50 rounded-full w-14 h-14 shadow-lg bg-primary hover:bg-primary/90"
+        size="lg"
+      >
+        <MessageSquare className="h-6 w-6" />
+      </Button>
+
+      {/* Chat Widget */}
+      {isOpen && (
+        <Card className="fixed bottom-20 right-4 z-50 w-80 h-96 shadow-xl border-primary/20">
+          <div className="flex items-center justify-between p-3 border-b bg-primary/5 rounded-t-lg">
+            <div className="flex items-center gap-2">
+              <Avatar className="w-8 h-8">
+                <AvatarFallback className="bg-primary/10 text-primary text-sm">R</AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="font-medium text-sm">Rafiki AI</p>
+                <p className="text-xs text-muted-foreground">Investment Assistant</p>
+              </div>
+            </div>
+            <div className="flex gap-1">
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleViewFullChat}>
+                <Minimize2 className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={toggleWidget}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-full" onClick={() => setIsMinimized(!isMinimized)}>
-              <MinusCircle className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-full" onClick={() => setIsOpen(false)}>
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-        </CardHeader>
-        
-        {!isMinimized && <>
-            <CardContent className="p-0 flex-grow h-[calc(100%-112px)] overflow-hidden">
-              <ScrollArea className="h-full">
-                <div className="p-3 space-y-4">
-                  {messages.map(message => <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[85%] rounded-lg px-3 py-2 ${message.isUser ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
-                        <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
+
+          <CardContent className="p-0 flex flex-col h-80">
+            {messages.length === 0 ? (
+              <div className="flex-1 p-4 space-y-3">
+                <div className="text-center">
+                  <p className="text-sm text-muted-foreground mb-3">{contextualTip}</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">Quick questions:</p>
+                  {quickQuestions.map((question, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      size="sm"
+                      className="w-full text-left justify-start h-auto py-2 px-3 text-xs"
+                      onClick={() => handleQuickQuestion(question)}
+                    >
+                      {question}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <ScrollArea className="flex-1 p-3">
+                <div className="space-y-3">
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[80%] p-2 rounded-lg text-xs ${
+                          message.isUser
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-muted'
+                        }`}
+                      >
+                        {message.content}
                       </div>
-                    </div>)}
-                  {isLoading && <div className="flex justify-start">
-                      <div className="max-w-[85%] bg-muted rounded-lg px-3 py-2">
-                        <div className="flex space-x-2">
-                          <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{
-                      animationDelay: "0ms"
-                    }}></div>
-                          <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{
-                      animationDelay: "150ms"
-                    }}></div>
-                          <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{
-                      animationDelay: "300ms"
-                    }}></div>
-                        </div>
+                    </div>
+                  ))}
+                  {isLoading && (
+                    <div className="flex justify-start">
+                      <div className="bg-muted p-2 rounded-lg text-xs">
+                        Rafiki is thinking...
                       </div>
-                    </div>}
+                    </div>
+                  )}
                   <div ref={messagesEndRef} />
                 </div>
               </ScrollArea>
-            </CardContent>
-            
-            <CardFooter className="p-3 border-t flex-col gap-2">
-              {contextualTip && <div className="flex items-center gap-2 w-full bg-accent/10 rounded-md p-2 text-xs">
-                  <Info className="h-3 w-3 text-accent shrink-0" />
-                  <p className="text-muted-foreground">{contextualTip}</p>
-                </div>}
-              <div className="flex gap-2 w-full">
-                <Textarea placeholder="Ask Rafiki something..." className="resize-none min-h-[40px] h-10 pt-2 text-sm" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                handleSendMessage();
-              }
-            }} />
-                <Button size="icon" className="h-10 w-10" disabled={!input.trim() || isLoading} onClick={handleSendMessage}>
+            )}
+
+            {/* Input Area */}
+            <div className="p-3 border-t">
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Ask Rafiki anything..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  disabled={isLoading}
+                  className="text-sm"
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={isLoading || !input.trim()}
+                  size="icon"
+                  className="h-9 w-9"
+                >
                   <Send className="h-4 w-4" />
                 </Button>
               </div>
-            </CardFooter>
-          </>}
-      </Card>
-    </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 };
 
