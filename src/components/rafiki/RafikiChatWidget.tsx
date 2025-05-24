@@ -8,12 +8,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+
 interface Message {
   id: string;
   content: string;
   isUser: boolean;
   timestamp: Date;
 }
+
 const RafikiChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -22,9 +24,7 @@ const RafikiChatWidget: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [contextualTip, setContextualTip] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const location = useLocation();
 
   // Get the current topic from the URL, if any
@@ -65,10 +65,12 @@ const RafikiChatWidget: React.FC = () => {
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       const topic = getCurrentTopic();
-      let initialMessage = "Habari yako! I'm Rafiki, your AI investment assistant. How can I help you with your investment safari in Kenya today?";
+      let initialMessage = "Jambo I'm Rafiki, your AI investment assistant. How can I help you with your investment safari leo?";
+      
       if (topic) {
-        initialMessage = `Habari yako! I see you're interested in ${topic}. I can provide information about this investment option or answer any other questions you might have.`;
+        initialMessage = `Jambo! I see you're interested in ${topic}. I can provide information about this investment option or answer any other questions you might have.`;
       }
+      
       setMessages([{
         id: "initial-message",
         content: initialMessage,
@@ -77,16 +79,19 @@ const RafikiChatWidget: React.FC = () => {
       }]);
     }
   }, [isOpen, messages.length, location]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth"
     });
   };
+
   useEffect(() => {
     if (isOpen && !isMinimized) {
       scrollToBottom();
     }
   }, [messages, isOpen, isMinimized]);
+
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;
     const userMessage = {
@@ -143,12 +148,24 @@ const RafikiChatWidget: React.FC = () => {
       setIsLoading(false);
     }
   };
+
   if (!isOpen) {
-    return <Button className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-accent hover:bg-accent/90 z-50 flex items-center justify-center p-0 overflow-hidden" onClick={() => setIsOpen(true)}>
-        <img src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" alt="Rafiki" className="w-full h-full object-cover bg-white rounded-full" />
-      </Button>;
+    return (
+      <Button 
+        className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-accent hover:bg-accent/90 z-50 flex items-center justify-center p-0 overflow-hidden" 
+        onClick={() => setIsOpen(true)}
+      >
+        <img 
+          src="/lovable-uploads/26c24d08-87aa-43d2-8154-2b3715c6cfa4.png" 
+          alt="Rafiki" 
+          className="w-full h-full object-cover bg-white rounded-full" 
+        />
+      </Button>
+    );
   }
-  return <div className="fixed bottom-6 right-6 z-50 transition-all duration-200 ease-in-out">
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 transition-all duration-200 ease-in-out">
       <Card className={`w-80 md:w-96 shadow-lg transition-all duration-300 ease-in-out ${isMinimized ? 'h-14' : 'h-[500px]'}`}>
         <CardHeader className="p-3 border-b flex flex-row items-center justify-between space-y-0">
           <div className="flex items-center gap-2">
@@ -215,6 +232,8 @@ const RafikiChatWidget: React.FC = () => {
             </CardFooter>
           </>}
       </Card>
-    </div>;
+    </div>
+  );
 };
+
 export default RafikiChatWidget;

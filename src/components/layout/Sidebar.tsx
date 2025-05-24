@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Home, ChevronLeft, ChevronRight, Menu, ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLocation } from "react-router-dom";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -50,6 +51,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
   toggle
 }) => {
   const isMobile = useIsMobile();
+  const location = useLocation();
+  
+  // Determine which nav item is active based on current path
+  const getActiveState = (href: string) => {
+    if (href === "/" && location.pathname === "/") return true;
+    if (href !== "/" && location.pathname.startsWith(href)) return true;
+    return false;
+  };
   
   if (isMobile && !isOpen) {
     return (
@@ -117,59 +126,61 @@ export const Sidebar: React.FC<SidebarProps> = ({
               icon={<Home className="w-4 h-4 text-primary" />} 
               label={isOpen || isMobile ? "Home" : ""} 
               href="/" 
-              active 
+              active={getActiveState("/")}
             />
             <NavItem 
               icon={<img src="/lovable-uploads/8b623f45-b9b4-48ee-a02a-8e8ebd58c7e0.png" alt="Jobs" className="w-4 h-4" />} 
               label={isOpen || isMobile ? "Career Hub" : ""} 
               href="/topics/jobs" 
+              active={getActiveState("/topics/jobs")}
             />
             <NavItem 
               icon={<img src="/lovable-uploads/800e50e9-0765-41ca-9728-eb655c16f679.png" alt="Learn" className="w-4 h-4" />} 
               label={isOpen || isMobile ? "Learning Center" : ""} 
               href="/learn" 
+              active={getActiveState("/learn")}
             />
             <NavItem 
               icon={<img src="/lovable-uploads/b2fe3736-d342-4f1d-b060-8bb25c5271de.png" alt="Glossary" className="w-4 h-4" />} 
               label={isOpen || isMobile ? "Financial Glossary" : ""} 
               href="/glossary" 
+              active={getActiveState("/glossary")}
             />
             <NavItem 
               icon={<img src="/lovable-uploads/83f25885-3df9-41ea-9f73-30dc81a20434.png" alt="Streaks" className="w-4 h-4" />} 
               label={isOpen || isMobile ? "Streaks" : ""} 
               href="/streaks" 
+              active={getActiveState("/streaks")}
             />
           </nav>
 
           {(isOpen || isMobile) && (
-            <div className="mt-4 border-t border-border pt-3">
-              <div className="mb-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="font-medium text-primary text-sm">Trending Categories</h3>
-                  <img 
-                    src="/lovable-uploads/a3315bc4-c6c6-43b0-9efa-afe9b490e170.png" 
-                    alt="Trending" 
-                    className="h-4 w-4 text-primary"
-                  />
-                </div>
-                <ul className="space-y-1">
-                  {trendingTopics.slice(0, 4).map(topic => (
-                    <li key={topic.name}>
-                      <a 
-                        href={`/topics/${topic.name.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-')}`} 
-                        className="flex items-center justify-between text-xs p-2 rounded-md hover:bg-primary/5 transition-colors"
-                      >
-                        <span className="text-foreground font-medium">{topic.name}</span>
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">{topic.posts}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <Button variant="ghost" className="px-0 mt-2 text-xs text-primary hover:text-accent transition-colors w-full flex justify-between items-center">
-                  <span>View all categories</span>
-                  <ArrowRight className="h-3 w-3" />
-                </Button>
+            <div className="mt-6 p-3">
+              <div className="flex items-center gap-2 mb-3">
+                <h3 className="font-medium text-primary text-sm">Trending Categories</h3>
+                <img 
+                  src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" 
+                  alt="Trending" 
+                  className="h-4 w-4"
+                />
               </div>
+              <ul className="space-y-1">
+                {trendingTopics.slice(0, 4).map(topic => (
+                  <li key={topic.name}>
+                    <a 
+                      href={`/topics/${topic.name.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-')}`} 
+                      className="flex items-center justify-between text-xs p-2 rounded-md hover:bg-primary/5 transition-colors"
+                    >
+                      <span className="text-foreground font-medium">{topic.name}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">{topic.posts}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <Button variant="ghost" className="px-0 mt-2 text-xs text-primary hover:text-accent transition-colors w-full flex justify-between items-center">
+                <span>View all categories</span>
+                <ArrowRight className="h-3 w-3" />
+              </Button>
             </div>
           )}
         </div>

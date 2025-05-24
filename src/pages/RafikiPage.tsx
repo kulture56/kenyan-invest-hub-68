@@ -18,7 +18,7 @@ interface Message {
 const initialMessages: Message[] = [
   {
     id: "1",
-    content: "Habari yako! I'm Rafiki, your AI investment assistant. How can I help you with your investment safari in Kenya today?\n\nYou can ask me about:\n- Current money market fund rates\n- Stock recommendations on NSE\n- SACCO dividend rates comparison\n- Best investment options for beginners\n- Investment risk management strategies",
+    content: "Jambo I'm Rafiki, your AI investment assistant. How can I help you with your investment safari leo?\n\nYou can ask me about:\n- Current money market fund rates\n- Stock recommendations on NSE\n- SACCO dividend rates comparison\n- Best investment options for beginners\n- Investment risk management strategies",
     isUser: false,
     timestamp: new Date(),
   },
