@@ -12,9 +12,7 @@ interface FeedPostCardProps {
   post: Post;
 }
 
-export const FeedPostCard: React.FC<FeedPostCardProps> = ({
-  post
-}) => {
+export const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -33,9 +31,7 @@ export const FeedPostCard: React.FC<FeedPostCardProps> = ({
   };
 
   const getTopicDisplay = (topic: string) => {
-    const topicMap: {
-      [key: string]: string;
-    } = {
+    const topicMap: { [key: string]: string } = {
       'institutions': 'INSTITUTIONS',
       'trading': 'TRADING',
       'news': 'NEWS',
@@ -63,19 +59,19 @@ export const FeedPostCard: React.FC<FeedPostCardProps> = ({
               <span className="font-medium text-foreground hover:underline cursor-pointer">
                 {post.author_name || "Anonymous"}
               </span>
-              {post.is_verified && <CheckCircle className="h-4 w-4 text-purple-500 fill-purple-500" />}
+              {post.is_verified && (
+                <CheckCircle className="h-4 w-4 text-blue-500 fill-blue-500" />
+              )}
               <span className="text-sm text-muted-foreground">
                 @{post.author_username || "user"}
               </span>
             </div>
             <div className="flex gap-2 text-xs text-muted-foreground">
               <span>
-                {formatDistanceToNow(new Date(post.timestamp), {
-                addSuffix: true
-              })}
+                {formatDistanceToNow(new Date(post.timestamp), { addSuffix: true })}
               </span>
               <span>•</span>
-              <Badge variant="outline" className="text-primary border-primary/20 hover:border-primary/30 transition-colors text-xs py-0 px-2 bg-yellow-500">
+              <Badge variant="outline" className="text-primary border-primary/20 hover:border-primary/30 transition-colors text-xs py-0 px-2">
                 #{getTopicDisplay(post.topic)}
               </Badge>
             </div>
@@ -87,7 +83,11 @@ export const FeedPostCard: React.FC<FeedPostCardProps> = ({
         <p className="whitespace-pre-line">{post.content}</p>
         {post.image_url && (
           <div className="mt-3 rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all">
-            <img src={post.image_url} alt="Post attachment" className="w-full h-auto hover:scale-[1.01] transition-transform" />
+            <img 
+              src={post.image_url} 
+              alt="Post attachment" 
+              className="w-full h-auto hover:scale-[1.01] transition-transform" 
+            />
           </div>
         )}
       </CardContent>
@@ -106,7 +106,11 @@ export const FeedPostCard: React.FC<FeedPostCardProps> = ({
             <span>{likeCount}</span>
           </Button>
           
-          <Button variant="ghost" size="sm" className="flex items-center gap-1 text-sm rounded-full px-3 hover:bg-primary/10 hover:text-primary">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="flex items-center gap-1 text-sm rounded-full px-3 hover:bg-primary/10 hover:text-primary"
+          >
             <MessageSquare className="h-4 w-4 text-primary" />
             <span>{post.comments}</span>
           </Button>
@@ -124,7 +128,11 @@ export const FeedPostCard: React.FC<FeedPostCardProps> = ({
             <Bookmark className={`h-4 w-4 ${isBookmarked ? "fill-primary" : ""}`} />
           </Button>
           
-          <Button variant="ghost" size="sm" className="flex items-center text-sm rounded-full p-2 hover:bg-primary/10 hover:text-primary">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="flex items-center text-sm rounded-full p-2 hover:bg-primary/10 hover:text-primary"
+          >
             <Share className="h-4 w-4 text-primary" />
           </Button>
         </div>

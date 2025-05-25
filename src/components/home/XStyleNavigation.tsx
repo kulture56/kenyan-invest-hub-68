@@ -53,7 +53,7 @@ export const XStyleNavigation: React.FC<XStyleNavigationProps> = ({
                 className={cn(
                   "px-4 py-3 text-sm font-medium whitespace-nowrap transition-all duration-200 border-b-2 hover:bg-accent/50",
                   activeTab === tab.id
-                    ? "border-purple-500 text-purple-600 bg-purple-50"
+                    ? "border-primary text-primary bg-primary/5"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 )}
               >
