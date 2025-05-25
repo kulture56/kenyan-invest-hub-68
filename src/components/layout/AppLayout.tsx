@@ -35,14 +35,14 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         }`}
       >
         <Navbar toggleSidebar={toggleSidebar} />
-        <main className={`flex-1 p-1 md:p-4 overflow-auto max-w-full ${
+        <main className={`flex-1 px-1 md:px-4 overflow-auto max-w-full ${
           isMobile ? 'pb-32' : 'pb-4'
         }`}>
           {children}
         </main>
       </div>
       
-      {/* Mobile Bottom Navigation - now consistent across all pages */}
+      {/* Mobile Bottom Navigation */}
       {isMobile && <MobileNavigation />}
       
       <Toaster />

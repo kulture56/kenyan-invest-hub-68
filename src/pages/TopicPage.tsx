@@ -1,14 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { CreatePostBox } from "@/components/post/CreatePostBox";
+import { EnhancedCreatePostBox } from "@/components/post/EnhancedCreatePostBox";
 import { PostCard } from "@/components/post/PostCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Briefcase, Users, Coins, ChartBar, Currency, Heart, HandCoins, FileText, Info } from "lucide-react";
 import StockTicker from "@/components/stocks/StockTicker";
-import JobsFilter from "@/components/jobs/JobsFilter";
+import EnhancedJobsFilter from "@/components/jobs/EnhancedJobsFilter";
 
 // A simple map of topic slugs to display names and icons
 const topicInfo = {
@@ -130,17 +130,12 @@ const TopicPage = () => {
   };
   const posts = mockPostsByTopic[topicSlug as keyof typeof mockPostsByTopic] || mockPostsByTopic.default;
 
-  // Show stock ticker prominently for stock-related topics
   const shouldShowProminentTicker = topicSlug === 'stocks';
-
-  // Check if this is the jobs topic
   const isJobsTopic = topicSlug === 'jobs';
 
   return (
     <AppLayout>
-      {/* Optimized layout - removed unnecessary sidebar and improved spacing */}
-      <div className="max-w-4xl mx-auto space-y-4">
-        {/* Display the stock ticker prominently for stocks topic */}
+      <div className="max-w-4xl mx-auto space-y-3">
         {shouldShowProminentTicker && (
           <div className="w-full">
             <StockTicker />
@@ -148,7 +143,7 @@ const TopicPage = () => {
         )}
         
         {/* Topic header */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 pt-2">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
             {topic.icon}
           </div>
@@ -157,30 +152,22 @@ const TopicPage = () => {
           </div>
         </div>
 
-        {/* Show compact ticker for non-stock topics */}
         {!shouldShowProminentTicker && (
           <div className="w-full">
             <StockTicker compact={true} />
           </div>
         )}
 
-        {/* Show jobs filter if this is the jobs topic */}
-        {isJobsTopic && (
-          <Card>
-            <CardContent className="p-4">
-              <h3 className="text-lg font-medium mb-3">Filter Jobs</h3>
-              <JobsFilter />
-            </CardContent>
-          </Card>
-        )}
+        {/* Enhanced jobs filter for careers topic */}
+        {isJobsTopic && <EnhancedJobsFilter />}
 
         {/* Main content tabs */}
         <Tabs defaultValue="latest">
-          <TabsContent value="latest" className="space-y-4">
-            <CreatePostBox defaultTopic={topic.name.toUpperCase()} />
+          <TabsContent value="latest" className="space-y-3">
+            <EnhancedCreatePostBox defaultTopic={topic.name.toUpperCase()} />
             
             {posts.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {posts.map(post => (
                   <PostCard key={post.id} {...post} />
                 ))}
