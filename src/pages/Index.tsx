@@ -4,7 +4,6 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { useIsMobile } from "@/hooks/use-mobile";
 import TopInsightsCard from "@/components/home/TopInsightsCard";
 import TrendingSidebar from "@/components/home/TrendingSidebar";
-import MobileTopicsBar from "@/components/home/MobileTopicsBar";
 import { XStyleNavigation } from "@/components/home/XStyleNavigation";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
 import { CreatePostBox } from "@/components/post/CreatePostBox";
@@ -60,8 +59,8 @@ const Index = () => {
         <div className="md:grid md:grid-cols-4 gap-3 mt-2">
           {/* Main content */}
           <div className="md:col-span-3 space-y-1">
-            {/* Top Insights Section */}
-            <TopInsightsCard insights={topInsights} />
+            {/* Top Insights Section - only show on For You tab */}
+            {activeTab === "for-you" && <TopInsightsCard insights={topInsights} />}
 
             {/* Create Post Box */}
             <CreatePostBox />
