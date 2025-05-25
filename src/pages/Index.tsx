@@ -7,6 +7,7 @@ import TrendingSidebar from "@/components/home/TrendingSidebar";
 import MobileTopicsBar from "@/components/home/MobileTopicsBar";
 import { XStyleNavigation } from "@/components/home/XStyleNavigation";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
+import { CreatePostBox } from "@/components/post/CreatePostBox";
 import { usePosts } from "@/hooks/usePosts";
 import { useHomeData } from "@/hooks/useHomeData";
 import { Card, CardContent } from "@/components/ui/card";
@@ -47,20 +48,23 @@ const Index = () => {
 
   return (
     <AppLayout>
-      <div className="max-w-6xl mx-auto">
-        {/* X-Style Navigation - Desktop */}
-        {!isMobile && (
-          <XStyleNavigation 
-            activeTab={activeTab}
-            onTabChange={handleTabChange}
-          />
-        )}
+      {/* Fixed Navigation Bar below header and above content */}
+      <div className="sticky top-14 z-30 bg-background border-b border-border/30">
+        <XStyleNavigation 
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+        />
+      </div>
 
+      <div className="max-w-6xl mx-auto">
         <div className="md:grid md:grid-cols-4 gap-4 mt-4">
           {/* Main content */}
           <div className="md:col-span-3 space-y-2">
             {/* Top Insights Section */}
             <TopInsightsCard insights={topInsights} />
+
+            {/* Create Post Box */}
+            <CreatePostBox />
 
             {/* Posts Feed */}
             <div className="space-y-2">
@@ -103,16 +107,6 @@ const Index = () => {
           )}
         </div>
       </div>
-      
-      {/* Mobile Navigation - Fixed at bottom */}
-      {isMobile && (
-        <div className="fixed bottom-16 left-0 right-0 bg-background border-t border-border/30 z-30">
-          <XStyleNavigation 
-            activeTab={activeTab}
-            onTabChange={handleTabChange}
-          />
-        </div>
-      )}
     </AppLayout>
   );
 };

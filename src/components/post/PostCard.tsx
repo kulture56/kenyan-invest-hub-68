@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -42,6 +43,7 @@ interface PostProps {
   shares: number;
   isLiked?: boolean;
   replies?: ReplyData[];
+  isVerified?: boolean;
 }
 export const PostCard: React.FC<PostProps> = ({
   id,
@@ -54,7 +56,8 @@ export const PostCard: React.FC<PostProps> = ({
   comments,
   shares,
   isLiked = false,
-  replies = []
+  replies = [],
+  isVerified = false
 }) => {
   const [liked, setLiked] = useState(isLiked);
   const [likeCount, setLikeCount] = useState(likes);
@@ -86,14 +89,11 @@ export const PostCard: React.FC<PostProps> = ({
       description: "Sharing options opened",
       duration: 2000
     });
-    // In a real app, this would open a share dialog
   };
   const handleReply = (content: string) => {
-    // Create a new reply
     const newReply: ReplyData = {
       id: `reply-${Date.now()}`,
       author: {
-        // Mock current user data - in a real app, this would come from auth context
         id: "current-user",
         name: "Current User",
         username: "currentuser",
@@ -127,6 +127,13 @@ export const PostCard: React.FC<PostProps> = ({
               <a href={`/profile/${author.id}`} className="font-medium hover:underline text-foreground hover:text-primary transition-colors">
                 {author.name}
               </a>
+              {isVerified && (
+                <img 
+                  src="/lovable-uploads/a48a1151-7e0c-4824-9523-a1f04c863334.png" 
+                  alt="Verified" 
+                  className="w-4 h-4"
+                />
+              )}
               <span className="text-sm text-muted-foreground">@{author.username}</span>
             </div>
             <div className="flex gap-2 text-xs text-muted-foreground">
@@ -145,7 +152,6 @@ export const PostCard: React.FC<PostProps> = ({
           </div>
         </div>
         
-        {/* Post Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
@@ -220,7 +226,6 @@ export const PostCard: React.FC<PostProps> = ({
           </Button>
         </div>}
       
-      {/* Mute Dialog */}
       <MuteDialog 
         open={muteDialogOpen} 
         onOpenChange={setMuteDialogOpen}

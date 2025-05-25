@@ -38,8 +38,8 @@ export const XStyleNavigation: React.FC<XStyleNavigationProps> = ({
   };
 
   return (
-    <div className="border-b border-border/30 bg-background/95 backdrop-blur sticky top-14 z-20">
-      <div className="relative">
+    <div className="bg-background/95 backdrop-blur w-full">
+      <div className="relative max-w-6xl mx-auto">
         <div 
           ref={scrollContainerRef}
           className="flex overflow-x-auto scrollbar-hide max-w-full"
@@ -69,7 +69,7 @@ export const XStyleNavigation: React.FC<XStyleNavigationProps> = ({
             variant="ghost"
             size="sm"
             onClick={scrollRight}
-            className="h-8 w-8 p-0 bg-background/80 backdrop-blur"
+            className="h-8 w-8 p-0 bg-background/80 backdrop-blur border border-border/50"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
