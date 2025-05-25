@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -13,9 +14,11 @@ import RecommendedContent from "@/components/learning/RecommendedContent";
 
 // Import mock data
 import { learningPaths, glossaryTerms, streaksData, weekDays } from "@/components/learning/mockData";
+
 interface LearningHubPageProps {
   initialTab?: string;
 }
+
 const LearningHubPage: React.FC<LearningHubPageProps> = ({
   initialTab
 }) => {
@@ -31,23 +34,19 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
       setActiveTab("streaks");
     }
   }, [location]);
-  return <AppLayout>
-      {/* Optimized container with better spacing */}
+
+  return (
+    <AppLayout>
+      {/* Optimized container with minimal spacing */}
       <div className="max-w-4xl mx-auto space-y-1">
         {/* Compact stock ticker */}
-        <div className="w-full">
-          <StockTicker compact={true} />
-        </div>
+        <StockTicker compact={true} />
         
-        {/* Progress card with full width utilization */}
-        <div className="w-full">
-          <ProgressCard completedModules={5} totalModules={26} quizzesCompleted={4} badgesEarned={2} />
-        </div>
+        {/* Progress card with optimized spacing */}
+        <ProgressCard completedModules={5} totalModules={26} quizzesCompleted={4} badgesEarned={2} />
         
         {/* Main content tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          
-          
           <TabsContent value="learn" className="mt-1">
             <LearningPathsTab learningPaths={learningPaths} />
           </TabsContent>
@@ -61,11 +60,11 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
           </TabsContent>
         </Tabs>
         
-        {/* Recommended content aligned vertically */}
-        <div className="w-full">
-          <RecommendedContent />
-        </div>
+        {/* Recommended content with minimal spacing */}
+        <RecommendedContent />
       </div>
-    </AppLayout>;
+    </AppLayout>
+  );
 };
+
 export default LearningHubPage;

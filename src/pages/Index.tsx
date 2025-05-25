@@ -29,18 +29,18 @@ const Index = () => {
   };
 
   const renderPostsSkeleton = () => (
-    <div className="space-y-4">
+    <div className="space-y-2">
       {[1, 2, 3].map((i) => (
-        <Card key={i} className="p-4">
-          <div className="flex items-center space-x-4 mb-4">
-            <Skeleton className="h-10 w-10 rounded-full" />
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-[200px]" />
-              <Skeleton className="h-4 w-[100px]" />
+        <Card key={i} className="p-3">
+          <div className="flex items-center space-x-3 mb-3">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <div className="space-y-1">
+              <Skeleton className="h-3 w-[150px]" />
+              <Skeleton className="h-3 w-[80px]" />
             </div>
           </div>
-          <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-3 w-full mb-1" />
+          <Skeleton className="h-3 w-3/4" />
         </Card>
       ))}
     </div>
@@ -57,9 +57,9 @@ const Index = () => {
       </div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="md:grid md:grid-cols-4 gap-4 mt-4">
+        <div className="md:grid md:grid-cols-4 gap-3 mt-2">
           {/* Main content */}
-          <div className="md:col-span-3 space-y-2">
+          <div className="md:col-span-3 space-y-1">
             {/* Top Insights Section */}
             <TopInsightsCard insights={topInsights} />
 
@@ -67,13 +67,13 @@ const Index = () => {
             <CreatePostBox />
 
             {/* Posts Feed */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               {loading ? (
                 renderPostsSkeleton()
               ) : error ? (
                 <Card>
-                  <CardContent className="flex flex-col items-center justify-center py-8">
-                    <h3 className="text-lg font-medium mb-2 text-red-500">Error loading posts</h3>
+                  <CardContent className="flex flex-col items-center justify-center py-6">
+                    <h3 className="text-lg font-medium mb-1 text-red-500">Error loading posts</h3>
                     <p className="text-sm text-muted-foreground text-center">
                       {error}
                     </p>
@@ -85,8 +85,8 @@ const Index = () => {
                 ))
               ) : (
                 <Card>
-                  <CardContent className="flex flex-col items-center justify-center py-8">
-                    <h3 className="text-lg font-medium mb-2">No posts yet</h3>
+                  <CardContent className="flex flex-col items-center justify-center py-6">
+                    <h3 className="text-lg font-medium mb-1">No posts yet</h3>
                     <p className="text-sm text-muted-foreground text-center">
                       Be the first to share something in this topic
                     </p>
