@@ -9,6 +9,60 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      posts: {
+        Row: {
+          author_avatar: string | null
+          author_name: string | null
+          author_username: string | null
+          comments: number | null
+          content: string
+          created_at: string | null
+          id: string
+          image_url: string | null
+          is_verified: boolean | null
+          likes: number | null
+          shares: number | null
+          timestamp: string | null
+          topic: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          author_avatar?: string | null
+          author_name?: string | null
+          author_username?: string | null
+          comments?: number | null
+          content: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          is_verified?: boolean | null
+          likes?: number | null
+          shares?: number | null
+          timestamp?: string | null
+          topic: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          author_avatar?: string | null
+          author_name?: string | null
+          author_username?: string | null
+          comments?: number | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          is_verified?: boolean | null
+          likes?: number | null
+          shares?: number | null
+          timestamp?: string | null
+          topic?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       rafiki_chat_history: {
         Row: {
           created_at: string
