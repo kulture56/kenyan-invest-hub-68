@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,39 +6,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Settings, HelpCircle, LogOut, UserRound, Download, Shield, Share2, Trophy, Target, Copy, Check } from "lucide-react";
+import { Settings, HelpCircle, LogOut, UserRound } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-
 const ProfilePage = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [activeTab, setActiveTab] = useState("profile");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') === 'dark' || 
-             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
-    return false;
-  });
-  const [twoFactorAuth, setTwoFactorAuth] = useState(false);
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [language, setLanguage] = useState("english");
-  const [notificationFrequency, setNotificationFrequency] = useState("daily");
-  const [copiedBadge, setCopiedBadge] = useState<string | null>(null);
-
-  // Apply dark mode
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // For demo purposes
 
   const handleLogout = () => {
     toast({
@@ -48,7 +22,6 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(false);
   };
-
   const handleLogin = () => {
     toast({
       title: "Logged in successfully",
@@ -56,50 +29,8 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(true);
   };
-
-  const handleDataExport = () => {
-    toast({
-      title: "Data export initiated",
-      description: "Your data will be emailed to you within 24 hours."
-    });
-  };
-
-  const handleShareBadge = (type: string, description: string) => {
-    const shareText = `🎉 I just earned my ${type} badge on GELT! ${description} Join me on my financial learning journey! #GELTAchievement`;
-    navigator.clipboard.writeText(shareText);
-    setCopiedBadge(type);
-    setTimeout(() => setCopiedBadge(null), 2000);
-    toast({
-      title: "Badge shared!",
-      description: "Achievement text copied to clipboard!"
-    });
-  };
-
-  const handleToggle2FA = (enabled: boolean) => {
-    setTwoFactorAuth(enabled);
-    toast({
-      title: enabled ? "2FA Enabled" : "2FA Disabled",
-      description: enabled ? "Your account is now more secure" : "Two-factor authentication has been disabled"
-    });
-  };
-
-  const handleConnectAccount = (provider: string) => {
-    toast({
-      title: `Connecting to ${provider}`,
-      description: `Setting up ${provider} connection...`
-    });
-  };
-
-  const handleDisconnectAccount = (provider: string) => {
-    toast({
-      title: `${provider} Disconnected`,
-      description: `Your ${provider} account has been disconnected`
-    });
-  };
-
   if (!isLoggedIn) {
-    return (
-      <AppLayout>
+    return <AppLayout>
         <div className="max-w-md mx-auto mt-10">
           <Card className="border-primary/20">
             <CardHeader>
@@ -122,12 +53,9 @@ const ProfilePage = () => {
             </CardFooter>
           </Card>
         </div>
-      </AppLayout>
-    );
+      </AppLayout>;
   }
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="container max-w-4xl mx-auto px-4 py-8">
         <div className="flex flex-col items-center gap-6 mb-8">
           <Avatar className="h-24 w-24 border-4 border-primary/20 shadow-lg">
@@ -145,46 +73,11 @@ const ProfilePage = () => {
                 <span className="font-medium text-primary">350</span> Followers
               </Button>
             </div>
-            
-            {/* Shareable Achievement Badges */}
-            <div className="flex justify-center gap-2 mt-4">
-              <Badge 
-                variant="secondary" 
-                className="gap-1 cursor-pointer hover:bg-secondary/80 transition-colors" 
-                onClick={() => handleShareBadge("7-day streak", "Stayed consistent with daily learning for a week!")}
-              >
-                <Target className="h-3 w-3" />
-                7-Day Streak
-                {copiedBadge === "7-day streak" ? <Check className="h-3 w-3" /> : <Share2 className="h-3 w-3" />}
-              </Badge>
-              <Badge 
-                variant="secondary" 
-                className="gap-1 cursor-pointer hover:bg-secondary/80 transition-colors" 
-                onClick={() => handleShareBadge("learning champion", "Completed multiple learning modules!")}
-              >
-                <Trophy className="h-3 w-3" />
-                Learning Champion
-                {copiedBadge === "learning champion" ? <Check className="h-3 w-3" /> : <Share2 className="h-3 w-3" />}
-              </Badge>
-            </div>
           </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="profile" className="gap-2">
-              <UserRound className="h-4 w-4" />
-              Profile
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="gap-2">
-              <Settings className="h-4 w-4" />
-              Settings
-            </TabsTrigger>
-            <TabsTrigger value="help" className="gap-2">
-              <HelpCircle className="h-4 w-4" />
-              Help
-            </TabsTrigger>
-          </TabsList>
+          
           
           <TabsContent value="profile">
             <Card>
@@ -217,151 +110,47 @@ const ProfilePage = () => {
           </TabsContent>
 
           <TabsContent value="settings">
-            <div className="space-y-6">
-              {/* Preferences */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Preferences</CardTitle>
-                  <CardDescription>Customize your app experience</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Language</h3>
-                      <p className="text-sm text-muted-foreground">Choose your preferred language</p>
-                    </div>
-                    <Select value={language} onValueChange={setLanguage}>
-                      <SelectTrigger className="w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="english">English</SelectItem>
-                        <SelectItem value="swahili">Swahili</SelectItem>
-                        <SelectItem value="kikuyu">Kikuyu</SelectItem>
-                      </SelectContent>
-                    </Select>
+            <Card>
+              <CardHeader>
+                <CardTitle>Account Settings</CardTitle>
+                <CardDescription>Manage your account preferences</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium">Email Notifications</h3>
+                    <p className="text-sm text-muted-foreground">Receive email notifications about new posts</p>
                   </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Notification Frequency</h3>
-                      <p className="text-sm text-muted-foreground">How often you receive notifications</p>
-                    </div>
-                    <Select value={notificationFrequency} onValueChange={setNotificationFrequency}>
-                      <SelectTrigger className="w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="realtime">Real-time</SelectItem>
-                        <SelectItem value="daily">Daily</SelectItem>
-                        <SelectItem value="weekly">Weekly</SelectItem>
-                        <SelectItem value="never">Never</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <Button variant="outline" size="sm">Enabled</Button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium">Two-Factor Authentication</h3>
+                    <p className="text-sm text-muted-foreground">Add an extra layer of security to your account</p>
                   </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Dark Mode</h3>
-                      <p className="text-sm text-muted-foreground">Toggle between light and dark themes</p>
-                    </div>
-                    <Switch checked={darkMode} onCheckedChange={setDarkMode} />
+                  <Button variant="outline" size="sm">Disabled</Button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium">Privacy</h3>
+                    <p className="text-sm text-muted-foreground">Control who can see your profile and activity</p>
                   </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Email Notifications</h3>
-                      <p className="text-sm text-muted-foreground">Receive email notifications about new posts</p>
-                    </div>
-                    <Switch checked={emailNotifications} onCheckedChange={setEmailNotifications} />
+                  <Button variant="outline" size="sm">Public</Button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium">Language</h3>
+                    <p className="text-sm text-muted-foreground">Choose your preferred language</p>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Security */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Security</CardTitle>
-                  <CardDescription>Manage your account security</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Two-Factor Authentication</h3>
-                      <p className="text-sm text-muted-foreground">Add an extra layer of security to your account</p>
-                    </div>
-                    <Switch checked={twoFactorAuth} onCheckedChange={handleToggle2FA} />
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-medium">Data Export</h3>
-                      <p className="text-sm text-muted-foreground">Download a copy of your data</p>
-                    </div>
-                    <Button variant="outline" size="sm" onClick={handleDataExport}>
-                      <Download className="h-4 w-4 mr-2" />
-                      Export
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Connected Accounts */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Connected Accounts</CardTitle>
-                  <CardDescription>Manage your linked social accounts</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 flex items-center justify-center rounded">
-                        <img src="/lovable-uploads/3bc974d1-0972-4716-9f11-3556d4d43e8d.png" alt="Google" className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">Google</h3>
-                        <p className="text-sm text-muted-foreground">Not connected</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" onClick={() => handleConnectAccount("Google")}>Connect</Button>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 flex items-center justify-center rounded">
-                        <img src="/lovable-uploads/dae899a5-b67c-40d1-80c6-4b76cc0f2592.png" alt="Apple" className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">Apple</h3>
-                        <p className="text-sm text-muted-foreground">Not connected</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" onClick={() => handleConnectAccount("Apple")}>Connect</Button>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-sm font-bold">f</div>
-                      <div>
-                        <h3 className="font-medium">Facebook</h3>
-                        <p className="text-sm text-green-600">Connected</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" onClick={() => handleDisconnectAccount("Facebook")}>Disconnect</Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Logout */}
-              <Card>
-                <CardFooter className="pt-6">
-                  <Button variant="destructive" className="ml-auto" onClick={handleLogout}>
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
+                  <Button variant="outline" size="sm">English</Button>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button variant="destructive" className="ml-auto" onClick={handleLogout}>
+                  <LogOut className="h-4 w-4 mr-2" /> Logout
+                </Button>
+              </CardFooter>
+            </Card>
           </TabsContent>
 
           <TabsContent value="help">
@@ -397,8 +186,6 @@ const ProfilePage = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default ProfilePage;

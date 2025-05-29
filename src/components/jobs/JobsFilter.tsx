@@ -1,309 +1,274 @@
 
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Check, ChevronDown, Filter } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
-import { Search, MapPin, Briefcase, DollarSign, Globe, Filter, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-interface JobsFilterProps {
-  onFiltersChange?: (filters: any) => void;
-}
+const workTypeOptions = [
+  { id: "all", label: "All jobs" },
+  { id: "hybrid", label: "Hybrid work" },
+  { id: "remote", label: "Remote" },
+];
 
-const JobsFilter: React.FC<JobsFilterProps> = ({ onFiltersChange }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [location, setLocation] = useState("");
-  const [jobType, setJobType] = useState("all");
-  const [experience, setExperience] = useState("all");
-  const [salaryRange, setSalaryRange] = useState([0, 500000]);
-  const [isDiasporaOpportunity, setIsDiasporaOpportunity] = useState(false);
-  const [remoteWork, setRemoteWork] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+const datePostedOptions = [
+  { id: "24h", label: "Last 24 hours" },
+  { id: "4days", label: "Last 4 days" },
+  { id: "1week", label: "Last week" },
+  { id: "2weeks", label: "2 weeks ago" },
+];
 
-  const salaryRanges = [
-    { label: "Entry Level (KSh 20K - 50K)", min: 20000, max: 50000 },
-    { label: "Mid Level (KSh 50K - 100K)", min: 50000, max: 100000 },
-    { label: "Senior Level (KSh 100K - 200K)", min: 100000, max: 200000 },
-    { label: "Executive (KSh 200K+)", min: 200000, max: 500000 },
-  ];
+const jobTypeOptions = [
+  { id: "fulltime", label: "Full-time" },
+  { id: "permanent", label: "Permanent" },
+  { id: "contract", label: "Contract" },
+  { id: "temporary", label: "Temporary" },
+  { id: "parttime", label: "Part-time" },
+  { id: "fixedterm", label: "Fixed term contract" },
+  { id: "internship", label: "Internship / Co-op" },
+  { id: "seasonal", label: "Seasonal" },
+  { id: "casual", label: "Casual" },
+  { id: "freelance", label: "Freelance" },
+  { id: "apprenticeship", label: "Apprenticeship" },
+];
 
-  const jobCategories = [
-    "Finance & Banking",
-    "Technology",
-    "Healthcare",
-    "Education",
-    "Marketing",
-    "Sales",
-    "Engineering",
-    "Legal",
-    "Human Resources",
-    "Operations"
-  ];
+const kenyanCounties = [
+  "Mombasa", "Kwale", "Kilifi", "Tana River", "Lamu", "Taita/Taveta", 
+  "Garissa", "Wajir", "Mandera", "Marsabit", "Isiolo", "Meru", 
+  "Tharaka-Nithi", "Embu", "Kitui", "Machakos", "Makueni", "Nyandarua", 
+  "Nyeri", "Kirinyaga", "Murang'a", "Kiambu", "Turkana", "West Pokot", 
+  "Samburu", "Trans Nzoia", "Uasin Gishu", "Elgeyo/Marakwet", "Nandi", 
+  "Baringo", "Laikipia", "Nakuru", "Narok", "Kajiado", "Kericho", 
+  "Bomet", "Kakamega", "Vihiga", "Bungoma", "Busia", "Siaya", "Kisumu", 
+  "Homa Bay", "Migori", "Kisii", "Nyamira", "Nairobi City"
+];
 
-  const experienceLevels = [
-    { value: "all", label: "All Experience Levels" },
-    { value: "entry", label: "Entry Level (0-2 years)" },
-    { value: "mid", label: "Mid Level (3-5 years)" },
-    { value: "senior", label: "Senior Level (6-10 years)" },
-    { value: "executive", label: "Executive (10+ years)" }
-  ];
+type FormValues = {
+  workType: string;
+  datePosted: string;
+  jobTypes: string[];
+  locations: string[];
+  institution: string;
+};
 
-  const handleSalaryRangeSelect = (range: { min: number; max: number }) => {
-    setSalaryRange([range.min, range.max]);
-    updateActiveFilters(`Salary: KSh ${range.min.toLocaleString()} - ${range.max.toLocaleString()}`);
+const JobsFilter = () => {
+  const form = useForm<FormValues>({
+    defaultValues: {
+      workType: "all",
+      datePosted: "",
+      jobTypes: [],
+      locations: [],
+      institution: "",
+    },
+  });
+
+  const onSubmit = (data: FormValues) => {
+    console.log("Filter applied:", data);
+    // Here you would typically filter the jobs data
   };
 
-  const updateActiveFilters = (filterName: string) => {
-    const exists = activeFilters.includes(filterName);
-    if (exists) {
-      setActiveFilters(activeFilters.filter(f => f !== filterName));
-    } else {
-      setActiveFilters([...activeFilters, filterName]);
-    }
-  };
-
-  const removeFilter = (filterName: string) => {
-    setActiveFilters(activeFilters.filter(f => f !== filterName));
-    // Reset corresponding state based on filter name
-    if (filterName.includes("Salary")) {
-      setSalaryRange([0, 500000]);
-    } else if (filterName === "Diaspora Opportunities") {
-      setIsDiasporaOpportunity(false);
-    } else if (filterName === "Remote Work") {
-      setRemoteWork(false);
-    }
-  };
-
-  const clearAllFilters = () => {
-    setSearchTerm("");
-    setLocation("");
-    setJobType("all");
-    setExperience("all");
-    setSalaryRange([0, 500000]);
-    setIsDiasporaOpportunity(false);
-    setRemoteWork(false);
-    setActiveFilters([]);
-  };
+  const selectedJobTypesCount = form.watch("jobTypes").length;
+  const selectedLocationsCount = form.watch("locations").length;
 
   return (
-    <div className="space-y-4">
-      {/* Search and Location */}
-      <Card>
-        <CardContent className="p-4 space-y-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search jobs, companies, or keywords..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          
-          <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Location (e.g., Nairobi, Mombasa, Remote)"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-        </CardContent>
-      </Card>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Work Type Filter */}
+          <FormField
+            control={form.control}
+            name="workType"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger className="h-9 w-[180px]">
+                    <SelectValue placeholder="Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {workTypeOptions.map((option) => (
+                      <SelectItem key={option.id} value={option.id}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
 
-      {/* Active Filters */}
-      {activeFilters.length > 0 && (
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-2">
-              <Label className="text-sm font-medium">Active Filters</Label>
-              <Button variant="ghost" size="sm" onClick={clearAllFilters}>
-                Clear All
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {activeFilters.map((filter) => (
-                <Badge key={filter} variant="secondary" className="gap-1">
-                  {filter}
-                  <X 
-                    className="h-3 w-3 cursor-pointer" 
-                    onClick={() => removeFilter(filter)}
+          {/* Date Posted Filter */}
+          <FormField
+            control={form.control}
+            name="datePosted"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger className="h-9 w-[180px]">
+                    <SelectValue placeholder="Date posted" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {datePostedOptions.map((option) => (
+                      <SelectItem key={option.id} value={option.id}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+
+          {/* Job Types Multi-select */}
+          <FormField
+            control={form.control}
+            name="jobTypes"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 border-dashed justify-start text-left font-normal w-[200px]"
+                    >
+                      <Filter className="mr-2 h-4 w-4" />
+                      {selectedJobTypesCount > 0 ? (
+                        <>Job Types ({selectedJobTypesCount})</>
+                      ) : (
+                        <>Job Types</>
+                      )}
+                      <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] p-0" align="start">
+                    <div className="max-h-60 overflow-y-auto p-2">
+                      {jobTypeOptions.map((option) => (
+                        <div
+                          key={option.id}
+                          className="flex items-center space-x-2 py-1 px-2 rounded-md hover:bg-accent"
+                        >
+                          <Checkbox
+                            id={`job-type-${option.id}`}
+                            checked={field.value?.includes(option.id)}
+                            onCheckedChange={(checked) => {
+                              const updatedValue = checked
+                                ? [...(field.value || []), option.id]
+                                : field.value?.filter((value) => value !== option.id) || [];
+                              field.onChange(updatedValue);
+                            }}
+                          />
+                          <label
+                            htmlFor={`job-type-${option.id}`}
+                            className="text-sm cursor-pointer flex-1"
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </FormItem>
+            )}
+          />
+
+          {/* Locations Multi-select */}
+          <FormField
+            control={form.control}
+            name="locations"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 border-dashed justify-start text-left font-normal w-[180px]"
+                    >
+                      <Filter className="mr-2 h-4 w-4" />
+                      {selectedLocationsCount > 0 ? (
+                        <>Location ({selectedLocationsCount})</>
+                      ) : (
+                        <>Location</>
+                      )}
+                      <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[220px] p-0" align="start">
+                    <div className="max-h-60 overflow-y-auto p-2">
+                      {kenyanCounties.map((county) => (
+                        <div
+                          key={county}
+                          className="flex items-center space-x-2 py-1 px-2 rounded-md hover:bg-accent"
+                        >
+                          <Checkbox
+                            id={`location-${county}`}
+                            checked={field.value?.includes(county)}
+                            onCheckedChange={(checked) => {
+                              const updatedValue = checked
+                                ? [...(field.value || []), county]
+                                : field.value?.filter((value) => value !== county) || [];
+                              field.onChange(updatedValue);
+                            }}
+                          />
+                          <label
+                            htmlFor={`location-${county}`}
+                            className="text-sm cursor-pointer flex-1"
+                          >
+                            {county}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </FormItem>
+            )}
+          />
+
+          {/* Institution Search */}
+          <FormField
+            control={form.control}
+            name="institution"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormControl>
+                  <input
+                    {...field}
+                    placeholder="Institution"
+                    className="h-9 px-3 py-2 rounded-md border border-input bg-background"
                   />
-                </Badge>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-      {/* Main Filters */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base">
-            <Filter className="h-4 w-4" />
-            Job Filters
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          
-          {/* Job Type */}
-          <div className="space-y-2">
-            <Label>Job Type</Label>
-            <Select value={jobType} onValueChange={setJobType}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Job Types</SelectItem>
-                <SelectItem value="full-time">Full-time</SelectItem>
-                <SelectItem value="part-time">Part-time</SelectItem>
-                <SelectItem value="contract">Contract</SelectItem>
-                <SelectItem value="internship">Internship</SelectItem>
-                <SelectItem value="freelance">Freelance</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Experience Level */}
-          <div className="space-y-2">
-            <Label>Experience Level</Label>
-            <Select value={experience} onValueChange={setExperience}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {experienceLevels.map((level) => (
-                  <SelectItem key={level.value} value={level.value}>
-                    {level.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Salary Range with Kenyan Indicators */}
-          <div className="space-y-3">
-            <Label className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4" />
-              Salary Range (KSh per month)
-            </Label>
-            
-            {/* Quick Salary Range Buttons */}
-            <div className="grid grid-cols-2 gap-2">
-              {salaryRanges.map((range, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  size="sm"
-                  className="text-xs h-auto p-2"
-                  onClick={() => handleSalaryRangeSelect(range)}
-                >
-                  {range.label}
-                </Button>
-              ))}
-            </div>
-            
-            {/* Custom Range Slider */}
-            <div className="px-2">
-              <Slider
-                value={salaryRange}
-                onValueChange={setSalaryRange}
-                max={500000}
-                min={0}
-                step={5000}
-                className="w-full"
-              />
-              <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                <span>KSh {salaryRange[0].toLocaleString()}</span>
-                <span>KSh {salaryRange[1].toLocaleString()}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Special Filters */}
-          <div className="space-y-3">
-            <Label>Special Opportunities</Label>
-            
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="diaspora"
-                checked={isDiasporaOpportunity}
-                onCheckedChange={(checked) => {
-                  setIsDiasporaOpportunity(checked as boolean);
-                  if (checked) {
-                    updateActiveFilters("Diaspora Opportunities");
-                  } else {
-                    removeFilter("Diaspora Opportunities");
-                  }
-                }}
-              />
-              <Label htmlFor="diaspora" className="flex items-center gap-2 text-sm">
-                <Globe className="h-4 w-4" />
-                Diaspora Opportunities
-              </Label>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="remote"
-                checked={remoteWork}
-                onCheckedChange={(checked) => {
-                  setRemoteWork(checked as boolean);
-                  if (checked) {
-                    updateActiveFilters("Remote Work");
-                  } else {
-                    removeFilter("Remote Work");
-                  }
-                }}
-              />
-              <Label htmlFor="remote" className="flex items-center gap-2 text-sm">
-                <Briefcase className="h-4 w-4" />
-                Remote Work Available
-              </Label>
-            </div>
-          </div>
-
-          {/* Apply Filters Button */}
-          <Button className="w-full" onClick={() => onFiltersChange?.({
-            searchTerm,
-            location,
-            jobType,
-            experience,
-            salaryRange,
-            isDiasporaOpportunity,
-            remoteWork
-          })}>
+          <Button type="submit" size="sm" className="h-9">
             Apply Filters
           </Button>
-        </CardContent>
-      </Card>
-
-      {/* Job Categories */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Popular Categories</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-2">
-            {jobCategories.map((category) => (
-              <Button
-                key={category}
-                variant="outline"
-                size="sm"
-                className="justify-start text-xs h-auto p-2"
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </form>
+    </Form>
   );
 };
 

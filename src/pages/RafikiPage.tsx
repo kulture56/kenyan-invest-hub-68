@@ -13,24 +13,12 @@ interface Message {
   content: string;
   isUser: boolean;
   timestamp: Date;
-  suggestions?: {
-    learningModules?: Array<{
-      title: string;
-      description: string;
-      link: string;
-    }>;
-    jobListings?: Array<{
-      title: string;
-      company: string;
-      link: string;
-    }>;
-  };
 }
 
 const initialMessages: Message[] = [
   {
     id: "1",
-    content: "Jambo! I'm Rafiki, your AI investment assistant. How can I help you with your investment safari leo?\n\nYou can ask me about:\n- Current money market fund rates\n- Stock recommendations on NSE\n- SACCO dividend rates comparison\n- Best investment options for beginners\n- Investment risk management strategies\n\nI can also suggest relevant learning modules and job opportunities based on your interests!",
+    content: "Jambo I'm Rafiki, your AI investment assistant. How can I help you with your investment safari leo?\n\nYou can ask me about:\n- Current money market fund rates\n- Stock recommendations on NSE\n- SACCO dividend rates comparison\n- Best investment options for beginners\n- Investment risk management strategies",
     isUser: false,
     timestamp: new Date(),
   },
@@ -112,18 +100,14 @@ const RafikiPage = () => {
       const hasPoll = input.includes('[POLL]');
       const hasChart = input.includes('[CHART:');
       
-      // Enhanced prompt for learning and job suggestions
-      const enhancedPrompt = `${contextPrompt}\n\nIf the user's question is about learning a specific topic, career advice, or job searching, include relevant suggestions in your response. Format learning module suggestions with [LEARNING_MODULE] tags and job suggestions with [JOB_SUGGESTION] tags.`;
-      
       // Call Supabase Edge Function to get response from OpenAI
       const { data, error } = await supabase.functions.invoke('rafiki-chat', {
         body: { 
           query: input,
-          contextPrompt: enhancedPrompt,
+          contextPrompt,
           formatting: {
             hasPoll,
-            hasChart,
-            includeSuggestions: true
+            hasChart
           }
         }
       });
@@ -132,50 +116,11 @@ const RafikiPage = () => {
         throw new Error(error.message);
       }
 
-      // Parse suggestions from response
-      const suggestions = {
-        learningModules: [],
-        jobListings: []
-      };
-
-      // Mock learning module suggestions based on keywords
-      if (input.toLowerCase().includes('learn') || input.toLowerCase().includes('course') || input.toLowerCase().includes('study')) {
-        suggestions.learningModules = [
-          {
-            title: "Investment Fundamentals",
-            description: "Learn the basics of investing in stocks, bonds, and funds",
-            link: "/learn"
-          },
-          {
-            title: "Kenyan Capital Markets",
-            description: "Understanding NSE and investment opportunities in Kenya",
-            link: "/learn"
-          }
-        ];
-      }
-
-      // Mock job suggestions based on keywords
-      if (input.toLowerCase().includes('job') || input.toLowerCase().includes('career') || input.toLowerCase().includes('work')) {
-        suggestions.jobListings = [
-          {
-            title: "Financial Analyst",
-            company: "Equity Bank",
-            link: "#"
-          },
-          {
-            title: "Investment Advisor",
-            company: "CIC Asset Management",
-            link: "#"
-          }
-        ];
-      }
-
       const rafikiResponse: Message = {
         id: `rafiki-${Date.now()}`,
         content: data.response,
         isUser: false,
         timestamp: new Date(),
-        suggestions: (suggestions.learningModules.length > 0 || suggestions.jobListings.length > 0) ? suggestions : undefined
       };
 
       setMessages((prev) => [...prev, rafikiResponse]);
