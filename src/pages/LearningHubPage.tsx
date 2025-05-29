@@ -47,6 +47,12 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         
         {/* Main content tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="learn">Learn</TabsTrigger>
+            <TabsTrigger value="glossary">Glossary</TabsTrigger>
+            <TabsTrigger value="streaks">Streaks</TabsTrigger>
+          </TabsList>
+          
           <TabsContent value="learn" className="mt-1">
             <LearningPathsTab learningPaths={learningPaths} />
           </TabsContent>
