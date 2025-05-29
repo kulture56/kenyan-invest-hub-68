@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -15,11 +14,9 @@ import RecommendedContent from "@/components/learning/RecommendedContent";
 
 // Import mock data
 import { learningPaths, glossaryTerms, streaksData, weekDays } from "@/components/learning/mockData";
-
 interface LearningHubPageProps {
   initialTab?: string;
 }
-
 const LearningHubPage: React.FC<LearningHubPageProps> = ({
   initialTab
 }) => {
@@ -35,9 +32,7 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
       setActiveTab("streaks");
     }
   }, [location]);
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       {/* Optimized container with minimal spacing */}
       <div className="max-w-4xl mx-auto space-y-1">
         {/* Compact stock ticker */}
@@ -45,11 +40,7 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         
         {/* Daily streak progress - positioned to not overlap */}
         <div className="flex justify-end mb-2">
-          <DailyStreakProgress 
-            questionsAnswered={2} 
-            dailyGoal={3} 
-            currentStreak={streaksData.currentStreak} 
-          />
+          <DailyStreakProgress questionsAnswered={2} dailyGoal={3} currentStreak={streaksData.currentStreak} />
         </div>
         
         {/* Progress card with optimized spacing */}
@@ -57,11 +48,7 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         
         {/* Main content tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="learn">Learn</TabsTrigger>
-            <TabsTrigger value="glossary">Glossary</TabsTrigger>
-            <TabsTrigger value="streaks">Streaks</TabsTrigger>
-          </TabsList>
+          
           
           <TabsContent value="learn" className="mt-1">
             <LearningPathsTab learningPaths={learningPaths} />
@@ -79,8 +66,6 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         {/* Recommended content with minimal spacing */}
         <RecommendedContent />
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default LearningHubPage;
