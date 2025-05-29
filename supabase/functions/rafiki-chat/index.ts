@@ -15,7 +15,7 @@ serve(async (req) => {
   }
 
   try {
-    const OPENAI_API_KEY = "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";
+    const OPENAI_API_KEY = "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";
     
     const requestData = await req.json();
     const { query, contextPrompt = "", formatting = {} } = requestData;
@@ -32,7 +32,13 @@ serve(async (req) => {
     let systemPrompt = `You are Rafiki, a knowledgeable AI investment assistant specialized in Kenyan financial markets.
 Your responses should be helpful, informative, and focused on providing accurate financial advice.
 Include specific details about Kenyan investment options, market trends, and financial instruments when relevant.
-You should be professional but warm in your communication style.`;
+You should be professional but warm in your communication style.
+
+When appropriate, suggest relevant learning modules or career opportunities:
+- For beginners, recommend "Stock Market Fundamentals" or "Investment Basics"
+- For intermediate users, suggest "SACCO Investment Guide" or "Cryptocurrency Basics"
+- For career inquiries, mention opportunities like Investment Analyst, Financial Advisor, or SACCO management roles
+- Always tailor suggestions to the user's query and experience level`;
 
     // Add contextual information if available
     if (contextPrompt) {
@@ -55,7 +61,7 @@ You should be professional but warm in your communication style.`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: "gpt-4o",  // Using gpt-4o for natural language understanding
+        model: "gpt-4o",  // Using gpt-4o for enhanced capabilities
         messages: [
           {
             role: 'system',

@@ -11,20 +11,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Settings, HelpCircle, LogOut, UserRound, Moon, Sun, Globe, Bell, Download, Shield, Link } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useTheme } from "@/contexts/ThemeContext";
+
 const ProfilePage = () => {
-  const {
-    toast
-  } = useToast();
-  const {
-    theme,
-    setTheme
-  } = useTheme();
+  const { toast } = useToast();
+  const { theme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState("profile");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [language, setLanguage] = useState("english");
   const [notificationFrequency, setNotificationFrequency] = useState("daily");
+
   const handleLogout = () => {
     toast({
       title: "Logged out successfully",
@@ -32,6 +29,7 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(false);
   };
+
   const handleLogin = () => {
     toast({
       title: "Logged in successfully",
@@ -39,12 +37,14 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(true);
   };
+
   const handleDataExport = () => {
     toast({
       title: "Data export initiated",
       description: "Your data export will be ready for download within 24 hours."
     });
   };
+
   const handleToggle2FA = () => {
     setTwoFactorEnabled(!twoFactorEnabled);
     toast({
@@ -52,8 +52,10 @@ const ProfilePage = () => {
       description: twoFactorEnabled ? "Two-factor authentication has been disabled." : "Two-factor authentication has been enabled for better security."
     });
   };
+
   if (!isLoggedIn) {
-    return <AppLayout>
+    return (
+      <AppLayout>
         <div className="max-w-md mx-auto mt-10">
           <Card className="border-primary/20">
             <CardHeader>
@@ -76,23 +78,26 @@ const ProfilePage = () => {
             </CardFooter>
           </Card>
         </div>
-      </AppLayout>;
+      </AppLayout>
+    );
   }
-  return <AppLayout>
-      <div className="container max-w-4xl mx-auto px-4 py-8">
-        <div className="flex flex-col items-center gap-6 mb-8">
-          <Avatar className="h-24 w-24 border-4 border-primary/20 shadow-lg">
+
+  return (
+    <AppLayout>
+      <div className="container max-w-4xl mx-auto px-4 py-4">
+        <div className="flex flex-col items-center gap-4 mb-6">
+          <Avatar className="h-20 w-20 border-4 border-primary/20 shadow-lg">
             <AvatarImage src="/placeholder.svg" alt="User Profile" />
-            <AvatarFallback className="bg-primary/10 text-primary text-2xl">JD</AvatarFallback>
+            <AvatarFallback className="bg-primary/10 text-primary text-xl">JD</AvatarFallback>
           </Avatar>
           <div className="text-center">
-            <h1 className="text-2xl font-bold">John Doe</h1>
-            <p className="text-muted-foreground">Financial Enthusiast | Nairobi, Kenya</p>
+            <h1 className="text-xl font-bold">John Doe</h1>
+            <p className="text-muted-foreground text-sm">Financial Enthusiast | Nairobi, Kenya</p>
             <div className="flex items-center justify-center gap-2 mt-2">
-              <Button variant="outline" size="sm" className="gap-1">
+              <Button variant="outline" size="sm" className="gap-1 text-xs">
                 <span className="font-medium text-primary">120</span> Following
               </Button>
-              <Button variant="outline" size="sm" className="gap-1">
+              <Button variant="outline" size="sm" className="gap-1 text-xs">
                 <span className="font-medium text-primary">350</span> Followers
               </Button>
             </div>
@@ -100,9 +105,22 @@ const ProfilePage = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="profile" className="flex items-center gap-2">
+              <UserRound className="h-4 w-4" />
+              Profile
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              Settings
+            </TabsTrigger>
+            <TabsTrigger value="help" className="flex items-center gap-2">
+              <HelpCircle className="h-4 w-4" />
+              Help
+            </TabsTrigger>
+          </TabsList>
           
-          
-          <TabsContent value="profile">
+          <TabsContent value="profile" className="mt-4">
             <Card>
               <CardHeader>
                 <CardTitle>Profile Information</CardTitle>
@@ -132,7 +150,7 @@ const ProfilePage = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="settings" className="space-y-6">
+          <TabsContent value="settings" className="space-y-4">
             {/* Preferences Section */}
             <Card>
               <CardHeader>
@@ -259,7 +277,7 @@ const ProfilePage = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <img src="/lovable-uploads/3bc974d1-0972-4716-9f11-3556d4d43e8d.png" alt="Google" className="h-8 w-8" />
+                    <img src="/lovable-uploads/09a16bf2-0f50-413e-896a-cd8da19124a9.png" alt="Google" className="h-8 w-8" />
                     <div>
                       <h3 className="font-medium">Google</h3>
                       <p className="text-sm text-muted-foreground">Connect your Google account</p>
@@ -270,7 +288,7 @@ const ProfilePage = () => {
 
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <img src="/lovable-uploads/dae899a5-b67c-40d1-80c6-4b76cc0f2592.png" alt="Apple" className="h-8 w-8" />
+                    <img src="/lovable-uploads/de5c5024-d2c5-453b-805a-28e479a06fd5.png" alt="Apple" className="h-8 w-8" />
                     <div>
                       <h3 className="font-medium">Apple</h3>
                       <p className="text-sm text-muted-foreground">Connect your Apple ID</p>
@@ -290,7 +308,7 @@ const ProfilePage = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="help">
+          <TabsContent value="help" className="mt-4">
             <Card>
               <CardHeader>
                 <CardTitle>Help Center</CardTitle>
@@ -323,6 +341,8 @@ const ProfilePage = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </AppLayout>;
+    </AppLayout>
+  );
 };
+
 export default ProfilePage;

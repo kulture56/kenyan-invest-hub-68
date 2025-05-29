@@ -28,7 +28,7 @@ const Index = () => {
   };
 
   const renderPostsSkeleton = () => (
-    <div className="space-y-2">
+    <div className="space-y-1">
       {[1, 2, 3].map((i) => (
         <Card key={i} className="p-3">
           <div className="flex items-center space-x-3 mb-3">
@@ -47,8 +47,8 @@ const Index = () => {
 
   return (
     <AppLayout>
-      {/* Fixed Navigation Bar below header and above content */}
-      <div className="sticky top-14 z-30 bg-background border-b border-border/30">
+      {/* Fixed Navigation Bar directly below header */}
+      <div className="sticky top-14 z-30 bg-background border-b border-border/30 -mt-2">
         <XStyleNavigation 
           activeTab={activeTab}
           onTabChange={handleTabChange}
@@ -56,7 +56,7 @@ const Index = () => {
       </div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="md:grid md:grid-cols-4 gap-3 mt-2">
+        <div className="md:grid md:grid-cols-4 gap-3 mt-1">
           {/* Main content */}
           <div className="md:col-span-3 space-y-1">
             {/* Top Insights Section - only show on For You tab */}
