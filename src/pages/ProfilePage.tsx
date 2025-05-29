@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,17 +11,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Settings, HelpCircle, LogOut, UserRound, Moon, Sun, Globe, Bell, Download, Shield, Link } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useTheme } from "@/contexts/ThemeContext";
-
 const ProfilePage = () => {
-  const { toast } = useToast();
-  const { theme, setTheme } = useTheme();
+  const {
+    toast
+  } = useToast();
+  const {
+    theme,
+    setTheme
+  } = useTheme();
   const [activeTab, setActiveTab] = useState("profile");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [language, setLanguage] = useState("english");
   const [notificationFrequency, setNotificationFrequency] = useState("daily");
-
   const handleLogout = () => {
     toast({
       title: "Logged out successfully",
@@ -30,7 +32,6 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(false);
   };
-
   const handleLogin = () => {
     toast({
       title: "Logged in successfully",
@@ -38,14 +39,12 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(true);
   };
-
   const handleDataExport = () => {
     toast({
       title: "Data export initiated",
       description: "Your data export will be ready for download within 24 hours."
     });
   };
-
   const handleToggle2FA = () => {
     setTwoFactorEnabled(!twoFactorEnabled);
     toast({
@@ -53,10 +52,8 @@ const ProfilePage = () => {
       description: twoFactorEnabled ? "Two-factor authentication has been disabled." : "Two-factor authentication has been enabled for better security."
     });
   };
-
   if (!isLoggedIn) {
-    return (
-      <AppLayout>
+    return <AppLayout>
         <div className="max-w-md mx-auto mt-10">
           <Card className="border-primary/20">
             <CardHeader>
@@ -79,12 +76,9 @@ const ProfilePage = () => {
             </CardFooter>
           </Card>
         </div>
-      </AppLayout>
-    );
+      </AppLayout>;
   }
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="container max-w-4xl mx-auto px-4 py-8">
         <div className="flex flex-col items-center gap-6 mb-8">
           <Avatar className="h-24 w-24 border-4 border-primary/20 shadow-lg">
@@ -106,20 +100,7 @@ const ProfilePage = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="profile" className="flex items-center gap-2">
-              <UserRound className="h-4 w-4" />
-              Profile
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              Settings
-            </TabsTrigger>
-            <TabsTrigger value="help" className="flex items-center gap-2">
-              <HelpCircle className="h-4 w-4" />
-              Help
-            </TabsTrigger>
-          </TabsList>
+          
           
           <TabsContent value="profile">
             <Card>
@@ -342,8 +323,6 @@ const ProfilePage = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default ProfilePage;
