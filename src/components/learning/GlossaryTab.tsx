@@ -52,6 +52,10 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({ glossaryTerms }) => {
     });
   };
 
+  console.log('Total glossary terms:', glossaryTerms.length);
+  console.log('Filtered terms:', filteredTerms.length);
+  console.log('Categories:', categories);
+
   return (
     <div className="space-y-4">
       <Card>
@@ -78,7 +82,7 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({ glossaryTerms }) => {
                   className="cursor-pointer"
                   onClick={() => setSelectedCategory(category)}
                 >
-                  {category}
+                  {category} ({glossaryTerms.filter(t => category === "All" || t.category === category).length})
                 </Badge>
               ))}
             </div>
@@ -115,7 +119,7 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({ glossaryTerms }) => {
                           onClick={() => handleAskRafiki(term)}
                         >
                           <MessageCircle className="h-3 w-3" />
-                          Ask Rafiki
+                          Ask Rafiki About This
                         </Button>
                       </div>
                     </div>
@@ -127,6 +131,13 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({ glossaryTerms }) => {
           {filteredTerms.length === 0 && (
             <div className="text-center py-8 text-muted-foreground">
               <p>No terms found matching your search.</p>
+              <p className="text-xs mt-1">Try adjusting your search terms or category filter.</p>
+            </div>
+          )}
+          
+          {glossaryTerms.length === 0 && (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>Loading glossary terms...</p>
             </div>
           )}
         </CardContent>

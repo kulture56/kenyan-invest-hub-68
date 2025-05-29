@@ -11,6 +11,7 @@ import GlossaryTab from "@/components/learning/GlossaryTab";
 import StreaksTab from "@/components/learning/StreaksTab";
 import ProgressCard from "@/components/learning/ProgressCard";
 import RecommendedContent from "@/components/learning/RecommendedContent";
+import DailyStreakProgress from "@/components/learning/DailyStreakProgress";
 
 // Import mock data
 import { learningPaths, glossaryTerms, streaksData, weekDays } from "@/components/learning/mockData";
@@ -41,6 +42,14 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
       <div className="max-w-4xl mx-auto space-y-1">
         {/* Compact stock ticker */}
         <StockTicker compact={true} />
+        
+        {/* Daily streak progress - compact version */}
+        <DailyStreakProgress 
+          currentStreak={7}
+          dailyGoal={50}
+          todayProgress={32}
+          compact={true}
+        />
         
         {/* Progress card with optimized spacing */}
         <ProgressCard completedModules={5} totalModules={26} quizzesCompleted={4} badgesEarned={2} />

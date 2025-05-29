@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,18 +10,36 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Settings, HelpCircle, LogOut, UserRound, Download, Shield, Share2, Trophy, Target } from "lucide-react";
+import { Settings, HelpCircle, LogOut, UserRound, Download, Shield, Share2, Trophy, Target, Copy, Check } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const ProfilePage = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("profile");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') === 'dark' || 
+             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+    return false;
+  });
   const [twoFactorAuth, setTwoFactorAuth] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [language, setLanguage] = useState("english");
   const [notificationFrequency, setNotificationFrequency] = useState("daily");
+  const [copiedBadge, setCopiedBadge] = useState<string | null>(null);
+
+  // Apply dark mode
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
 
   const handleLogout = () => {
     toast({
@@ -46,11 +64,36 @@ const ProfilePage = () => {
     });
   };
 
-  const handleShareBadge = (type: string) => {
-    navigator.clipboard.writeText(`Check out my ${type} achievement on GELT! 🎉`);
+  const handleShareBadge = (type: string, description: string) => {
+    const shareText = `🎉 I just earned my ${type} badge on GELT! ${description} Join me on my financial learning journey! #GELTAchievement`;
+    navigator.clipboard.writeText(shareText);
+    setCopiedBadge(type);
+    setTimeout(() => setCopiedBadge(null), 2000);
     toast({
-      title: "Badge link copied",
-      description: "Share your achievement with friends!"
+      title: "Badge shared!",
+      description: "Achievement text copied to clipboard!"
+    });
+  };
+
+  const handleToggle2FA = (enabled: boolean) => {
+    setTwoFactorAuth(enabled);
+    toast({
+      title: enabled ? "2FA Enabled" : "2FA Disabled",
+      description: enabled ? "Your account is now more secure" : "Two-factor authentication has been disabled"
+    });
+  };
+
+  const handleConnectAccount = (provider: string) => {
+    toast({
+      title: `Connecting to ${provider}`,
+      description: `Setting up ${provider} connection...`
+    });
+  };
+
+  const handleDisconnectAccount = (provider: string) => {
+    toast({
+      title: `${provider} Disconnected`,
+      description: `Your ${provider} account has been disconnected`
     });
   };
 
@@ -103,17 +146,25 @@ const ProfilePage = () => {
               </Button>
             </div>
             
-            {/* Achievement Badges */}
+            {/* Shareable Achievement Badges */}
             <div className="flex justify-center gap-2 mt-4">
-              <Badge variant="secondary" className="gap-1 cursor-pointer" onClick={() => handleShareBadge("7-day streak")}>
+              <Badge 
+                variant="secondary" 
+                className="gap-1 cursor-pointer hover:bg-secondary/80 transition-colors" 
+                onClick={() => handleShareBadge("7-day streak", "Stayed consistent with daily learning for a week!")}
+              >
                 <Target className="h-3 w-3" />
                 7-Day Streak
-                <Share2 className="h-3 w-3" />
+                {copiedBadge === "7-day streak" ? <Check className="h-3 w-3" /> : <Share2 className="h-3 w-3" />}
               </Badge>
-              <Badge variant="secondary" className="gap-1 cursor-pointer" onClick={() => handleShareBadge("learning champion")}>
+              <Badge 
+                variant="secondary" 
+                className="gap-1 cursor-pointer hover:bg-secondary/80 transition-colors" 
+                onClick={() => handleShareBadge("learning champion", "Completed multiple learning modules!")}
+              >
                 <Trophy className="h-3 w-3" />
                 Learning Champion
-                <Share2 className="h-3 w-3" />
+                {copiedBadge === "learning champion" ? <Check className="h-3 w-3" /> : <Share2 className="h-3 w-3" />}
               </Badge>
             </div>
           </div>
@@ -239,7 +290,7 @@ const ProfilePage = () => {
                       <h3 className="font-medium">Two-Factor Authentication</h3>
                       <p className="text-sm text-muted-foreground">Add an extra layer of security to your account</p>
                     </div>
-                    <Switch checked={twoFactorAuth} onCheckedChange={setTwoFactorAuth} />
+                    <Switch checked={twoFactorAuth} onCheckedChange={handleToggle2FA} />
                   </div>
                   
                   <div className="flex items-center justify-between">
@@ -264,24 +315,28 @@ const ProfilePage = () => {
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">G</div>
+                      <div className="w-8 h-8 flex items-center justify-center rounded">
+                        <img src="/lovable-uploads/3bc974d1-0972-4716-9f11-3556d4d43e8d.png" alt="Google" className="w-6 h-6" />
+                      </div>
                       <div>
                         <h3 className="font-medium">Google</h3>
                         <p className="text-sm text-muted-foreground">Not connected</p>
                       </div>
                     </div>
-                    <Button variant="outline" size="sm">Connect</Button>
+                    <Button variant="outline" size="sm" onClick={() => handleConnectAccount("Google")}>Connect</Button>
                   </div>
                   
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-black rounded flex items-center justify-center text-white text-sm font-bold">🍎</div>
+                      <div className="w-8 h-8 flex items-center justify-center rounded">
+                        <img src="/lovable-uploads/dae899a5-b67c-40d1-80c6-4b76cc0f2592.png" alt="Apple" className="w-6 h-6" />
+                      </div>
                       <div>
                         <h3 className="font-medium">Apple</h3>
                         <p className="text-sm text-muted-foreground">Not connected</p>
                       </div>
                     </div>
-                    <Button variant="outline" size="sm">Connect</Button>
+                    <Button variant="outline" size="sm" onClick={() => handleConnectAccount("Apple")}>Connect</Button>
                   </div>
                   
                   <div className="flex items-center justify-between">
@@ -292,7 +347,7 @@ const ProfilePage = () => {
                         <p className="text-sm text-green-600">Connected</p>
                       </div>
                     </div>
-                    <Button variant="outline" size="sm">Disconnect</Button>
+                    <Button variant="outline" size="sm" onClick={() => handleDisconnectAccount("Facebook")}>Disconnect</Button>
                   </div>
                 </CardContent>
               </Card>
