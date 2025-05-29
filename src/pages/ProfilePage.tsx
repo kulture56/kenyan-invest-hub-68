@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -6,14 +7,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Settings, HelpCircle, LogOut, UserRound } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Settings, HelpCircle, LogOut, UserRound, Moon, Sun, Globe, Bell, Download, Shield, Link } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useTheme } from "@/contexts/ThemeContext";
+
 const ProfilePage = () => {
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+  const { theme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState("profile");
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // For demo purposes
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [language, setLanguage] = useState("english");
+  const [notificationFrequency, setNotificationFrequency] = useState("daily");
 
   const handleLogout = () => {
     toast({
@@ -22,6 +30,7 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(false);
   };
+
   const handleLogin = () => {
     toast({
       title: "Logged in successfully",
@@ -29,8 +38,25 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(true);
   };
+
+  const handleDataExport = () => {
+    toast({
+      title: "Data export initiated",
+      description: "Your data export will be ready for download within 24 hours."
+    });
+  };
+
+  const handleToggle2FA = () => {
+    setTwoFactorEnabled(!twoFactorEnabled);
+    toast({
+      title: twoFactorEnabled ? "2FA Disabled" : "2FA Enabled",
+      description: twoFactorEnabled ? "Two-factor authentication has been disabled." : "Two-factor authentication has been enabled for better security."
+    });
+  };
+
   if (!isLoggedIn) {
-    return <AppLayout>
+    return (
+      <AppLayout>
         <div className="max-w-md mx-auto mt-10">
           <Card className="border-primary/20">
             <CardHeader>
@@ -53,9 +79,12 @@ const ProfilePage = () => {
             </CardFooter>
           </Card>
         </div>
-      </AppLayout>;
+      </AppLayout>
+    );
   }
-  return <AppLayout>
+
+  return (
+    <AppLayout>
       <div className="container max-w-4xl mx-auto px-4 py-8">
         <div className="flex flex-col items-center gap-6 mb-8">
           <Avatar className="h-24 w-24 border-4 border-primary/20 shadow-lg">
@@ -77,7 +106,20 @@ const ProfilePage = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="profile" className="flex items-center gap-2">
+              <UserRound className="h-4 w-4" />
+              Profile
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              Settings
+            </TabsTrigger>
+            <TabsTrigger value="help" className="flex items-center gap-2">
+              <HelpCircle className="h-4 w-4" />
+              Help
+            </TabsTrigger>
+          </TabsList>
           
           <TabsContent value="profile">
             <Card>
@@ -109,43 +151,157 @@ const ProfilePage = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="settings">
+          <TabsContent value="settings" className="space-y-6">
+            {/* Preferences Section */}
             <Card>
               <CardHeader>
-                <CardTitle>Account Settings</CardTitle>
-                <CardDescription>Manage your account preferences</CardDescription>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="h-5 w-5" />
+                  Preferences
+                </CardTitle>
+                <CardDescription>Customize your app experience</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Globe className="h-5 w-5 text-muted-foreground" />
+                    <div>
+                      <h3 className="font-medium">Language</h3>
+                      <p className="text-sm text-muted-foreground">Choose your preferred language</p>
+                    </div>
+                  </div>
+                  <Select value={language} onValueChange={setLanguage}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="english">English</SelectItem>
+                      <SelectItem value="swahili">Kiswahili</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Bell className="h-5 w-5 text-muted-foreground" />
+                    <div>
+                      <h3 className="font-medium">Notification Frequency</h3>
+                      <p className="text-sm text-muted-foreground">How often you receive notifications</p>
+                    </div>
+                  </div>
+                  <Select value={notificationFrequency} onValueChange={setNotificationFrequency}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="realtime">Real-time</SelectItem>
+                      <SelectItem value="daily">Daily</SelectItem>
+                      <SelectItem value="weekly">Weekly</SelectItem>
+                      <SelectItem value="none">None</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {theme === 'dark' ? <Moon className="h-5 w-5 text-muted-foreground" /> : <Sun className="h-5 w-5 text-muted-foreground" />}
+                    <div>
+                      <h3 className="font-medium">Theme</h3>
+                      <p className="text-sm text-muted-foreground">Choose your preferred theme</p>
+                    </div>
+                  </div>
+                  <Select value={theme} onValueChange={(value: 'light' | 'dark' | 'system') => setTheme(value)}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="light">Light</SelectItem>
+                      <SelectItem value="dark">Dark</SelectItem>
+                      <SelectItem value="system">System</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Bell className="h-5 w-5 text-muted-foreground" />
+                    <div>
+                      <h3 className="font-medium">Email Notifications</h3>
+                      <p className="text-sm text-muted-foreground">Receive email notifications about new posts</p>
+                    </div>
+                  </div>
+                  <Switch checked={emailNotifications} onCheckedChange={setEmailNotifications} />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Security Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5" />
+                  Security & Privacy
+                </CardTitle>
+                <CardDescription>Manage your account security settings</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium">Email Notifications</h3>
-                    <p className="text-sm text-muted-foreground">Receive email notifications about new posts</p>
-                  </div>
-                  <Button variant="outline" size="sm">Enabled</Button>
-                </div>
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-medium">Two-Factor Authentication</h3>
                     <p className="text-sm text-muted-foreground">Add an extra layer of security to your account</p>
                   </div>
-                  <Button variant="outline" size="sm">Disabled</Button>
+                  <Switch checked={twoFactorEnabled} onCheckedChange={handleToggle2FA} />
                 </div>
+
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-medium">Privacy</h3>
-                    <p className="text-sm text-muted-foreground">Control who can see your profile and activity</p>
+                    <h3 className="font-medium">Data Export</h3>
+                    <p className="text-sm text-muted-foreground">Download a copy of your data</p>
                   </div>
-                  <Button variant="outline" size="sm">Public</Button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium">Language</h3>
-                    <p className="text-sm text-muted-foreground">Choose your preferred language</p>
-                  </div>
-                  <Button variant="outline" size="sm">English</Button>
+                  <Button variant="outline" size="sm" onClick={handleDataExport} className="gap-2">
+                    <Download className="h-4 w-4" />
+                    Export
+                  </Button>
                 </div>
               </CardContent>
-              <CardFooter>
+            </Card>
+
+            {/* Connected Accounts Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Link className="h-5 w-5" />
+                  Connected Accounts
+                </CardTitle>
+                <CardDescription>Manage your social media connections</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <img src="/lovable-uploads/3bc974d1-0972-4716-9f11-3556d4d43e8d.png" alt="Google" className="h-8 w-8" />
+                    <div>
+                      <h3 className="font-medium">Google</h3>
+                      <p className="text-sm text-muted-foreground">Connect your Google account</p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm">Connect</Button>
+                </div>
+
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <img src="/lovable-uploads/dae899a5-b67c-40d1-80c6-4b76cc0f2592.png" alt="Apple" className="h-8 w-8" />
+                    <div>
+                      <h3 className="font-medium">Apple</h3>
+                      <p className="text-sm text-muted-foreground">Connect your Apple ID</p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm">Connect</Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardFooter className="pt-6">
                 <Button variant="destructive" className="ml-auto" onClick={handleLogout}>
                   <LogOut className="h-4 w-4 mr-2" /> Logout
                 </Button>
@@ -186,6 +342,8 @@ const ProfilePage = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </AppLayout>;
+    </AppLayout>
+  );
 };
+
 export default ProfilePage;

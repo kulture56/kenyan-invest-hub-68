@@ -18,7 +18,7 @@ interface Message {
 const initialMessages: Message[] = [
   {
     id: "1",
-    content: "Jambo I'm Rafiki, your AI investment assistant. How can I help you with your investment safari leo?\n\nYou can ask me about:\n- Current money market fund rates\n- Stock recommendations on NSE\n- SACCO dividend rates comparison\n- Best investment options for beginners\n- Investment risk management strategies",
+    content: "Jambo I'm Rafiki, your AI investment assistant. How can I help you with your investment safari leo?\n\nYou can ask me about:\n- Current money market fund rates\n- Stock recommendations on NSE\n- SACCO dividend rates comparison\n- Best investment options for beginners\n- Investment risk management strategies\n- Learning modules recommendations\n- Career opportunities in finance",
     isUser: false,
     timestamp: new Date(),
   },
@@ -96,18 +96,39 @@ const RafikiPage = () => {
       const contextPrompt = topicMatch ? 
         `The user is currently browsing the ${topicMatch[1]} topic. Consider this context when responding.` : "";
       
-      // Parse for special formatting
+      // Parse for special formatting and suggestions
       const hasPoll = input.includes('[POLL]');
       const hasChart = input.includes('[CHART:');
+      const shouldSuggestLearning = input.toLowerCase().includes('learn') || input.toLowerCase().includes('understand') || input.toLowerCase().includes('study');
+      const shouldSuggestJobs = input.toLowerCase().includes('career') || input.toLowerCase().includes('job') || input.toLowerCase().includes('work');
+      
+      // Enhanced context for learning and job suggestions
+      const enhancedPrompt = `${contextPrompt}
+        
+        ${shouldSuggestLearning ? 'The user seems interested in learning. Consider suggesting relevant learning modules from GELT platform such as:' +
+        '- Stock Market Fundamentals (Beginner, 4 weeks)' +
+        '- SACCO Investment Guide (Intermediate, 3 weeks)' +
+        '- Cryptocurrency Basics (Advanced, 6 weeks)' : ''}
+        
+        ${shouldSuggestJobs ? 'The user seems interested in career opportunities. Consider suggesting relevant finance jobs in Kenya such as:' +
+        '- Investment Analyst positions' +
+        '- Financial Advisor roles' +
+        '- SACCO management positions' +
+        '- Banking sector opportunities' +
+        '- Fintech startup roles' : ''}
+        
+        Always provide helpful, practical advice specific to the Kenyan financial market.`;
       
       // Call Supabase Edge Function to get response from OpenAI
       const { data, error } = await supabase.functions.invoke('rafiki-chat', {
         body: { 
           query: input,
-          contextPrompt,
+          contextPrompt: enhancedPrompt,
           formatting: {
             hasPoll,
-            hasChart
+            hasChart,
+            shouldSuggestLearning,
+            shouldSuggestJobs
           }
         }
       });

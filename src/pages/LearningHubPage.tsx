@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StockTicker from "@/components/stocks/StockTicker";
+import DailyStreakProgress from "@/components/learning/DailyStreakProgress";
 
 // Import our components
 import LearningPathsTab from "@/components/learning/LearningPathsTab";
@@ -42,11 +43,26 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({
         {/* Compact stock ticker */}
         <StockTicker compact={true} />
         
+        {/* Daily streak progress - positioned to not overlap */}
+        <div className="flex justify-end mb-2">
+          <DailyStreakProgress 
+            questionsAnswered={2} 
+            dailyGoal={3} 
+            currentStreak={streaksData.currentStreak} 
+          />
+        </div>
+        
         {/* Progress card with optimized spacing */}
         <ProgressCard completedModules={5} totalModules={26} quizzesCompleted={4} badgesEarned={2} />
         
         {/* Main content tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="learn">Learn</TabsTrigger>
+            <TabsTrigger value="glossary">Glossary</TabsTrigger>
+            <TabsTrigger value="streaks">Streaks</TabsTrigger>
+          </TabsList>
+          
           <TabsContent value="learn" className="mt-1">
             <LearningPathsTab learningPaths={learningPaths} />
           </TabsContent>

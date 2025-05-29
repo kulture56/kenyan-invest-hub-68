@@ -4,6 +4,7 @@ import StreaksOverview from "./streaks/StreaksOverview";
 import GroupStreaks from "./streaks/GroupStreaks";
 import Leaderboards from "./streaks/Leaderboards";
 import Challenges from "./streaks/Challenges";
+import ShareableBadge from "./streaks/ShareableBadge";
 
 interface Challenge {
   id: string;
@@ -132,6 +133,7 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
       <div className="lg:col-span-1 space-y-3">
         <StreaksOverview streaksData={streaksData} weekDays={weekDays} />
         <GroupStreaks groupStreaks={groupStreaks} />
+        <ShareableBadge streaksData={streaksData} />
       </div>
       
       <div className="lg:col-span-2 space-y-3">
