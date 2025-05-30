@@ -1,4 +1,3 @@
-
 import React, { useState, ChangeEvent, FormEvent, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -6,6 +5,8 @@ import {
   AuthTabs,
   TechOrbitDisplay,
 } from '@/components/ui/modern-animated-sign-in';
+import ParticleTypography from '@/components/ui/interactive-particle-typography-1';
+import { Typewriter } from '@/components/ui/typewriter';
 
 type FormData = {
   email: string;
@@ -223,10 +224,29 @@ const LoginPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <section className='flex max-lg:justify-center'>
-        {/* Left Side */}
-        <span className='flex flex-col justify-center w-1/2 max-lg:hidden'>
-          <Ripple mainCircleSize={100} />
-          <TechOrbitDisplay iconsArray={iconsArray} text="Karibu" />
+        {/* Left Side - Interactive Particle Typography */}
+        <span className='flex flex-col justify-center w-1/2 max-lg:hidden relative'>
+          <div className="absolute inset-0 z-10">
+            <ParticleTypography />
+          </div>
+          <div className="absolute bottom-10 left-10 z-20 text-white">
+            <div className="text-sm mb-2">
+              <span>Your investment journey to </span>
+              <Typewriter
+                text={[
+                  "financial freedom",
+                  "wealth building",
+                  "smart investing",
+                  "a better future",
+                ]}
+                speed={70}
+                className="text-purple-400"
+                waitTime={1500}
+                deleteSpeed={40}
+                cursorChar={"_"}
+              />
+            </div>
+          </div>
         </span>
 
         {/* Right Side */}
