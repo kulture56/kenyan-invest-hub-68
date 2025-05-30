@@ -1,3 +1,4 @@
+
 import React, { useState, ChangeEvent, FormEvent, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -174,6 +175,13 @@ const LoginPage: React.FC = () => {
     console.log('Forgot password clicked');
   };
 
+  const goToLandingPage = (
+    event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    navigate('/');
+  };
+
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement>,
     name: keyof FormData
@@ -198,7 +206,23 @@ const LoginPage: React.FC = () => {
 
   const formFields = {
     header: 'Karibu Nyumbani',
-    subHeader: 'Welcome back to Gelt - Your investment journey continues',
+    subHeader: (
+      <div className="text-sm mb-2">
+        <Typewriter
+          text={[
+            "financial freedom",
+            "wealth building", 
+            "smart investing",
+            "a better future",
+          ]}
+          speed={70}
+          className="text-purple-400"
+          waitTime={1500}
+          deleteSpeed={40}
+          cursorChar={"_"}
+        />
+      </div>
+    ),
     fields: [
       {
         label: 'Email',
@@ -219,6 +243,9 @@ const LoginPage: React.FC = () => {
     ],
     submitButton: 'Sign In',
     textVariantButton: 'Forgot password?',
+    appleLogin: 'Login with Apple',
+    googleLogin: 'Login with Google',
+    signUpPrompt: "Don't have an account yet? Sign up",
   };
 
   return (
@@ -229,24 +256,6 @@ const LoginPage: React.FC = () => {
           <div className="absolute inset-0 z-10">
             <ParticleTypography />
           </div>
-          <div className="absolute bottom-10 left-10 z-20 text-white">
-            <div className="text-sm mb-2">
-              <span>Your investment journey to </span>
-              <Typewriter
-                text={[
-                  "financial freedom",
-                  "wealth building",
-                  "smart investing",
-                  "a better future",
-                ]}
-                speed={70}
-                className="text-purple-400"
-                waitTime={1500}
-                deleteSpeed={40}
-                cursorChar={"_"}
-              />
-            </div>
-          </div>
         </span>
 
         {/* Right Side */}
@@ -254,6 +263,7 @@ const LoginPage: React.FC = () => {
           <AuthTabs
             formFields={formFields}
             goTo={goToForgotPassword}
+            goToLandingPage={goToLandingPage}
             handleSubmit={handleSubmit}
           />
         </span>
