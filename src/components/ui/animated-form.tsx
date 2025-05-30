@@ -162,7 +162,7 @@ const AnimatedForm = memo(function AnimatedForm({
 
         {textVariantButton && goTo && <BoxReveal boxColor='var(--skeleton)' duration={0.3}>
             <section className='mt-4 text-center hover:cursor-pointer'>
-              <button className='text-sm text-blue-500 hover:cursor-pointer outline-hidden' onClick={goTo}>
+              <button onClick={goTo} className="text-sm hover:cursor-pointer outline-hidden text-purple-900">
                 {textVariantButton}
               </button>
             </section>
@@ -170,7 +170,7 @@ const AnimatedForm = memo(function AnimatedForm({
 
         {signUpPrompt && goToLandingPage && <BoxReveal boxColor='var(--skeleton)' duration={0.3}>
             <section className='mt-4 text-center hover:cursor-pointer'>
-              <button className='text-sm text-purple-500 hover:cursor-pointer outline-hidden hover:underline' onClick={goToLandingPage}>
+              <button onClick={goToLandingPage} className="text-sm hover:cursor-pointer outline-hidden hover:underline text-fuchsia-900">
                 {signUpPrompt}
               </button>
             </section>

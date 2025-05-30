@@ -7,7 +7,7 @@ export const createFormFields = (handleInputChange: (event: ChangeEvent<HTMLInpu
       <img src="/lovable-uploads/fdcbabe4-bcae-41ba-af33-b425873da4b4.png" alt="Kenya Flag" className="w-8 h-6 object-cover rounded-sm" />
     </div>,
   subHeader: <div className="text-sm mb-2">
-      <span className="text-neutral-600 dark:text-neutral-300">Your investment Safari to </span>
+      <span className="text-zinc-950">Your investment Safari to </span>
       <Typewriter text={["financial freedom", "wealth building", "smart investing", "a better future"]} speed={70} className="text-purple-400" waitTime={1500} deleteSpeed={40} cursorChar={"_"} />
     </div>,
   fields: [{
