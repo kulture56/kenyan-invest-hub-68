@@ -202,7 +202,7 @@ const LoginPage: React.FC = () => {
       {
         label: 'Email',
         required: true,
-        type: 'email',
+        type: 'email' as const,
         placeholder: 'Enter your email address',
         onChange: (event: ChangeEvent<HTMLInputElement>) =>
           handleInputChange(event, 'email'),
@@ -210,7 +210,7 @@ const LoginPage: React.FC = () => {
       {
         label: 'Password',
         required: true,
-        type: 'password',
+        type: 'password' as const,
         placeholder: 'Enter your password',
         onChange: (event: ChangeEvent<HTMLInputElement>) =>
           handleInputChange(event, 'password'),
