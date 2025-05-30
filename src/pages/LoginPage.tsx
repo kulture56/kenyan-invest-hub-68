@@ -1,3 +1,4 @@
+
 import React, { useState, ChangeEvent, FormEvent, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -216,7 +217,7 @@ const LoginPage: React.FC = () => {
     ),
     subHeader: (
       <div className="text-sm mb-2">
-        <span className="text-neutral-600 dark:text-neutral-300">Your investment journey to </span>
+        <span className="text-neutral-600 dark:text-neutral-300">Your investment Safari to </span>
         <Typewriter
           text={[
             "financial freedom",
@@ -267,8 +268,8 @@ const LoginPage: React.FC = () => {
           </div>
         </span>
 
-        {/* Right Side */}
-        <span className='w-1/2 h-[100dvh] flex flex-col justify-center items-center max-lg:w-full max-lg:px-[10%]'>
+        {/* Right Side - Changed to white background */}
+        <span className='w-1/2 h-[100dvh] flex flex-col justify-center items-center max-lg:w-full max-lg:px-[10%] bg-white'>
           <AuthTabs
             formFields={formFields}
             goTo={goToForgotPassword}

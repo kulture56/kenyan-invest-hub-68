@@ -9,6 +9,8 @@ import TopicPage from "./pages/TopicPage";
 import RafikiPage from "./pages/RafikiPage";
 import ProfilePage from "./pages/ProfilePage";
 import MessagesPage from "./pages/MessagesPage";
+import NotificationsPage from "./pages/NotificationsPage";
+import BookmarksPage from "./pages/BookmarksPage";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
 import RafikiChatWidget from "./components/rafiki/RafikiChatWidget";
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/rafiki" element={<RafikiPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/messages" element={<MessagesPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/bookmarks" element={<BookmarksPage />} />
           <Route path="/learn" element={<LearningHubPage />} />
           <Route path="/learning-hub" element={<LearningHubPage />} />
           <Route path="/glossary" element={<LearningHubPage initialTab="glossary" />} />

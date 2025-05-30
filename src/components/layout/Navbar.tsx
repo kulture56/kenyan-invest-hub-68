@@ -1,12 +1,12 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { NavbarSearch } from "./NavbarSearch";
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -31,25 +31,25 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right side with search and user actions */}
         <div className="flex items-center gap-2 ml-auto">
           {/* Search bar */}
-          <div className="hidden md:flex relative max-w-sm w-full">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input 
-              placeholder="Search topics, posts, or users..." 
-              className="pl-10 bg-secondary/50 border-secondary focus:bg-background transition-colors h-9" 
-            />
-          </div>
+          {!isMobile && <NavbarSearch />}
 
-          <Button variant="ghost" size="icon" className="hover:bg-secondary/50 h-9 w-9">
-            <img src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" alt="Bookmarks" className="h-4 w-4 text-foreground/80" />
+          <Button variant="ghost" size="icon" className="hover:bg-secondary/50 h-9 w-9" asChild>
+            <Link to="/bookmarks">
+              <img src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" alt="Bookmarks" className="h-4 w-4 text-foreground/80" />
+            </Link>
           </Button>
           
-          <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50 h-9 w-9">
-            <img src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" alt="Notifications" className="h-4 w-4 text-foreground/80" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full animate-pulse-gentle"></span>
+          <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50 h-9 w-9" asChild>
+            <Link to="/notifications">
+              <img src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" alt="Notifications" className="h-4 w-4 text-foreground/80" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full animate-pulse-gentle"></span>
+            </Link>
           </Button>
           
-          <Button variant="ghost" size="icon" className="hover:bg-secondary/50 h-9 w-9">
-            <img src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" alt="Messages" className="h-4 w-4 text-foreground/80" />
+          <Button variant="ghost" size="icon" className="hover:bg-secondary/50 h-9 w-9" asChild>
+            <Link to="/messages">
+              <img src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" alt="Messages" className="h-4 w-4 text-foreground/80" />
+            </Link>
           </Button>
           
           <DropdownMenu>
