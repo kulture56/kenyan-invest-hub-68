@@ -137,7 +137,7 @@ const ParticleTypography = () => {
         const points: Array<{ x: number; y: number; sourceCanvasWidth: number; sourceCanvasHeight: number; isEmptyPlaceholder?: boolean }> = [];
         if (!word || word.trim() === "" || mainCanvasWidth <= 0 || mainCanvasHeight <= 0) {
             console.warn("getWordPoints: Invalid word or canvas dimensions.");
-            return [{ sourceCanvasWidth: mainCanvasWidth, sourceCanvasHeight: mainCanvasHeight, isEmptyPlaceholder: true }];
+            return [{ x: 0, y: 0, sourceCanvasWidth: mainCanvasWidth, sourceCanvasHeight: mainCanvasHeight, isEmptyPlaceholder: true }];
         }
 
         const tempCanvas = document.createElement('canvas');
@@ -183,7 +183,7 @@ const ParticleTypography = () => {
         }
         if (points.length === 0) {
             console.warn("getWordPoints: No points found. Returning placeholder.");
-            return [{ sourceCanvasWidth: mainCanvasWidth, sourceCanvasHeight: mainCanvasHeight, isEmptyPlaceholder: true }];
+            return [{ x: 0, y: 0, sourceCanvasWidth: mainCanvasWidth, sourceCanvasHeight: mainCanvasHeight, isEmptyPlaceholder: true }];
         }
         return points;
     }, []);
