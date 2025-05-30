@@ -1,184 +1,202 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bookmark, Search, Filter, Calendar, TrendingUp, Users, Briefcase } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
-
-// Mock bookmarked posts data
-const mockBookmarkedPosts = [
-  {
-    id: "bookmark-1",
-    author: {
-      name: "Investment Pro",
-      username: "@investpro",
-      avatar: "/placeholder.svg",
-      verified: true,
-      institution: "Goldman Sachs"
-    },
-    content: "Here's why I think tech stocks are undervalued right now. The P/E ratios are historically low compared to growth potential...",
-    timestamp: "2h",
-    likes: 245,
-    comments: 32,
-    reposts: 15,
-    bookmarks: 89,
-    topic: "Technology",
-    category: "investments"
-  },
-  {
-    id: "bookmark-2",
-    author: {
-      name: "Market Analyst",
-      username: "@marketguru",
-      avatar: "/placeholder.svg",
-      verified: true,
-      institution: "JP Morgan"
-    },
-    content: "Breaking: Fed signals potential rate cuts in Q2. This could be a game-changer for growth stocks. Here's my analysis...",
-    timestamp: "5h",
-    likes: 567,
-    comments: 89,
-    reposts: 134,
-    bookmarks: 203,
-    topic: "Market News",
-    category: "news"
-  },
-  {
-    id: "bookmark-3",
-    author: {
-      name: "Crypto Expert",
-      username: "@cryptomaster",
-      avatar: "/placeholder.svg",
-      verified: true,
-      institution: "Coinbase"
-    },
-    content: "Bitcoin's correlation with traditional markets is weakening. This could signal a maturation of the crypto space...",
-    timestamp: "1d",
-    likes: 892,
-    comments: 156,
-    reposts: 267,
-    bookmarks: 445,
-    topic: "Cryptocurrency",
-    category: "investments"
-  },
-  {
-    id: "bookmark-4",
-    author: {
-      name: "Financial Advisor",
-      username: "@financeguru",
-      avatar: "/placeholder.svg",
-      verified: false,
-      institution: null
-    },
-    content: "Your emergency fund should cover 6-12 months of expenses. Here's how to build one systematically...",
-    timestamp: "2d",
-    likes: 423,
-    comments: 67,
-    reposts: 89,
-    bookmarks: 234,
-    topic: "Personal Finance",
-    category: "education"
-  }
-];
+import { Bookmark, Star, TrendingUp } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Post } from "@/types/Post";
 
 const BookmarksPage = () => {
-  const [bookmarkedPosts, setBookmarkedPosts] = useState(mockBookmarkedPosts);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("all");
-
-  const filteredPosts = bookmarkedPosts.filter(post => {
-    const matchesSearch = post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.author.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.topic.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    if (activeTab === "all") return matchesSearch;
-    return matchesSearch && post.category === activeTab;
-  });
-
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "investments": return <TrendingUp className="h-4 w-4" />;
-      case "news": return <Calendar className="h-4 w-4" />;
-      case "education": return <Users className="h-4 w-4" />;
-      default: return <Briefcase className="h-4 w-4" />;
+  // Mock bookmarked posts data with all required properties
+  const bookmarkedPosts: Post[] = [
+    {
+      id: "1",
+      author: {
+        name: "Sarah Kimani",
+        username: "@sarah_k",
+        avatar: "/lovable-uploads/92d3bdce-9360-486e-8617-373fba41fb1f.png",
+        verified: true,
+        institution: "Equity Bank"
+      },
+      content: "Just learned about diversification strategies for the Kenyan market. The key is balancing between government bonds, equities, and real estate. What's your preferred allocation?",
+      timestamp: "2 hours ago",
+      created_at: "2024-01-20T10:00:00Z",
+      updated_at: "2024-01-20T10:00:00Z",
+      likes: 45,
+      comments: 12,
+      reposts: 8,
+      shares: 5,
+      bookmarks: 23,
+      topic: "Investment Strategy",
+      category: "Education",
+      is_verified: true
+    },
+    {
+      id: "2",
+      author: {
+        name: "David Mwangi",
+        username: "@david_invest",
+        avatar: "/lovable-uploads/92d3bdce-9360-486e-8617-373fba41fb1f.png",
+        verified: true,
+        institution: "KCB Bank"
+      },
+      content: "NSE performance this quarter has been impressive. Technology stocks are leading gains with Safaricom up 15%. Perfect time to review your portfolio allocation.",
+      timestamp: "4 hours ago",
+      created_at: "2024-01-20T08:00:00Z",
+      updated_at: "2024-01-20T08:00:00Z",
+      likes: 67,
+      comments: 18,
+      reposts: 15,
+      shares: 9,
+      bookmarks: 34,
+      topic: "Market Analysis",
+      category: "News",
+      is_verified: true
+    },
+    {
+      id: "3",
+      author: {
+        name: "Grace Wanjiku",
+        username: "@grace_finance",
+        avatar: "/lovable-uploads/92d3bdce-9360-486e-8617-373fba41fb1f.png",
+        verified: true,
+        institution: "NCBA Bank"
+      },
+      content: "Treasury bills rates at 16.8% - highest in months! Consider laddering your fixed income investments for better liquidity management. Here's how I structure mine...",
+      timestamp: "6 hours ago",
+      created_at: "2024-01-20T06:00:00Z",
+      updated_at: "2024-01-20T06:00:00Z",
+      likes: 89,
+      comments: 25,
+      reposts: 20,
+      shares: 12,
+      bookmarks: 56,
+      topic: "Fixed Income",
+      category: "Strategy",
+      is_verified: true
     }
-  };
+  ];
 
-  const categories = [
-    { id: "all", label: "All", count: bookmarkedPosts.length },
-    { id: "investments", label: "Investments", count: bookmarkedPosts.filter(p => p.category === "investments").length },
-    { id: "news", label: "News", count: bookmarkedPosts.filter(p => p.category === "news").length },
-    { id: "education", label: "Education", count: bookmarkedPosts.filter(p => p.category === "education").length }
+  const savedCollections = [
+    { name: "Investment Strategies", count: 12, color: "bg-blue-500" },
+    { name: "Market Analysis", count: 8, color: "bg-green-500" },
+    { name: "Educational Content", count: 15, color: "bg-purple-500" },
+    { name: "Expert Insights", count: 6, color: "bg-orange-500" }
   ];
 
   return (
     <AppLayout>
-      <div className="container mx-auto py-6 max-w-4xl">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Bookmarks
-          </h1>
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input 
-                placeholder="Search bookmarks..." 
-                className="pl-9 w-64"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <Button variant="outline" size="icon">
-              <Filter className="h-4 w-4" />
-            </Button>
-          </div>
+      <div className="max-w-4xl mx-auto space-y-6">
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-6">
+          <Bookmark className="h-6 w-6 text-primary" />
+          <h1 className="text-2xl font-bold">Your Bookmarks</h1>
         </div>
 
-        <Card className="shadow-md border-border/50">
-          <CardContent className="p-0">
-            <div className="border-b border-border/50 p-4">
-              <Tabs value={activeTab} onValueChange={setActiveTab}>
-                <TabsList className="grid w-full grid-cols-4">
-                  {categories.map((category) => (
-                    <TabsTrigger key={category.id} value={category.id} className="flex items-center gap-2">
-                      {getCategoryIcon(category.id)}
-                      <span>{category.label}</span>
-                      <span className="text-xs bg-muted text-muted-foreground px-1.5 py-0.5 rounded-full">
-                        {category.count}
-                      </span>
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </Tabs>
-            </div>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Bookmark className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Total Saved</p>
+                  <p className="text-2xl font-bold">{bookmarkedPosts.length}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-            <ScrollArea className="h-[calc(80vh-200px)]">
-              {filteredPosts.length > 0 ? (
-                <div className="space-y-1 p-1">
-                  {filteredPosts.map((post) => (
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Star className="h-5 w-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Collections</p>
+                  <p className="text-2xl font-bold">{savedCollections.length}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-purple-100 rounded-lg">
+                  <TrendingUp className="h-5 w-5 text-purple-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">This Week</p>
+                  <p className="text-2xl font-bold">12</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bookmark className="h-5 w-5" />
+                  Recent Bookmarks
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <div className="space-y-1">
+                  {bookmarkedPosts.map((post) => (
                     <FeedPostCard key={post.id} post={post} />
                   ))}
                 </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-64 text-center">
-                  <Bookmark className="h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium mb-2">
-                    {searchQuery ? "No bookmarks found" : "No bookmarks yet"}
-                  </h3>
-                  <p className="text-muted-foreground">
-                    {searchQuery 
-                      ? `No bookmarks match "${searchQuery}". Try a different search term.`
-                      : "Start bookmarking posts to save them for later reading."}
-                  </p>
-                </div>
-              )}
-            </ScrollArea>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Saved Collections</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {savedCollections.map((collection, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent cursor-pointer transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${collection.color}`} />
+                      <span className="font-medium">{collection.name}</span>
+                    </div>
+                    <Badge variant="secondary">{collection.count}</Badge>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Quick Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <button className="w-full p-2 text-left rounded-lg hover:bg-accent transition-colors">
+                  Create New Collection
+                </button>
+                <button className="w-full p-2 text-left rounded-lg hover:bg-accent transition-colors">
+                  Export Bookmarks
+                </button>
+                <button className="w-full p-2 text-left rounded-lg hover:bg-accent transition-colors">
+                  Manage Collections
+                </button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </AppLayout>
   );

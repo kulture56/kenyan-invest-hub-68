@@ -1,165 +1,12 @@
 
-import React, { useState, ChangeEvent, FormEvent, ReactNode } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Ripple,
-  AuthTabs,
-  TechOrbitDisplay,
-} from '@/components/ui/modern-animated-sign-in';
+import { AuthTabs, TechOrbitDisplay } from '@/components/ui/modern-animated-sign-in';
 import ParticleTypography from '@/components/ui/interactive-particle-typography-1';
-import { Typewriter } from '@/components/ui/typewriter';
-
-type FormData = {
-  email: string;
-  password: string;
-};
-
-interface OrbitIcon {
-  component: () => ReactNode;
-  className: string;
-  duration?: number;
-  delay?: number;
-  radius?: number;
-  path?: boolean;
-  reverse?: boolean;
-}
-
-const iconsArray: OrbitIcon[] = [
-  {
-    component: () => (
-      <img
-        width={40}
-        height={40}
-        src='/lovable-uploads/4bffdd8b-451b-4211-b64c-d3bf0c460d56.png'
-        alt='Kenya Flag'
-        className="rounded-md object-cover"
-      />
-    ),
-    className: 'size-[40px] border-none bg-transparent',
-    duration: 20,
-    delay: 20,
-    radius: 100,
-    path: false,
-    reverse: false,
-  },
-  {
-    component: () => (
-      <img
-        width={35}
-        height={35}
-        src='/lovable-uploads/6a6c3356-ea41-4eb5-92d8-ba8cfe41d706.png'
-        alt='Safaricom'
-        className="rounded-md object-cover"
-      />
-    ),
-    className: 'size-[35px] border-none bg-transparent',
-    duration: 20,
-    delay: 10,
-    radius: 100,
-    path: false,
-    reverse: false,
-  },
-  {
-    component: () => (
-      <img
-        width={50}
-        height={50}
-        src='/lovable-uploads/2a92d424-974a-483d-87e0-62fe36d864f9.png'
-        alt='KICC Building'
-        className="rounded-md object-cover"
-      />
-    ),
-    className: 'size-[50px] border-none bg-transparent',
-    radius: 210,
-    duration: 20,
-    path: false,
-    reverse: false,
-  },
-  {
-    component: () => (
-      <img
-        width={50}
-        height={50}
-        src='/lovable-uploads/1ffdf219-7b0e-463d-bb3d-e24e776c0069.png'
-        alt='Nairobi Skyline'
-        className="rounded-md object-cover"
-      />
-    ),
-    className: 'size-[50px] border-none bg-transparent',
-    radius: 210,
-    duration: 20,
-    delay: 20,
-    path: false,
-    reverse: false,
-  },
-  {
-    component: () => (
-      <img
-        width={35}
-        height={35}
-        src='/lovable-uploads/f6257fec-d804-49ae-ac19-299b1dbe7369.png'
-        alt='Kenya Wildlife'
-        className="rounded-md object-cover"
-      />
-    ),
-    className: 'size-[35px] border-none bg-transparent',
-    duration: 20,
-    delay: 20,
-    radius: 150,
-    path: false,
-    reverse: true,
-  },
-  {
-    component: () => (
-      <img
-        width={35}
-        height={35}
-        src='/lovable-uploads/f791c29c-3f47-4bb0-9d3e-af2d1cebfe32.png'
-        alt='Nairobi Night'
-        className="rounded-md object-cover"
-      />
-    ),
-    className: 'size-[35px] border-none bg-transparent',
-    duration: 20,
-    delay: 10,
-    radius: 150,
-    path: false,
-    reverse: true,
-  },
-  {
-    component: () => (
-      <img
-        width={45}
-        height={45}
-        src='/lovable-uploads/4bffdd8b-451b-4211-b64c-d3bf0c460d56.png'
-        alt='Kenya'
-        className="rounded-full object-cover"
-      />
-    ),
-    className: 'size-[45px] border-none bg-transparent',
-    radius: 270,
-    duration: 20,
-    path: false,
-    reverse: true,
-  },
-  {
-    component: () => (
-      <img
-        width={45}
-        height={45}
-        src='/lovable-uploads/2a92d424-974a-483d-87e0-62fe36d864f9.png'
-        alt='Nairobi'
-        className="rounded-full object-cover"
-      />
-    ),
-    className: 'size-[45px] border-none bg-transparent',
-    radius: 270,
-    duration: 20,
-    delay: 60,
-    path: false,
-    reverse: true,
-  },
-];
+import { FormData } from '@/components/login/LoginFormData';
+import { iconsArray } from '@/components/login/OrbitIcons';
+import { createFormFields } from '@/components/login/LoginFormFields';
+import { createLoginHandlers } from '@/components/login/LoginHandlers';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -168,95 +15,14 @@ const LoginPage: React.FC = () => {
     password: '',
   });
 
-  const goToForgotPassword = (
-    event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-  ) => {
-    event.preventDefault();
-    console.log('Forgot password clicked');
-  };
+  const {
+    goToForgotPassword,
+    goToLandingPage,
+    handleInputChange,
+    handleSubmit,
+  } = createLoginHandlers(navigate, setFormData);
 
-  const goToLandingPage = (
-    event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-  ) => {
-    event.preventDefault();
-    window.open('https://preview--geltlandingpage-05.lovable.app/', '_blank');
-  };
-
-  const handleInputChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    name: keyof FormData
-  ) => {
-    const value = event.target.value;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log('Form submitted', formData);
-    
-    // Simulate login success and redirect to main platform
-    setTimeout(() => {
-      navigate('/');
-    }, 1000);
-  };
-
-  const formFields = {
-    header: (
-      <div className="flex items-center gap-2">
-        <span>Karibu Nyumbani</span>
-        <img
-          src="/lovable-uploads/fdcbabe4-bcae-41ba-af33-b425873da4b4.png"
-          alt="Kenya Flag"
-          className="w-8 h-6 object-cover rounded-sm"
-        />
-      </div>
-    ),
-    subHeader: (
-      <div className="text-sm mb-2">
-        <span className="text-neutral-600 dark:text-neutral-300">Your investment Safari to </span>
-        <Typewriter
-          text={[
-            "financial freedom",
-            "wealth building", 
-            "smart investing",
-            "a better future",
-          ]}
-          speed={70}
-          className="text-purple-400"
-          waitTime={1500}
-          deleteSpeed={40}
-          cursorChar={"_"}
-        />
-      </div>
-    ),
-    fields: [
-      {
-        label: 'Email',
-        required: true,
-        type: 'email' as const,
-        placeholder: 'Enter your email address',
-        onChange: (event: ChangeEvent<HTMLInputElement>) =>
-          handleInputChange(event, 'email'),
-      },
-      {
-        label: 'Password',
-        required: true,
-        type: 'password' as const,
-        placeholder: 'Enter your password',
-        onChange: (event: ChangeEvent<HTMLInputElement>) =>
-          handleInputChange(event, 'password'),
-      },
-    ],
-    submitButton: 'Sign In',
-    textVariantButton: 'Forgot password?',
-    appleLogin: 'Login with Apple',
-    googleLogin: 'Login with Google',
-    signUpPrompt: "Don't have an account yet? Sign up",
-  };
+  const formFields = createFormFields(handleInputChange);
 
   return (
     <div className="min-h-screen bg-background">
@@ -268,7 +34,7 @@ const LoginPage: React.FC = () => {
           </div>
         </span>
 
-        {/* Right Side - Changed to white background */}
+        {/* Right Side - White background */}
         <span className='w-1/2 h-[100dvh] flex flex-col justify-center items-center max-lg:w-full max-lg:px-[10%] bg-white'>
           <AuthTabs
             formFields={formFields}
