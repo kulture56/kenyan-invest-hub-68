@@ -1,4 +1,3 @@
-
 import React, { useState, ChangeEvent, FormEvent, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -179,7 +178,7 @@ const LoginPage: React.FC = () => {
     event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
     event.preventDefault();
-    navigate('/');
+    window.open('https://preview--geltlandingpage-05.lovable.app/', '_blank');
   };
 
   const handleInputChange = (
@@ -205,9 +204,19 @@ const LoginPage: React.FC = () => {
   };
 
   const formFields = {
-    header: 'Karibu Nyumbani',
+    header: (
+      <div className="flex items-center gap-2">
+        <span>Karibu Nyumbani</span>
+        <img
+          src="/lovable-uploads/fdcbabe4-bcae-41ba-af33-b425873da4b4.png"
+          alt="Kenya Flag"
+          className="w-8 h-6 object-cover rounded-sm"
+        />
+      </div>
+    ),
     subHeader: (
       <div className="text-sm mb-2">
+        <span className="text-neutral-600 dark:text-neutral-300">Your investment journey to </span>
         <Typewriter
           text={[
             "financial freedom",

@@ -326,7 +326,7 @@ type Field = {
 };
 
 type AnimatedFormProps = {
-  header: string;
+  header: string | ReactNode;
   subHeader?: string | ReactNode;
   fields: Field[];
   submitButton: string;
@@ -602,7 +602,7 @@ const BottomGradient = () => {
 
 interface AuthTabsProps {
   formFields: {
-    header: string;
+    header: string | ReactNode;
     subHeader?: string | ReactNode;
     fields: Array<{
       label: string;
