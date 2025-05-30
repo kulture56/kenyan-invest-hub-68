@@ -9,6 +9,7 @@ import TopicPage from "./pages/TopicPage";
 import RafikiPage from "./pages/RafikiPage";
 import ProfilePage from "./pages/ProfilePage";
 import MessagesPage from "./pages/MessagesPage";
+import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
 import RafikiChatWidget from "./components/rafiki/RafikiChatWidget";
 import LearningHubPage from "./pages/LearningHubPage";
@@ -21,6 +22,7 @@ const App = () => (
     <TooltipProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<Index />} />
           <Route path="/topics/:topicSlug" element={<TopicPage />} />
           <Route path="/rafiki" element={<RafikiPage />} />
