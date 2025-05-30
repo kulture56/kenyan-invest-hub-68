@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 const DEFAULT_TEXT = "GELT";
@@ -32,7 +31,20 @@ const thermalPalettes = {
 const PARTICLE_COLORS = [...thermalPalettes.neutral];
 
 class Particle {
-    constructor(targetX, targetY, canvasWidth, canvasHeight, physicsParams) {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    targetX: number;
+    targetY: number;
+    physicsParams: typeof initialPhysicsParams;
+    baseSize: number;
+    size: number;
+    color: string;
+    attractionOffset: number;
+    noiseOffset: number;
+
+    constructor(targetX: number, targetY: number, canvasWidth: number, canvasHeight: number, physicsParams: typeof initialPhysicsParams) {
         this.x = Math.random() * canvasWidth;
         this.y = Math.random() * canvasHeight;
         this.vx = (Math.random() - 0.5) * 6;
@@ -47,7 +59,7 @@ class Particle {
         this.noiseOffset = (Math.random() - 0.5) * 0.2;
     }
 
-    update(mouse) {
+    update(mouse: { x?: number; y?: number }) {
         if (this.baseSize !== this.physicsParams.PARTICLE_BASE_SIZE) {
             this.baseSize = this.physicsParams.PARTICLE_BASE_SIZE;
         }
@@ -102,7 +114,7 @@ class Particle {
         this.y += this.vy;
     }
 
-    draw(ctx) {
+    draw(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, Math.max(0.2, this.size), 0, Math.PI * 2);
         ctx.fillStyle = this.color;
@@ -113,16 +125,16 @@ class Particle {
 }
 
 const ParticleTypography = () => {
-    const canvasRef = useRef(null);
-    const particlesArrayRef = useRef([]);
-    const wordTargetPointsRef = useRef([]);
-    const mouseRef = useRef({ x: undefined, y: undefined });
-    const animationFrameIdRef = useRef(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const particlesArrayRef = useRef<Particle[]>([]);
+    const wordTargetPointsRef = useRef<Array<{ x: number; y: number; sourceCanvasWidth: number; sourceCanvasHeight: number; isEmptyPlaceholder?: boolean }>>([]);
+    const mouseRef = useRef<{ x?: number; y?: number }>({ x: undefined, y: undefined });
+    const animationFrameIdRef = useRef<number | null>(null);
     const physicsParamsRef = useRef({...initialPhysicsParams});
     const initialParticleCountCalculatedRef = useRef(false);
 
-    const getWordPoints = useCallback((word, mainCanvasWidth, mainCanvasHeight) => {
-        const points = [];
+    const getWordPoints = useCallback((word: string, mainCanvasWidth: number, mainCanvasHeight: number) => {
+        const points: Array<{ x: number; y: number; sourceCanvasWidth: number; sourceCanvasHeight: number; isEmptyPlaceholder?: boolean }> = [];
         if (!word || word.trim() === "" || mainCanvasWidth <= 0 || mainCanvasHeight <= 0) {
             console.warn("getWordPoints: Invalid word or canvas dimensions.");
             return [{ sourceCanvasWidth: mainCanvasWidth, sourceCanvasHeight: mainCanvasHeight, isEmptyPlaceholder: true }];
@@ -132,6 +144,8 @@ const ParticleTypography = () => {
         tempCanvas.width = mainCanvasWidth;
         tempCanvas.height = mainCanvasHeight;
         const tempCtx = tempCanvas.getContext('2d');
+        if (!tempCtx) return points;
+        
         const normalizedWord = word.toUpperCase();
         const fontToUse = DEFAULT_FONT_FAMILY;
         let optimalFontSize = MIN_FONT_SIZE;
@@ -297,7 +311,7 @@ const ParticleTypography = () => {
             }
         });
 
-        const handleMouseMove = (event) => {
+        const handleMouseMove = (event: MouseEvent) => {
             const rect = canvasRef.current?.getBoundingClientRect();
             if (rect) {
                 mouseRef.current = { x: event.clientX - rect.left, y: event.clientY - rect.top };
@@ -306,7 +320,7 @@ const ParticleTypography = () => {
         const handleMouseLeave = () => {
             mouseRef.current = { x: undefined, y: undefined };
         };
-        const handleTouchMove = (event) => {
+        const handleTouchMove = (event: TouchEvent) => {
             event.preventDefault();
             const rect = canvasRef.current?.getBoundingClientRect();
             if (rect && event.touches.length > 0) {
@@ -324,7 +338,7 @@ const ParticleTypography = () => {
         canvasElement?.addEventListener('touchend', handleTouchEnd);
         canvasElement?.addEventListener('touchcancel', handleTouchEnd);
 
-        let resizeTimer;
+        let resizeTimer: NodeJS.Timeout;
         const handleResize = () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
@@ -343,7 +357,9 @@ const ParticleTypography = () => {
         window.addEventListener('resize', handleResize);
 
         return () => {
-            cancelAnimationFrame(animationFrameIdRef.current);
+            if (animationFrameIdRef.current) {
+                cancelAnimationFrame(animationFrameIdRef.current);
+            }
             canvasElement?.removeEventListener('mousemove', handleMouseMove);
             canvasElement?.removeEventListener('mouseleave', handleMouseLeave);
             canvasElement?.removeEventListener('touchmove', handleTouchMove);
