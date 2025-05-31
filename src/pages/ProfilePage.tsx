@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -15,18 +14,21 @@ import { Settings, HelpCircle, LogOut, UserRound, Moon, Sun, Globe, Bell, Downlo
 import { useToast } from "@/components/ui/use-toast";
 import { useTheme } from "@/contexts/ThemeContext";
 import { handleLogout as authLogout } from "@/utils/auth";
-
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const { theme, setTheme } = useTheme();
+  const {
+    toast
+  } = useToast();
+  const {
+    theme,
+    setTheme
+  } = useTheme();
   const [activeTab, setActiveTab] = useState("profile");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [language, setLanguage] = useState("english");
   const [notificationFrequency, setNotificationFrequency] = useState("daily");
-
   const handleLogout = () => {
     toast({
       title: "Logged out successfully",
@@ -34,7 +36,6 @@ const ProfilePage = () => {
     });
     authLogout();
   };
-
   const handleLogin = () => {
     toast({
       title: "Logged in successfully",
@@ -42,14 +43,12 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(true);
   };
-
   const handleDataExport = () => {
     toast({
       title: "Data export initiated",
       description: "Your data export will be ready for download within 24 hours."
     });
   };
-
   const handleToggle2FA = () => {
     setTwoFactorEnabled(!twoFactorEnabled);
     toast({
@@ -57,10 +56,8 @@ const ProfilePage = () => {
       description: twoFactorEnabled ? "Two-factor authentication has been disabled." : "Two-factor authentication has been enabled for better security."
     });
   };
-
   if (!isLoggedIn) {
-    return (
-      <AppLayout>
+    return <AppLayout>
         <div className="max-w-md mx-auto mt-10">
           <Card className="border-primary/20">
             <CardHeader>
@@ -83,12 +80,9 @@ const ProfilePage = () => {
             </CardFooter>
           </Card>
         </div>
-      </AppLayout>
-    );
+      </AppLayout>;
   }
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="container max-w-4xl mx-auto px-4 py-4">
         <div className="flex flex-col items-center gap-4 mb-6">
           <Avatar className="h-20 w-20 border-4 border-primary/20 shadow-lg">
@@ -110,81 +104,10 @@ const ProfilePage = () => {
         </div>
 
         {/* My Account Section */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <UserRound className="h-5 w-5" />
-              My Account
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors">
-              <div className="flex items-center gap-3">
-                <UserRound className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Profile</span>
-              </div>
-              <Button variant="ghost" size="sm">View</Button>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors">
-              <div className="flex items-center gap-3">
-                <Settings className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Settings</span>
-              </div>
-              <Button variant="ghost" size="sm">Manage</Button>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors">
-              <div className="flex items-center gap-3">
-                <HelpCircle className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Help</span>
-              </div>
-              <Button variant="ghost" size="sm">Support</Button>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors">
-              <div className="flex items-center gap-3">
-                <LogOut className="h-5 w-5 text-red-500" />
-                <span className="font-medium text-red-500">Logout</span>
-              </div>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600">
-                    Exit
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure you want to logout?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      You will be redirected to the login page and will need to sign in again to access your account.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>No</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleLogout}>Yes</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </div>
-          </CardContent>
-        </Card>
+        
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="profile" className="flex items-center gap-2">
-              <UserRound className="h-4 w-4" />
-              Profile
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              Settings
-            </TabsTrigger>
-            <TabsTrigger value="help" className="flex items-center gap-2">
-              <HelpCircle className="h-4 w-4" />
-              Help
-            </TabsTrigger>
-          </TabsList>
+          
           
           <TabsContent value="profile" className="mt-4">
             <Card>
@@ -399,8 +322,6 @@ const ProfilePage = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default ProfilePage;
