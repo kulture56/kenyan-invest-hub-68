@@ -38,16 +38,16 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({ glossaryTerms }) => {
     return acc;
   }, {} as Record<string, GlossaryTerm[]>);
 
-  const handleAskRafiki = (term: string, definition: string) => {
-    const question = `Can you explain more about "${term}" and how it applies to Kenyan financial markets?`;
+  const handleAskRafiki = () => {
+    const question = `Can you help me understand financial terms and concepts related to Kenyan markets?`;
     navigate("/rafiki", { 
       state: { suggestedQuestion: question }
     });
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
@@ -57,23 +57,31 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({ glossaryTerms }) => {
             className="pl-10"
           />
         </div>
-        <Badge variant="secondary">
+        <Button
+          onClick={handleAskRafiki}
+          className="flex items-center gap-2 bg-primary hover:bg-primary/90"
+          size="sm"
+        >
+          <MessageCircle className="h-4 w-4" />
+          Ask Rafiki
+        </Button>
+        <Badge variant="secondary" className="whitespace-nowrap">
           {filteredTerms.length} term{filteredTerms.length !== 1 ? 's' : ''}
         </Badge>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {Object.keys(groupedTerms)
           .sort()
           .map((letter) => (
-            <div key={letter} className="space-y-3">
-              <h3 className="text-lg font-semibold text-primary border-b pb-2">
+            <div key={letter} className="space-y-2">
+              <h3 className="text-lg font-semibold text-primary border-b pb-1">
                 {letter}
               </h3>
-              <div className="grid gap-3">
+              <div className="grid gap-2">
                 {groupedTerms[letter].map((term, index) => (
                   <Card key={`${letter}-${index}`} className="hover:shadow-md transition-shadow">
-                    <CardHeader className="pb-3">
+                    <CardHeader className="pb-2">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <CardTitle className="text-base">{term.term}</CardTitle>
@@ -81,15 +89,6 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({ glossaryTerms }) => {
                             {term.category}
                           </Badge>
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleAskRafiki(term.term, term.definition)}
-                          className="flex items-center gap-1 text-primary hover:text-primary/80"
-                        >
-                          <MessageCircle className="h-4 w-4" />
-                          Ask Rafiki
-                        </Button>
                       </div>
                     </CardHeader>
                     <CardContent className="pt-0">
@@ -105,7 +104,7 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({ glossaryTerms }) => {
       </div>
 
       {filteredTerms.length === 0 && (
-        <div className="text-center py-8">
+        <div className="text-center py-6">
           <p className="text-muted-foreground">No terms found matching "{searchTerm}"</p>
         </div>
       )}
