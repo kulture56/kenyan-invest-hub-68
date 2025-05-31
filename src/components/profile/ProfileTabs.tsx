@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,23 +9,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Settings, HelpCircle, UserRound, Moon, Sun, Globe, Bell, Download, Shield, Link } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useTheme } from "@/contexts/ThemeContext";
-
 export const ProfileTabs = () => {
-  const { toast } = useToast();
-  const { theme, setTheme } = useTheme();
+  const {
+    toast
+  } = useToast();
+  const {
+    theme,
+    setTheme
+  } = useTheme();
   const [activeTab, setActiveTab] = useState("profile");
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [language, setLanguage] = useState("english");
   const [notificationFrequency, setNotificationFrequency] = useState("daily");
-
   const handleDataExport = () => {
     toast({
       title: "Data export initiated",
       description: "Your data export will be ready for download within 24 hours."
     });
   };
-
   const handleToggle2FA = () => {
     setTwoFactorEnabled(!twoFactorEnabled);
     toast({
@@ -34,23 +35,8 @@ export const ProfileTabs = () => {
       description: twoFactorEnabled ? "Two-factor authentication has been disabled." : "Two-factor authentication has been enabled for better security."
     });
   };
-
-  return (
-    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-      <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="profile" className="flex items-center gap-2">
-          <UserRound className="h-4 w-4" />
-          Profile
-        </TabsTrigger>
-        <TabsTrigger value="settings" className="flex items-center gap-2">
-          <Settings className="h-4 w-4" />
-          Settings
-        </TabsTrigger>
-        <TabsTrigger value="help" className="flex items-center gap-2">
-          <HelpCircle className="h-4 w-4" />
-          Help
-        </TabsTrigger>
-      </TabsList>
+  return <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      
       
       <TabsContent value="profile" className="mt-4">
         <Card>
@@ -263,6 +249,5 @@ export const ProfileTabs = () => {
           </CardFooter>
         </Card>
       </TabsContent>
-    </Tabs>
-  );
+    </Tabs>;
 };
