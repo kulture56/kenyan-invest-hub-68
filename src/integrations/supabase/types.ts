@@ -63,6 +63,60 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          age_group: string | null
+          analytics_consent: boolean | null
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          full_name: string | null
+          gender: string | null
+          id: string
+          last_login: string | null
+          location: string | null
+          privacy_avatar: string | null
+          privacy_bio: string | null
+          privacy_full_name: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age_group?: string | null
+          analytics_consent?: boolean | null
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          gender?: string | null
+          id?: string
+          last_login?: string | null
+          location?: string | null
+          privacy_avatar?: string | null
+          privacy_bio?: string | null
+          privacy_full_name?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age_group?: string | null
+          analytics_consent?: boolean | null
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          gender?: string | null
+          id?: string
+          last_login?: string | null
+          location?: string | null
+          privacy_avatar?: string | null
+          privacy_bio?: string | null
+          privacy_full_name?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       rafiki_chat_history: {
         Row: {
           created_at: string
