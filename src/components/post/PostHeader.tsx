@@ -22,7 +22,7 @@ interface PostAuthor {
 
 interface PostHeaderProps {
   author: PostAuthor;
-  createdAt: Date;
+  createdAt: Date | string;
   topic?: string;
   isVerified?: boolean;
   postId: string;
@@ -42,6 +42,17 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
   const handleReportClick = () => {
     navigate(`/report/${postId}`);
   };
+
+  // Safely convert createdAt to Date object
+  const getValidDate = (date: Date | string): Date => {
+    if (date instanceof Date) {
+      return isNaN(date.getTime()) ? new Date() : date;
+    }
+    const parsedDate = new Date(date);
+    return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
+  };
+
+  const validDate = getValidDate(createdAt);
 
   return (
     <div className="pb-2 pt-4 px-4 flex flex-row gap-3 justify-between">
@@ -65,7 +76,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             <span className="text-sm text-muted-foreground">@{author.username}</span>
           </div>
           <div className="flex gap-2 text-xs text-muted-foreground">
-            <span>{formatDistanceToNow(createdAt, { addSuffix: true })}</span>
+            <span>{formatDistanceToNow(validDate, { addSuffix: true })}</span>
             {topic && (
               <>
                 <span>•</span>

@@ -28,7 +28,7 @@ interface PostProps {
   content: string;
   image?: string;
   topic?: string;
-  createdAt: Date;
+  createdAt: Date | string;
   likes: number;
   comments: number;
   shares: number;

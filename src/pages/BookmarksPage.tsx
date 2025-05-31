@@ -1,4 +1,3 @@
-
 import React from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,8 +21,8 @@ const BookmarksPage = () => {
       },
       content: "Just learned about diversification strategies for the Kenyan market. The key is balancing between government bonds, equities, and real estate. What's your preferred allocation?",
       timestamp: "2 hours ago",
-      created_at: "2024-01-20T10:00:00Z",
-      updated_at: "2024-01-20T10:00:00Z",
+      created_at: new Date("2024-01-20T10:00:00Z").toISOString(),
+      updated_at: new Date("2024-01-20T10:00:00Z").toISOString(),
       likes: 45,
       comments: 12,
       reposts: 8,
@@ -44,8 +43,8 @@ const BookmarksPage = () => {
       },
       content: "NSE performance this quarter has been impressive. Technology stocks are leading gains with Safaricom up 15%. Perfect time to review your portfolio allocation.",
       timestamp: "4 hours ago",
-      created_at: "2024-01-20T08:00:00Z",
-      updated_at: "2024-01-20T08:00:00Z",
+      created_at: new Date("2024-01-20T08:00:00Z").toISOString(),
+      updated_at: new Date("2024-01-20T08:00:00Z").toISOString(),
       likes: 67,
       comments: 18,
       reposts: 15,
@@ -66,8 +65,8 @@ const BookmarksPage = () => {
       },
       content: "Treasury bills rates at 16.8% - highest in months! Consider laddering your fixed income investments for better liquidity management. Here's how I structure mine...",
       timestamp: "6 hours ago",
-      created_at: "2024-01-20T06:00:00Z",
-      updated_at: "2024-01-20T06:00:00Z",
+      created_at: new Date("2024-01-20T06:00:00Z").toISOString(),
+      updated_at: new Date("2024-01-20T06:00:00Z").toISOString(),
       likes: 89,
       comments: 25,
       reposts: 20,
