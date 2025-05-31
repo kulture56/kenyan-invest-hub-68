@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { motion, Variants } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -89,7 +90,7 @@ const Typewriter = ({
     return () => clearTimeout(timeout);
   }, [currentIndex, displayText, isDeleting, speed, deleteSpeed, waitTime, texts, currentTextIndex, loop, initialDelay]);
   return <div className={`inline whitespace-pre-wrap tracking-tight ${className}`}>
-      <span className="text-purple-900">{displayText}</span>
+      <span className="text-purple-500">{displayText}</span>
       {showCursor && <motion.span variants={cursorAnimationVariants} className={cn(cursorClassName, hideCursorOnType && (currentIndex < texts[currentTextIndex].length || isDeleting) ? "hidden" : "")} initial="initial" animate="animate">
           {cursorChar}
         </motion.span>}

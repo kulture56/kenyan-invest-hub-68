@@ -1,8 +1,9 @@
+
 import React from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
-import { Bookmark, Star, TrendingUp } from "lucide-react";
+import { Bookmark, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Post } from "@/types/Post";
@@ -99,18 +100,56 @@ const BookmarksPage = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Bookmark className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold">{bookmarkedPosts.length}</p>
+                  <p className="text-sm text-muted-foreground">Total Bookmarks</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-          
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-yellow-500/10 rounded-lg">
+                  <Star className="h-5 w-5 text-yellow-500" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold">4</p>
+                  <p className="text-sm text-muted-foreground">Collections</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-          
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-green-500/10 rounded-lg">
+                  <img src="/lovable-uploads/6f9d8153-9570-4af8-a17d-ab29bb8d60e2.png" alt="Trending" className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold">12</p>
+                  <p className="text-sm text-muted-foreground">This Week</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-4">
             <Card>
-              
+              <CardHeader>
+                <CardTitle>Saved Posts</CardTitle>
+              </CardHeader>
               <CardContent className="p-0">
                 <div className="space-y-1">
                   {bookmarkedPosts.map(post => <FeedPostCard key={post.id} post={post} />)}
@@ -120,7 +159,24 @@ const BookmarksPage = () => {
           </div>
 
           {/* Sidebar */}
-          
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Collections</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {savedCollections.map((collection, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${collection.color}`} />
+                      <span className="font-medium">{collection.name}</span>
+                    </div>
+                    <Badge variant="secondary">{collection.count}</Badge>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </AppLayout>;

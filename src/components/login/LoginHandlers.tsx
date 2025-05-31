@@ -44,10 +44,20 @@ export const createLoginHandlers = (
     }, 1000);
   };
 
+  const handleLogout = () => {
+    // Clear any stored auth data
+    localStorage.removeItem('auth');
+    sessionStorage.removeItem('auth');
+    
+    // Redirect to login page
+    navigate('/login');
+  };
+
   return {
     goToForgotPassword,
     goToLandingPage,
     handleInputChange,
     handleSubmit,
+    handleLogout,
   };
 };

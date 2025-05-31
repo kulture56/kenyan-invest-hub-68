@@ -68,7 +68,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             </a>
             {isVerified && (
               <img 
-                src="/lovable-uploads/a48a1151-7e0c-4824-9523-a1f04c863334.png" 
+                src="/lovable-uploads/b01c2fed-c55d-468c-a20e-3fb895691c6f.png" 
                 alt="Verified" 
                 className="w-4 h-4"
               />

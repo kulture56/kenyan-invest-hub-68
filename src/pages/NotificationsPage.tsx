@@ -70,7 +70,7 @@ const NotificationsPage = () => {
       case "comment": return <MessageSquare className="h-4 w-4 text-blue-500" />;
       case "follow": return <UserPlus className="h-4 w-4 text-green-500" />;
       case "mention": return <MessageSquare className="h-4 w-4 text-purple-500" />;
-      case "system": return <TrendingUp className="h-4 w-4 text-primary" />;
+      case "system": return <img src="/lovable-uploads/6f9d8153-9570-4af8-a17d-ab29bb8d60e2.png" alt="System" className="h-4 w-4" />;
       default: return <Bell className="h-4 w-4" />;
     }
   };
@@ -134,11 +134,9 @@ const NotificationsPage = () => {
         <Card className="shadow-md border-border/50">
           <CardHeader>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="all">All</TabsTrigger>
                 <TabsTrigger value="unread">Unread</TabsTrigger>
-                <TabsTrigger value="like">Likes</TabsTrigger>
-                <TabsTrigger value="comment">Comments</TabsTrigger>
               </TabsList>
             </Tabs>
           </CardHeader>
