@@ -13,6 +13,10 @@ const ProfilePage = () => {
     setIsLoggedIn(true);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   if (!isLoggedIn) {
     return (
       <AppLayout>
@@ -25,7 +29,7 @@ const ProfilePage = () => {
     <AppLayout>
       <div className="container max-w-4xl mx-auto px-4 py-4">
         <ProfileHeader />
-        <MyAccountSection />
+        <MyAccountSection onLogout={handleLogout} />
         <ProfileTabs />
       </div>
     </AppLayout>
