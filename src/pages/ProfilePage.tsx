@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,10 +9,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Settings, HelpCircle, LogOut, UserRound, Moon, Sun, Globe, Bell, Download, Shield, Link } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useTheme } from "@/contexts/ThemeContext";
+
 const ProfilePage = () => {
+  const navigate = useNavigate();
   const {
     toast
   } = useToast();
@@ -25,13 +29,16 @@ const ProfilePage = () => {
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [language, setLanguage] = useState("english");
   const [notificationFrequency, setNotificationFrequency] = useState("daily");
+
   const handleLogout = () => {
     toast({
       title: "Logged out successfully",
       description: "You have been logged out of your account."
     });
     setIsLoggedIn(false);
+    navigate('/login');
   };
+
   const handleLogin = () => {
     toast({
       title: "Logged in successfully",
@@ -39,12 +46,14 @@ const ProfilePage = () => {
     });
     setIsLoggedIn(true);
   };
+
   const handleDataExport = () => {
     toast({
       title: "Data export initiated",
       description: "Your data export will be ready for download within 24 hours."
     });
   };
+
   const handleToggle2FA = () => {
     setTwoFactorEnabled(!twoFactorEnabled);
     toast({
@@ -52,6 +61,7 @@ const ProfilePage = () => {
       description: twoFactorEnabled ? "Two-factor authentication has been disabled." : "Two-factor authentication has been enabled for better security."
     });
   };
+
   if (!isLoggedIn) {
     return <AppLayout>
         <div className="max-w-md mx-auto mt-10">
@@ -78,6 +88,7 @@ const ProfilePage = () => {
         </div>
       </AppLayout>;
   }
+
   return <AppLayout>
       <div className="container max-w-4xl mx-auto px-4 py-4">
         <div className="flex flex-col items-center gap-4 mb-6">
@@ -283,9 +294,25 @@ const ProfilePage = () => {
 
             <Card>
               <CardFooter className="pt-6">
-                <Button variant="destructive" className="ml-auto" onClick={handleLogout}>
-                  <LogOut className="h-4 w-4 mr-2" /> Logout
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" className="ml-auto">
+                      <LogOut className="h-4 w-4 mr-2" /> Logout
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you sure you want to logout?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        You will be redirected to the login page and will need to sign in again to access your account.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>No</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleLogout}>Yes</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </CardFooter>
             </Card>
           </TabsContent>

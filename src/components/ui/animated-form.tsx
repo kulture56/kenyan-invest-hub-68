@@ -1,3 +1,4 @@
+
 'use client';
 
 import { memo, ReactNode, useState, ChangeEvent, FormEvent } from 'react';
@@ -76,15 +77,15 @@ const AnimatedForm = memo(function AnimatedForm({
       setErrors(formErrors);
     }
   };
-  return <section className="max-md:w-full flex flex-col gap-4 w-96 mx-auto bg-purple-50">
+  return <section className="max-md:w-full flex flex-col gap-4 w-96 mx-auto bg-white rounded-lg p-6 shadow-lg">
       <BoxReveal boxColor='var(--skeleton)' duration={0.3}>
-        <h2 className='font-bold text-3xl text-neutral-800 dark:text-neutral-200'>
+        <h2 className='font-bold text-3xl text-gray-900'>
           {header}
         </h2>
       </BoxReveal>
 
       {subHeader && <BoxReveal boxColor='var(--skeleton)' duration={0.3} className='pb-2'>
-          <div className='text-neutral-600 text-sm max-w-sm dark:text-neutral-300'>
+          <div className='text-gray-700 text-sm max-w-sm'>
             {subHeader}
           </div>
         </BoxReveal>}
@@ -92,7 +93,7 @@ const AnimatedForm = memo(function AnimatedForm({
       {/* Social Login Buttons */}
       {(appleLogin || googleLogin) && <div className="space-y-3">
           {appleLogin && <BoxReveal boxColor='var(--skeleton)' duration={0.3} overflow='visible' width='unset'>
-              <button type='button' onClick={() => console.log('Apple login clicked')} className="g-button group/btn bg-transparent w-full rounded-md border h-10 font-medium outline-hidden hover:cursor-pointer flex items-center justify-center gap-3 text-zinc-950">
+              <button type='button' onClick={() => console.log('Apple login clicked')} className="g-button group/btn bg-white w-full rounded-md border border-gray-300 h-10 font-medium outline-hidden hover:cursor-pointer flex items-center justify-center gap-3 text-gray-900 hover:bg-gray-50">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
                 </svg>
@@ -102,8 +103,8 @@ const AnimatedForm = memo(function AnimatedForm({
             </BoxReveal>}
 
           {googleLogin && <BoxReveal boxColor='var(--skeleton)' duration={0.3} overflow='visible' width='unset'>
-              <button className='g-button group/btn bg-transparent w-full rounded-md border h-10 font-medium outline-hidden hover:cursor-pointer' type='button' onClick={() => console.log('Google login clicked')}>
-                <span className="flex items-center justify-center w-full h-full gap-3 text-zinc-950">
+              <button className='g-button group/btn bg-white w-full rounded-md border border-gray-300 h-10 font-medium outline-hidden hover:cursor-pointer hover:bg-gray-50' type='button' onClick={() => console.log('Google login clicked')}>
+                <span className="flex items-center justify-center w-full h-full gap-3 text-gray-900">
                   <img src="/lovable-uploads/789c9d61-2d9e-4a99-87d1-248bdd20ccd0.png" width={20} height={20} alt='Google Icon' />
                   {googleLogin}
                 </span>
@@ -113,11 +114,11 @@ const AnimatedForm = memo(function AnimatedForm({
 
           <BoxReveal boxColor='var(--skeleton)' duration={0.3} width='100%'>
             <section className='flex items-center gap-4'>
-              <hr className='flex-1 border-1 border-dashed border-neutral-300 dark:border-neutral-700' />
-              <p className="text-sm text-zinc-950">
+              <hr className='flex-1 border-1 border-dashed border-gray-300' />
+              <p className="text-sm text-gray-600">
                 or
               </p>
-              <hr className='flex-1 border-1 border-dashed border-neutral-300 dark:border-neutral-700' />
+              <hr className='flex-1 border-1 border-dashed border-gray-300' />
             </section>
           </BoxReveal>
         </div>}
@@ -126,16 +127,16 @@ const AnimatedForm = memo(function AnimatedForm({
         <section className={`grid grid-cols-1 md:grid-cols-${fieldPerRow} mb-4`}>
           {fields.map(field => <section key={field.label} className='flex flex-col gap-2'>
               <BoxReveal boxColor='var(--skeleton)' duration={0.3}>
-                <Label htmlFor={field.label}>
+                <Label htmlFor={field.label} className="text-gray-900">
                   {field.label} <span className='text-red-500'>*</span>
                 </Label>
               </BoxReveal>
 
               <BoxReveal width='100%' boxColor='var(--skeleton)' duration={0.3} className='flex flex-col space-y-2 w-full'>
                 <section className='relative'>
-                  <Input type={field.type === 'password' ? visible ? 'text' : 'password' : field.type} id={field.label} placeholder={field.placeholder} onChange={field.onChange} className="bg-zinc-950" />
+                  <Input type={field.type === 'password' ? visible ? 'text' : 'password' : field.type} id={field.label} placeholder={field.placeholder} onChange={field.onChange} className="bg-white text-gray-900 border-gray-300" />
 
-                  {field.type === 'password' && <button type='button' onClick={toggleVisibility} className='absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5'>
+                  {field.type === 'password' && <button type='button' onClick={toggleVisibility} className='absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-gray-600'>
                       {visible ? <Eye className='h-5 w-5' /> : <EyeOff className='h-5 w-5' />}
                     </button>}
                 </section>
@@ -154,7 +155,7 @@ const AnimatedForm = memo(function AnimatedForm({
         </BoxReveal>
 
         <BoxReveal width='100%' boxColor='var(--skeleton)' duration={0.3} overflow='visible'>
-          <button type='submit' className="bg-gradient-to-br relative group/btn from-zinc-200 dark:from-zinc-900 dark:to-zinc-900 to-zinc-200 block w-full rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] outline-hidden hover:cursor-pointer text-gray-50 bg-zinc-950 hover:bg-zinc-800">
+          <button type='submit' className="bg-gradient-to-br relative group/btn from-purple-600 to-purple-700 block w-full rounded-md h-10 font-medium shadow-lg outline-hidden hover:cursor-pointer text-white hover:from-purple-700 hover:to-purple-800">
             {submitButton} &rarr;
             <BottomGradient />
           </button>
@@ -162,7 +163,7 @@ const AnimatedForm = memo(function AnimatedForm({
 
         {textVariantButton && goTo && <BoxReveal boxColor='var(--skeleton)' duration={0.3}>
             <section className='mt-4 text-center hover:cursor-pointer'>
-              <button onClick={goTo} className="text-sm hover:cursor-pointer outline-hidden text-purple-900">
+              <button onClick={goTo} className="text-sm hover:cursor-pointer outline-hidden text-purple-600 hover:text-purple-700">
                 {textVariantButton}
               </button>
             </section>
@@ -170,7 +171,7 @@ const AnimatedForm = memo(function AnimatedForm({
 
         {signUpPrompt && goToLandingPage && <BoxReveal boxColor='var(--skeleton)' duration={0.3}>
             <section className='mt-4 text-center hover:cursor-pointer'>
-              <button onClick={goToLandingPage} className="text-sm hover:cursor-pointer outline-hidden hover:underline text-fuchsia-900">
+              <button onClick={goToLandingPage} className="text-sm hover:cursor-pointer outline-hidden hover:underline text-purple-600 hover:text-purple-700">
                 {signUpPrompt}
               </button>
             </section>
