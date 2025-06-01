@@ -105,7 +105,7 @@ export const PrivacyPolicyTab = () => {
               - Object to processing for direct marketing
               - Withdraw consent for data processing
               
-              To exercise these rights, visit Account > Settings > Security & Privacy or contact our support team.
+              To exercise these rights, visit Account {'>'}  Settings {'>'}  Security & Privacy or contact our support team.
             </p>
           </section>
 
@@ -141,7 +141,7 @@ export const PrivacyPolicyTab = () => {
             <h3 className="text-lg font-semibold">12. Contact Us</h3>
             <p className="text-muted-foreground">
               If you have questions about this Privacy Policy or our data practices, contact us through:
-              - Help Center > Contact Support
+              - Help Center {'>'}  Contact Support
               - Email: privacy@geltplatform.com
               - Our Data Protection Officer for matters related to Kenya's Data Protection Act
             </p>

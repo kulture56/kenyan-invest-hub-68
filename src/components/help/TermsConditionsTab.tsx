@@ -69,14 +69,14 @@ export const TermsConditionsTab = () => {
           <section>
             <h3 className="text-lg font-semibold">8. Premium Features</h3>
             <p className="text-muted-foreground">
-              GELT offers premium features (e.g., group streaks, advanced analytics) through a subscription model. Subscription terms, including fees, billing, and cancellation, are detailed in the Account > Settings section. You agree to comply with these terms when accessing premium features.
+              GELT offers premium features (e.g., group streaks, advanced analytics) through a subscription model. Subscription terms, including fees, billing, and cancellation, are detailed in the Account {'>'}  Settings section. You agree to comply with these terms when accessing premium features.
             </p>
           </section>
 
           <section>
             <h3 className="text-lg font-semibold">9. Data Protection</h3>
             <p className="text-muted-foreground">
-              GELT complies with Kenya's Data Protection Act (2019). You have the right to access, export, or delete your personal data via Account > Settings > Security & Privacy. Data used for Rafiki AI training is anonymized and processed in accordance with our Privacy Policy.
+              GELT complies with Kenya's Data Protection Act (2019). You have the right to access, export, or delete your personal data via Account {'>'}  Settings {'>'}  Security & Privacy. Data used for Rafiki AI training is anonymized and processed in accordance with our Privacy Policy.
             </p>
           </section>
 
