@@ -123,7 +123,7 @@ const SavedJobs: React.FC = () => {
                         <a href={job.job_url} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="h-4 w-4" />
                         </a>
-                      </a>
+                      </Button>
                     )}
                     <Button 
                       variant="outline" 
