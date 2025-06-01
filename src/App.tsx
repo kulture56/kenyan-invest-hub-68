@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import TopicPage from "./pages/TopicPage";
 import RafikiPage from "./pages/RafikiPage";
 import ProfilePage from "./pages/ProfilePage";
+import SettingsPage from "./pages/SettingsPage";
+import HelpPage from "./pages/HelpPage";
 import MessagesPage from "./pages/MessagesPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import BookmarksPage from "./pages/BookmarksPage";
@@ -29,6 +31,8 @@ const App = () => (
           <Route path="/topics/:topicSlug" element={<TopicPage />} />
           <Route path="/rafiki" element={<RafikiPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/help" element={<HelpPage />} />
           <Route path="/messages" element={<MessagesPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/bookmarks" element={<BookmarksPage />} />

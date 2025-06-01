@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
@@ -8,7 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { PersonalDetailsTab } from "@/components/profile/PersonalDetailsTab";
 import { AnalyticsPreferencesTab } from "@/components/profile/AnalyticsPreferencesTab";
 import { AccountOverviewTab } from "@/components/profile/AccountOverviewTab";
-import { LoginForm } from "@/components/profile/LoginForm";
 
 interface UserProfile {
   id: string;
@@ -29,166 +28,38 @@ interface UserProfile {
 }
 
 const ProfilePage = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState(searchParams.get("tab") || "personal");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState<string>("");
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    checkUser();
-  }, []);
-
-  const checkUser = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        setIsLoggedIn(true);
-        setUserEmail(user.email || "");
-        await fetchProfile(user.id);
-      } else {
-        setIsLoggedIn(false);
-      }
-    } catch (error) {
-      console.error("Error checking user:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchProfile = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', userId)
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        throw error;
-      }
-
-      if (data) {
-        setProfile(data);
-      } else {
-        // Create profile if it doesn't exist
-        const { data: newProfile, error: createError } = await supabase
-          .from('profiles')
-          .insert([{
-            user_id: userId,
-            full_name: userEmail.split('@')[0],
-            last_login: new Date().toISOString()
-          }])
-          .select()
-          .single();
-
-        if (createError) throw createError;
-        setProfile(newProfile);
-      }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load profile data",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handleLogin = async (email: string, password: string) => {
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Logged in successfully",
-        description: "Welcome back to GELT!"
-      });
-      
-      await checkUser();
-    } catch (error: any) {
-      toast({
-        title: "Login failed",
-        description: error.message,
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-
-      toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account."
-      });
-      
-      setIsLoggedIn(false);
-      setProfile(null);
-      navigate("/");
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive"
-      });
-    }
-  };
+  const [profile, setProfile] = useState<UserProfile | null>({
+    id: "demo-id",
+    user_id: "demo-user-id",
+    full_name: "John Doe",
+    bio: "Financial enthusiast and GELT Platform user",
+    avatar_url: null,
+    gender: "Male",
+    age_group: "25-34",
+    location: "Nairobi, Kenya",
+    privacy_full_name: "public",
+    privacy_bio: "public",
+    privacy_avatar: "public",
+    analytics_consent: true,
+    created_at: "2024-01-15T10:30:00Z",
+    updated_at: "2024-01-15T10:30:00Z",
+    last_login: "2024-01-15T08:45:00Z"
+  });
+  const userEmail = "john.doe@example.com";
 
   const updateProfile = async (updates: Partial<UserProfile>) => {
     if (!profile) return;
 
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .update(updates)
-        .eq('user_id', profile.user_id)
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      setProfile(data);
-      toast({
-        title: "Profile Updated",
-        description: "Your profile has been successfully updated."
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive"
-      });
-    }
+    // Simulate profile update
+    setProfile(prev => prev ? { ...prev, ...updates } : null);
+    toast({
+      title: "Profile Updated",
+      description: "Your profile has been successfully updated."
+    });
   };
-
-  if (loading) {
-    return (
-      <AppLayout>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-        </div>
-      </AppLayout>
-    );
-  }
-
-  if (!isLoggedIn) {
-    return (
-      <AppLayout>
-        <LoginForm onLogin={handleLogin} />
-      </AppLayout>
-    );
-  }
 
   return (
     <AppLayout>
@@ -224,7 +95,7 @@ const ProfilePage = () => {
             <AccountOverviewTab
               profile={profile}
               userEmail={userEmail}
-              onLogout={handleLogout}
+              onLogout={() => {}}
             />
           </TabsContent>
         </Tabs>
