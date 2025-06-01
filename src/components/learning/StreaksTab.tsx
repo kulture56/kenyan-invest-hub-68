@@ -1,10 +1,14 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StreaksOverview from "./streaks/StreaksOverview";
 import GroupStreaks from "./streaks/GroupStreaks";
 import Leaderboards from "./streaks/Leaderboards";
 import Challenges from "./streaks/Challenges";
 import ShareableBadge from "./streaks/ShareableBadge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, Trophy, Target } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Challenge {
   id: string;
@@ -31,6 +35,15 @@ interface StreaksTabProps {
   weekDays: string[];
 }
 
+interface ThemedStreak {
+  id: string;
+  title: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  is_active: boolean;
+}
+
 // Mock data for leaderboards
 const individualLeaderboard = [
   {
@@ -44,7 +57,7 @@ const individualLeaderboard = [
     id: 2,
     position: 2,
     username: "InvestKing",
-    avatar: "/placeholder.svg",
+    avatar: "/placeholder.svg", 
     points: 756
   },
   {
@@ -118,22 +131,159 @@ const groupStreaks = [
   },
   {
     id: 2,
-    name: "Finance Buddies",
+    name: "Finance Buddies", 
     members: 5,
     streak: 7
   }
 ];
 
+const DailyQuestionsCard: React.FC = () => {
+  const [questionsCompleted, setQuestionsCompleted] = useState(2);
+  const maxQuestions = 3;
+  const pointsPerQuestion = 1;
+
+  return (
+    <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <Target className="h-5 w-5 text-blue-600" />
+          Daily Questions
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium">Progress Today</span>
+            <Badge variant="secondary">
+              {questionsCompleted}/{maxQuestions} completed
+            </Badge>
+          </div>
+          
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div 
+              className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+              style={{ width: `${(questionsCompleted / maxQuestions) * 100}%` }}
+            />
+          </div>
+          
+          <div className="flex justify-between text-sm text-muted-foreground">
+            <span>Points earned: {questionsCompleted * pointsPerQuestion}</span>
+            <span>Max: {maxQuestions} points</span>
+          </div>
+          
+          {questionsCompleted < maxQuestions && (
+            <p className="text-sm text-blue-600 font-medium">
+              {maxQuestions - questionsCompleted} question{maxQuestions - questionsCompleted !== 1 ? 's' : ''} remaining today
+            </p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const ThemedStreaksCard: React.FC = () => {
+  const [themedStreaks, setThemedStreaks] = useState<ThemedStreak[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchThemedStreaks();
+  }, []);
+
+  const fetchThemedStreaks = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('streak_themes')
+        .select('*')
+        .eq('is_active', true)
+        .order('start_date', { ascending: true });
+
+      if (error) throw error;
+      setThemedStreaks(data || []);
+    } catch (error) {
+      console.error('Error fetching themed streaks:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  if (loading) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5" />
+            Themed Streaks
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">Loading themed streaks...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Calendar className="h-5 w-5" />
+          Themed Streaks
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          {themedStreaks.length === 0 ? (
+            <p className="text-muted-foreground text-sm">No active themed streaks at the moment.</p>
+          ) : (
+            themedStreaks.map((streak) => (
+              <div key={streak.id} className="border rounded-lg p-3 bg-gradient-to-r from-green-50 to-emerald-50">
+                <div className="flex justify-between items-start mb-2">
+                  <h4 className="font-semibold text-green-800">{streak.title}</h4>
+                  <Badge className="bg-green-100 text-green-800 border-green-300">
+                    Active
+                  </Badge>
+                </div>
+                <p className="text-sm text-green-700 mb-2">{streak.description}</p>
+                <div className="flex justify-between text-xs text-green-600">
+                  <span>{formatDate(streak.start_date)} - {formatDate(streak.end_date)}</span>
+                  <Trophy className="h-4 w-4" />
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 const StreaksTab: React.FC<StreaksTabProps> = ({
   streaksData,
   weekDays
 }) => {
+  // Update streaksData to ensure max 3 points per day
+  const updatedStreaksData = {
+    ...streaksData,
+    dailyGoal: 3, // Maximum 3 points per day
+    weeklyPoints: streaksData.weeklyPoints.map(points => Math.min(points, 3)) // Cap at 3 points
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
       <div className="lg:col-span-1 space-y-3">
-        <StreaksOverview streaksData={streaksData} weekDays={weekDays} />
+        <StreaksOverview streaksData={updatedStreaksData} weekDays={weekDays} />
+        <DailyQuestionsCard />
+        <ThemedStreaksCard />
         <GroupStreaks groupStreaks={groupStreaks} />
-        <ShareableBadge streaksData={streaksData} />
+        <ShareableBadge streaksData={updatedStreaksData} />
       </div>
       
       <div className="lg:col-span-2 space-y-3">
@@ -142,7 +292,7 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
           institutionLeaderboard={institutionLeaderboard}
         />
         
-        <Challenges challenges={streaksData.upcomingChallenges} />
+        <Challenges challenges={updatedStreaksData.upcomingChallenges} />
       </div>
     </div>
   );

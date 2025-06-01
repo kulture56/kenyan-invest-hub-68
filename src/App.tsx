@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,6 +18,7 @@ import NotFound from "./pages/NotFound";
 import RafikiChatWidget from "./components/rafiki/RafikiChatWidget";
 import LearningHubPage from "./pages/LearningHubPage";
 import ReportPage from "./pages/ReportPage";
+import JobsHubPage from "./pages/JobsHubPage";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +42,8 @@ const App = () => (
             <Route path="/learning-hub" element={<LearningHubPage />} />
             <Route path="/glossary" element={<LearningHubPage initialTab="glossary" />} />
             <Route path="/streaks" element={<LearningHubPage initialTab="streaks" />} />
+            <Route path="/jobs" element={<JobsHubPage />} />
+            <Route path="/career-hub" element={<JobsHubPage />} />
             <Route path="/report/:postId" element={<ReportPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

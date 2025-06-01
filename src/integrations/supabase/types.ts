@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      job_applications: {
+        Row: {
+          application_date: string
+          company_name: string
+          created_at: string
+          id: string
+          job_title: string
+          job_url: string | null
+          notes: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          application_date?: string
+          company_name: string
+          created_at?: string
+          id?: string
+          job_title: string
+          job_url?: string | null
+          notes?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          application_date?: string
+          company_name?: string
+          created_at?: string
+          id?: string
+          job_title?: string
+          job_url?: string | null
+          notes?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           author_avatar: string | null
@@ -138,6 +177,63 @@ export type Database = {
           message?: string
           response?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      saved_jobs: {
+        Row: {
+          company_name: string
+          id: string
+          job_title: string
+          job_url: string | null
+          saved_date: string
+          user_id: string
+        }
+        Insert: {
+          company_name: string
+          id?: string
+          job_title: string
+          job_url?: string | null
+          saved_date?: string
+          user_id: string
+        }
+        Update: {
+          company_name?: string
+          id?: string
+          job_title?: string
+          job_url?: string | null
+          saved_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      streak_themes: {
+        Row: {
+          created_at: string
+          description: string
+          end_date: string
+          id: string
+          is_active: boolean
+          start_date: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          end_date: string
+          id?: string
+          is_active?: boolean
+          start_date: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          end_date?: string
+          id?: string
+          is_active?: boolean
+          start_date?: string
+          title?: string
         }
         Relationships: []
       }

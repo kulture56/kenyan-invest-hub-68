@@ -1,218 +1,131 @@
 
+// Mock data for learning paths with alphabetically ordered videos
 export const learningPaths = [
   {
     id: "1",
-    title: "Stock Market Fundamentals",
-    description: "Learn the basics of stock market investing, from understanding market mechanics to analyzing companies.",
+    title: "Introduction to Investing",
+    description: "Learn the basics of investing in the Kenyan market",
     progress: 60,
-    modules: 8,
-    completedModules: 5,
-    estimatedTime: "4 weeks",
-    difficulty: "Beginner",
-    category: "Stocks",
-    completed: 5,
-    image: "/placeholder.svg",
-    tags: ["stocks", "investing", "fundamentals"]
+    totalLessons: 12,
+    estimatedTime: "2 hours",
+    category: "Beginner",
+    videos: [
+      { id: "v1", title: "Asset Allocation Strategies", duration: "8:30", completed: true },
+      { id: "v2", title: "Basic Investment Principles", duration: "12:15", completed: true },
+      { id: "v3", title: "Diversification Fundamentals", duration: "10:45", completed: true },
+      { id: "v4", title: "Emergency Fund Planning", duration: "7:20", completed: false },
+      { id: "v5", title: "Financial Goal Setting", duration: "9:15", completed: false },
+      { id: "v6", title: "Getting Started with NSE", duration: "15:30", completed: false },
+      { id: "v7", title: "Introduction to Bonds", duration: "11:40", completed: false },
+      { id: "v8", title: "Market Analysis Basics", duration: "13:25", completed: false },
+      { id: "v9", title: "Portfolio Building 101", duration: "14:10", completed: false },
+      { id: "v10", title: "Risk Assessment Methods", duration: "10:30", completed: false },
+      { id: "v11", title: "Stock Market Fundamentals", duration: "16:45", completed: false },
+      { id: "v12", title: "Understanding Market Volatility", duration: "12:00", completed: false }
+    ]
   },
   {
     id: "2", 
-    title: "SACCO Investment Guide",
-    description: "Master the art of SACCO investments and understand how to maximize returns through cooperative societies.",
-    progress: 30,
-    modules: 6,
-    completedModules: 2,
-    estimatedTime: "3 weeks",
-    difficulty: "Intermediate",
-    category: "SACCOs",
-    completed: 2,
-    image: "/placeholder.svg",
-    tags: ["sacco", "cooperative", "savings"]
+    title: "SACCO Fundamentals",
+    description: "Understanding Savings and Credit Cooperative Organizations",
+    progress: 40,
+    totalLessons: 10,
+    estimatedTime: "1.5 hours",
+    category: "Beginner",
+    videos: [
+      { id: "s1", title: "Benefits of SACCO Membership", duration: "9:45", completed: true },
+      { id: "s2", title: "Choosing the Right SACCO", duration: "11:30", completed: true },
+      { id: "s3", title: "Digital SACCO Services", duration: "8:15", completed: false },
+      { id: "s4", title: "Dividend Calculations", duration: "12:20", completed: false },
+      { id: "s5", title: "How SACCOs Work", duration: "14:10", completed: false },
+      { id: "s6", title: "Loan Application Process", duration: "10:45", completed: false },
+      { id: "s7", title: "SACCO Governance Structure", duration: "13:30", completed: false },
+      { id: "s8", title: "SACCO vs Bank Comparison", duration: "9:20", completed: false },
+      { id: "s9", title: "Savings Products Available", duration: "7:55", completed: false },
+      { id: "s10", title: "Understanding SACCO Shares", duration: "15:40", completed: false }
+    ]
   },
   {
     id: "3",
-    title: "Cryptocurrency Basics",
-    description: "Understand blockchain technology and cryptocurrency investing in the Kenyan context.",
-    progress: 0,
-    modules: 10,
-    completedModules: 0,
-    estimatedTime: "6 weeks", 
-    difficulty: "Advanced",
-    category: "Crypto",
-    completed: 0,
-    image: "/placeholder.svg",
-    tags: ["crypto", "blockchain", "digital currency"]
+    title: "NSE Trading Mastery", 
+    description: "Master trading on the Nairobi Securities Exchange",
+    progress: 25,
+    totalLessons: 15,
+    estimatedTime: "3 hours",
+    category: "Advanced",
+    videos: [
+      { id: "n1", title: "Advanced Trading Strategies", duration: "18:30", completed: true },
+      { id: "n2", title: "Blue Chip Stocks Analysis", duration: "16:45", completed: false },
+      { id: "n3", title: "Capital Gains Tax Planning", duration: "12:20", completed: false },
+      { id: "n4", title: "Dividend Yield Calculations", duration: "10:15", completed: false },
+      { id: "n5", title: "Economic Indicators Impact", duration: "14:40", completed: false },
+      { id: "n6", title: "Foreign Investment Rules", duration: "11:30", completed: false },
+      { id: "n7", title: "Market Making Concepts", duration: "13:25", completed: false },
+      { id: "n8", title: "NSE Trading Hours and Rules", duration: "9:50", completed: false },
+      { id: "n9", title: "Order Types and Execution", duration: "15:20", completed: false },
+      { id: "n10", title: "Portfolio Performance Metrics", duration: "12:35", completed: false },
+      { id: "n11", title: "Risk Management Techniques", duration: "17:10", completed: false },
+      { id: "n12", title: "Sector Analysis Methods", duration: "14:55", completed: false },
+      { id: "n13", title: "Technical Analysis Tools", duration: "19:20", completed: false },
+      { id: "n14", title: "Understanding Market Cycles", duration: "16:30", completed: false },
+      { id: "n15", title: "Value vs Growth Investing", duration: "13:45", completed: false }
+    ]
   }
 ];
 
-export const glossaryTerms = [
+// Mock data for daily questions with exactly 3 questions per day, 1 point each
+export const dailyQuestions = [
   {
-    letter: "A",
-    term: "Asset",
-    definition: "A resource with economic value that an individual or entity owns or controls with the expectation that it will provide future benefit.",
-    category: "General"
+    id: "q1",
+    question: "What is the minimum share capital required to start a SACCO in Kenya?",
+    options: [
+      "KES 100,000",
+      "KES 500,000", 
+      "KES 1,000,000",
+      "KES 2,000,000"
+    ],
+    correctAnswer: 1,
+    points: 1,
+    category: "SACCO"
   },
   {
-    letter: "B", 
-    term: "Bond",
-    definition: "A fixed income instrument that represents a loan made by an investor to a borrower.",
-    category: "Fixed Income"
+    id: "q2", 
+    question: "Which of the following is NOT a blue-chip stock on the NSE?",
+    options: [
+      "Safaricom PLC",
+      "Equity Group Holdings",
+      "Kenya Commercial Bank",
+      "Generic Bank Ltd"
+    ],
+    correctAnswer: 3,
+    points: 1,
+    category: "NSE"
   },
   {
-    letter: "B",
-    term: "Business Daily Africa Index",
-    definition: "A locally tracked financial index focused on blue-chip or high-performing Kenyan stocks.",
-    category: "Markets"
-  },
-  {
-    letter: "C",
-    term: "Chama",
-    definition: "Informal investment group or self-help group pooling resources for collective investment or welfare.",
-    category: "Kenyan Finance"
-  },
-  {
-    letter: "C",
-    term: "County Bonds",
-    definition: "Bonds issued by county governments to raise development funds, often offered locally to residents.",
-    category: "Fixed Income"
-  },
-  {
-    letter: "C",
-    term: "Co-operative Shares",
-    definition: "Ownership units in co-operative societies that entitle members to dividends and voting rights.",
-    category: "Kenyan Finance"
-  },
-  {
-    letter: "D",
-    term: "Dividend",
-    definition: "A payment made by a corporation to its shareholders, usually as a distribution of profits.",
-    category: "Stocks"
-  },
-  {
-    letter: "D",
-    term: "Digital Lenders",
-    definition: "Mobile-based platforms offering short-term loans with high interest, popular among MSMEs and individuals.",
-    category: "Kenyan Finance"
-  },
-  {
-    letter: "D",
-    term: "Diaspora Remittances",
-    definition: "Inflows of funds from Kenyans abroad, a major source of capital and investment in real estate and business.",
-    category: "Kenyan Finance"
-  },
-  {
-    letter: "H",
-    term: "Harambee Contributions",
-    definition: "Community fundraising efforts often used for social or investment purposes.",
-    category: "Kenyan Finance"
-  },
-  {
-    letter: "H",
-    term: "Huduma Card",
-    definition: "A government-issued smart card for accessing financial and public services, often used for G2P payments.",
-    category: "Government Services"
-  },
-  {
-    letter: "K",
-    term: "KCB Simba Points",
-    definition: "A bank loyalty program convertible into value for purchases, often used in savings incentives.",
+    id: "q3",
+    question: "What is the current Central Bank Rate (CBR) range in Kenya?",
+    options: [
+      "5-7%",
+      "8-10%",
+      "12-15%", 
+      "18-20%"
+    ],
+    correctAnswer: 2,
+    points: 1,
     category: "Banking"
-  },
-  {
-    letter: "L",
-    term: "Lipa na M-Pesa",
-    definition: "A mobile payment solution used by SMEs for digital transactions and cashless sales.",
-    category: "Mobile Money"
-  },
-  {
-    letter: "L",
-    term: "Logbook Loan",
-    definition: "A secured loan where a vehicle logbook is used as collateral, popular with informal sector.",
-    category: "Lending"
-  },
-  {
-    letter: "M",
-    term: "M-Pesa Statement",
-    definition: "A mobile money transaction record used in lieu of bank statements for personal finance tracking.",
-    category: "Mobile Money"
-  },
-  {
-    letter: "M",
-    term: "M-Pesa Global",
-    definition: "A service enabling international money transfers and cross-border remittances via mobile.",
-    category: "Mobile Money"
-  },
-  {
-    letter: "S",
-    term: "SACCO Dividends",
-    definition: "Profits shared among SACCO members based on their share capital and savings contributions.",
-    category: "Kenyan Finance"
-  },
-  {
-    letter: "S",
-    term: "Safaricom M-Akiba",
-    definition: "A mobile-based retail bond platform offering government bonds via USSD and M-Pesa.",
-    category: "Investment Platforms"
-  },
-  {
-    letter: "S",
-    term: "Stawi Loan",
-    definition: "A digital loan product for small traders offered by a consortium of Kenyan banks.",
-    category: "Lending"
-  },
-  {
-    letter: "T",
-    term: "Treasury Mobile Direct (TMD)",
-    definition: "A platform for retail investors to buy government securities (T-bills & bonds) via mobile phone.",
-    category: "Government Securities"
-  },
-  {
-    letter: "U",
-    term: "Unit Trust Funds (UTFs)",
-    definition: "Pooled investment vehicles offered by fund managers, regulated by CMA Kenya.",
-    category: "Investment Funds"
-  },
-  {
-    letter: "U",
-    term: "Uwezo Fund",
-    definition: "A government fund providing credit to youth, women, and persons with disabilities for business purposes.",
-    category: "Government Programs"
-  },
-  {
-    letter: "Y",
-    term: "Youth Fund",
-    definition: "Government initiative offering financial support to youth-owned enterprises via loans or grants.",
-    category: "Government Programs"
   }
 ];
 
-export const streaksData = {
-  currentStreak: 7,
-  longestStreak: 21,
-  weeklyGoal: 5,
-  dailyProgress: [
-    { day: "Mon", completed: true, activities: 3 },
-    { day: "Tue", completed: true, activities: 2 },
-    { day: "Wed", completed: false, activities: 0 },
-    { day: "Thu", completed: true, activities: 4 },
-    { day: "Fri", completed: true, activities: 1 },
-    { day: "Sat", completed: false, activities: 0 },
-    { day: "Sun", completed: true, activities: 2 }
-  ],
-  thisWeek: 5,
-  completedChallenges: 12,
-  dailyGoal: 3,
-  weeklyPoints: [4, 3, 0, 5, 2, 0, 3],
-  upcomingChallenges: [
+// Weekly streak data with exactly 3 points max per day
+export const weeklyStreakData = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  datasets: [
     {
-      id: "1",
-      title: "Complete 3 Stock Analysis",
-      description: "Analyze 3 different stocks using fundamental analysis",
-      progress: 1,
-      total: 3,
-      reward: "50 points",
-      deadline: "2024-01-15"
-    }
-  ]
+      label: 'Points Earned',
+      data: [3, 2, 3, 1, 0, 3, 2], // Max 3 points per day
+      backgroundColor: 'rgba(99, 102, 241, 0.8)',
+      borderColor: 'rgba(99, 102, 241, 1)',
+      borderWidth: 1,
+    },
+  ],
 };
-
-export const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
