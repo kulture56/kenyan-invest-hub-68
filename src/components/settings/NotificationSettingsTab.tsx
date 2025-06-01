@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Save, Bell, Mail } from "lucide-react";
+import { Save, Bell, Mail, Smartphone, AlertTriangle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 export const NotificationSettingsTab = () => {
@@ -12,12 +12,14 @@ export const NotificationSettingsTab = () => {
   const [emailNotifications, setEmailNotifications] = useState({
     transactions: true,
     updates: false,
-    promotions: false
+    promotions: false,
+    security: true
   });
   const [pushNotifications, setPushNotifications] = useState({
     alerts: true,
     messages: true,
-    updates: false
+    updates: false,
+    marketing: false
   });
 
   const handleEmailToggle = (field: string, value: boolean) => {
@@ -26,6 +28,24 @@ export const NotificationSettingsTab = () => {
 
   const handlePushToggle = (field: string, value: boolean) => {
     setPushNotifications(prev => ({ ...prev, [field]: value }));
+  };
+
+  const requestPushPermission = async () => {
+    if ('Notification' in window) {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        toast({
+          title: "Push Notifications Enabled",
+          description: "You'll now receive push notifications from GELT Platform."
+        });
+      } else {
+        toast({
+          title: "Permission Denied",
+          description: "Push notifications require browser permission to work.",
+          variant: "destructive"
+        });
+      }
+    }
   };
 
   const handleSave = () => {
@@ -44,15 +64,18 @@ export const NotificationSettingsTab = () => {
             Email Notifications
           </CardTitle>
           <CardDescription>
-            Choose which emails you'd like to receive
+            Choose which emails you'd like to receive from GELT Platform
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <Label>Transaction Alerts</Label>
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="space-y-1 flex-1">
+              <Label className="font-medium flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-orange-500" />
+                Transaction Alerts
+              </Label>
               <p className="text-sm text-muted-foreground">
-                Get notified about important account transactions
+                Important notifications about account transactions and security events
               </p>
             </div>
             <Switch
@@ -61,11 +84,24 @@ export const NotificationSettingsTab = () => {
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <Label>App Updates</Label>
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="space-y-1 flex-1">
+              <Label className="font-medium">Security Alerts</Label>
               <p className="text-sm text-muted-foreground">
-                Receive notifications about new features and updates
+                Critical security notifications and account protection updates
+              </p>
+            </div>
+            <Switch
+              checked={emailNotifications.security}
+              onCheckedChange={(checked) => handleEmailToggle("security", checked)}
+            />
+          </div>
+
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="space-y-1 flex-1">
+              <Label className="font-medium">App Updates</Label>
+              <p className="text-sm text-muted-foreground">
+                Notifications about new features, improvements, and platform updates
               </p>
             </div>
             <Switch
@@ -74,11 +110,11 @@ export const NotificationSettingsTab = () => {
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <Label>Promotions</Label>
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="space-y-1 flex-1">
+              <Label className="font-medium">Promotions & Tips</Label>
               <p className="text-sm text-muted-foreground">
-                Get notified about special offers and promotions
+                Educational content, financial tips, and special offers
               </p>
             </div>
             <Switch
@@ -92,7 +128,7 @@ export const NotificationSettingsTab = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Bell className="h-5 w-5" />
+            <Smartphone className="h-5 w-5" />
             Push Notifications
           </CardTitle>
           <CardDescription>
@@ -100,11 +136,25 @@ export const NotificationSettingsTab = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <Label>Mobile Alerts</Label>
+          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <Label className="font-medium">Enable Push Notifications</Label>
+                <p className="text-sm text-muted-foreground">
+                  Grant browser permission to receive push notifications
+                </p>
+              </div>
+              <Button onClick={requestPushPermission} variant="outline" size="sm">
+                Enable
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="space-y-1 flex-1">
+              <Label className="font-medium">Critical Alerts</Label>
               <p className="text-sm text-muted-foreground">
-                Important alerts and reminders
+                Important alerts and security notifications
               </p>
             </div>
             <Switch
@@ -113,11 +163,11 @@ export const NotificationSettingsTab = () => {
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <Label>Messages</Label>
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="space-y-1 flex-1">
+              <Label className="font-medium">Messages & Mentions</Label>
               <p className="text-sm text-muted-foreground">
-                New messages and mentions
+                New messages, replies, and when someone mentions you
               </p>
             </div>
             <Switch
@@ -126,11 +176,11 @@ export const NotificationSettingsTab = () => {
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <Label>Updates</Label>
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="space-y-1 flex-1">
+              <Label className="font-medium">Product Updates</Label>
               <p className="text-sm text-muted-foreground">
-                App updates and new features
+                New features and platform improvements
               </p>
             </div>
             <Switch
@@ -138,15 +188,28 @@ export const NotificationSettingsTab = () => {
               onCheckedChange={(checked) => handlePushToggle("updates", checked)}
             />
           </div>
+
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="space-y-1 flex-1">
+              <Label className="font-medium">Marketing</Label>
+              <p className="text-sm text-muted-foreground">
+                Promotional content and special offers
+              </p>
+            </div>
+            <Switch
+              checked={pushNotifications.marketing}
+              onCheckedChange={(checked) => handlePushToggle("marketing", checked)}
+            />
+          </div>
+
+          <div className="flex justify-end pt-4 border-t">
+            <Button onClick={handleSave} className="gap-2">
+              <Save className="h-4 w-4" />
+              Save Changes
+            </Button>
+          </div>
         </CardContent>
       </Card>
-
-      <div className="flex justify-end">
-        <Button onClick={handleSave} className="gap-2">
-          <Save className="h-4 w-4" />
-          Save Changes
-        </Button>
-      </div>
     </div>
   );
 };

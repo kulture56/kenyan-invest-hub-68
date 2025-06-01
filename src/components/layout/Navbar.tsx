@@ -68,12 +68,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/profile?tab=settings" className="cursor-pointer flex items-center gap-2">
+                <Link to="/settings" className="cursor-pointer flex items-center gap-2">
                   <img src="/lovable-uploads/5e177755-4876-42aa-953a-36cee4079784.png" className="h-4 w-4" /> Settings
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/profile?tab=help" className="cursor-pointer flex items-center gap-2">
+                <Link to="/help" className="cursor-pointer flex items-center gap-2">
                   <img src="/lovable-uploads/602cec52-f456-44c8-9fef-dc523c21efed.png" className="h-4 w-4" /> Help
                 </Link>
               </DropdownMenuItem>

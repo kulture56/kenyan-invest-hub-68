@@ -13,40 +13,44 @@ const SettingsPage = () => {
 
   return (
     <AppLayout>
-      <div className="container max-w-4xl mx-auto px-4 py-6">
+      <div className="container max-w-6xl mx-auto px-4 py-6">
         <div className="mb-6">
           <h1 className="text-3xl font-bold">Settings</h1>
           <p className="text-muted-foreground">Manage your account preferences and privacy settings</p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="privacy">Privacy</TabsTrigger>
-            <TabsTrigger value="notifications">Notifications</TabsTrigger>
-            <TabsTrigger value="appearance">Appearance</TabsTrigger>
-            <TabsTrigger value="security">Security</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-6">
+            <TabsTrigger value="account" className="text-xs md:text-sm">Account</TabsTrigger>
+            <TabsTrigger value="privacy" className="text-xs md:text-sm">Privacy</TabsTrigger>
+            <TabsTrigger value="notifications" className="text-xs md:text-sm">Notifications</TabsTrigger>
+            <TabsTrigger value="appearance" className="text-xs md:text-sm">Appearance</TabsTrigger>
+            <TabsTrigger value="security" className="text-xs md:text-sm">Security</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="account" className="mt-6">
-            <AccountSettingsTab />
-          </TabsContent>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-12">
+              <TabsContent value="account" className="mt-0">
+                <AccountSettingsTab />
+              </TabsContent>
 
-          <TabsContent value="privacy" className="mt-6">
-            <PrivacySettingsTab />
-          </TabsContent>
+              <TabsContent value="privacy" className="mt-0">
+                <PrivacySettingsTab />
+              </TabsContent>
 
-          <TabsContent value="notifications" className="mt-6">
-            <NotificationSettingsTab />
-          </TabsContent>
+              <TabsContent value="notifications" className="mt-0">
+                <NotificationSettingsTab />
+              </TabsContent>
 
-          <TabsContent value="appearance" className="mt-6">
-            <AppearanceSettingsTab />
-          </TabsContent>
+              <TabsContent value="appearance" className="mt-0">
+                <AppearanceSettingsTab />
+              </TabsContent>
 
-          <TabsContent value="security" className="mt-6">
-            <SecuritySettingsTab />
-          </TabsContent>
+              <TabsContent value="security" className="mt-0">
+                <SecuritySettingsTab />
+              </TabsContent>
+            </div>
+          </div>
         </Tabs>
       </div>
     </AppLayout>
