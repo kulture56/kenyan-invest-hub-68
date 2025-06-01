@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Plus, 
   ExternalLink, 
@@ -74,6 +74,7 @@ const JobApplicationTracker: React.FC = () => {
     e.preventDefault();
     
     try {
+      // For now, using a placeholder user_id. In a real app, this would come from authentication
       const { data, error } = await supabase
         .from('job_applications')
         .insert([{
@@ -81,7 +82,8 @@ const JobApplicationTracker: React.FC = () => {
           company_name: formData.company_name,
           job_url: formData.job_url || null,
           status: formData.status,
-          notes: formData.notes || null
+          notes: formData.notes || null,
+          user_id: '00000000-0000-0000-0000-000000000000' // Placeholder user_id
         }])
         .select()
         .single();
