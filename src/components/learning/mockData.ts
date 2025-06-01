@@ -6,9 +6,11 @@ export const learningPaths = [
     title: "Introduction to Investing",
     description: "Learn the basics of investing in the Kenyan market",
     progress: 60,
-    totalLessons: 12,
-    estimatedTime: "2 hours",
-    category: "Beginner",
+    modules: 12,
+    completed: 7,
+    image: "/placeholder.svg",
+    tags: ["Beginner", "Investing", "Kenya"],
+    featured: true,
     videos: [
       { id: "v1", title: "Asset Allocation Strategies", duration: "8:30", completed: true },
       { id: "v2", title: "Basic Investment Principles", duration: "12:15", completed: true },
@@ -29,9 +31,10 @@ export const learningPaths = [
     title: "SACCO Fundamentals",
     description: "Understanding Savings and Credit Cooperative Organizations",
     progress: 40,
-    totalLessons: 10,
-    estimatedTime: "1.5 hours",
-    category: "Beginner",
+    modules: 10,
+    completed: 4,
+    image: "/placeholder.svg",
+    tags: ["Beginner", "SACCO", "Savings"],
     videos: [
       { id: "s1", title: "Benefits of SACCO Membership", duration: "9:45", completed: true },
       { id: "s2", title: "Choosing the Right SACCO", duration: "11:30", completed: true },
@@ -50,9 +53,10 @@ export const learningPaths = [
     title: "NSE Trading Mastery", 
     description: "Master trading on the Nairobi Securities Exchange",
     progress: 25,
-    totalLessons: 15,
-    estimatedTime: "3 hours",
-    category: "Advanced",
+    modules: 15,
+    completed: 4,
+    image: "/placeholder.svg",
+    tags: ["Advanced", "NSE", "Trading"],
     videos: [
       { id: "n1", title: "Advanced Trading Strategies", duration: "18:30", completed: true },
       { id: "n2", title: "Blue Chip Stocks Analysis", duration: "16:45", completed: false },
@@ -70,6 +74,46 @@ export const learningPaths = [
       { id: "n14", title: "Understanding Market Cycles", duration: "16:30", completed: false },
       { id: "n15", title: "Value vs Growth Investing", duration: "13:45", completed: false }
     ]
+  }
+];
+
+// Mock data for glossary terms
+export const glossaryTerms = [
+  {
+    letter: "A",
+    term: "Asset Allocation",
+    definition: "The process of dividing investments among different asset categories, such as stocks, bonds, and cash, to optimize the risk/return tradeoff based on an individual's specific situation and goals.",
+    category: "Investment"
+  },
+  {
+    letter: "B",
+    term: "Blue Chip Stocks",
+    definition: "Shares of large, well-established companies with a history of reliable performance. On the NSE, examples include Safaricom, Equity Bank, and Kenya Commercial Bank.",
+    category: "NSE"
+  },
+  {
+    letter: "C",
+    term: "Central Bank Rate (CBR)",
+    definition: "The rate set by the Central Bank of Kenya that influences lending rates across the banking sector. Currently maintained between 12-15%.",
+    category: "Banking"
+  },
+  {
+    letter: "D",
+    term: "Diversification",
+    definition: "An investment strategy that spreads risk by allocating investments across various financial instruments, industries, and other categories to minimize the impact of any single investment's poor performance.",
+    category: "Investment"
+  },
+  {
+    letter: "N",
+    term: "Nairobi Securities Exchange (NSE)",
+    definition: "Kenya's principal stock exchange where public companies are listed and traded. It provides a platform for buying and selling securities in Kenya.",
+    category: "NSE"
+  },
+  {
+    letter: "S",
+    term: "SACCO",
+    definition: "Savings and Credit Cooperative Organization - a member-owned financial cooperative that provides savings and credit services to its members in Kenya.",
+    category: "SACCO"
   }
 ];
 
@@ -115,6 +159,39 @@ export const dailyQuestions = [
     category: "Banking"
   }
 ];
+
+// Streaks data
+export const streaksData = {
+  currentStreak: 7,
+  longestStreak: 21,
+  thisWeek: 18,
+  completedChallenges: 3,
+  dailyGoal: 3,
+  weeklyPoints: [3, 2, 3, 1, 0, 3, 2],
+  upcomingChallenges: [
+    {
+      id: "1",
+      title: "SACCO Week Champion",
+      description: "Complete 3 daily questions for 7 consecutive days focusing on SACCO topics",
+      progress: 4,
+      total: 7,
+      reward: "SACCO Expert Badge",
+      deadline: "2025-06-08"
+    },
+    {
+      id: "2",
+      title: "NSE Trading Master",
+      description: "Answer 20 NSE-related questions correctly this month",
+      progress: 12,
+      total: 20,
+      reward: "Trading Pro Badge",
+      deadline: "2025-06-30"
+    }
+  ]
+};
+
+// Week days for the chart
+export const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 // Weekly streak data with exactly 3 points max per day
 export const weeklyStreakData = {
