@@ -13,40 +13,43 @@ const HelpPage = () => {
 
   return (
     <AppLayout>
-      <div className="container max-w-4xl mx-auto px-4 py-6">
+      <div className="container max-w-6xl mx-auto px-4 py-6">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold">Help Center</h1>
-          <p className="text-muted-foreground">Find answers, policies, and support resources</p>
+          <h1 className="text-3xl font-bold">GELT Help Center</h1>
+          <p className="text-muted-foreground">Find answers, policies, and support resources for the GELT Platform</p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="faqs">FAQs</TabsTrigger>
-            <TabsTrigger value="privacy">Privacy Policy</TabsTrigger>
-            <TabsTrigger value="terms">Terms & Conditions</TabsTrigger>
-            <TabsTrigger value="contact">Contact Support</TabsTrigger>
-            <TabsTrigger value="resources">Resources</TabsTrigger>
+          {/* Mobile: Single column layout */}
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-6 h-auto md:h-10">
+            <TabsTrigger value="faqs" className="text-xs md:text-sm px-2 py-2">FAQs</TabsTrigger>
+            <TabsTrigger value="privacy" className="text-xs md:text-sm px-2 py-2">Privacy Policy</TabsTrigger>
+            <TabsTrigger value="terms" className="text-xs md:text-sm px-2 py-2">Terms & Conditions</TabsTrigger>
+            <TabsTrigger value="contact" className="text-xs md:text-sm px-2 py-2">Contact Support</TabsTrigger>
+            <TabsTrigger value="resources" className="text-xs md:text-sm px-2 py-2">Resources</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="faqs" className="mt-6">
-            <FAQTab />
-          </TabsContent>
+          <div className="w-full">
+            <TabsContent value="faqs" className="mt-0">
+              <FAQTab />
+            </TabsContent>
 
-          <TabsContent value="privacy" className="mt-6">
-            <PrivacyPolicyTab />
-          </TabsContent>
+            <TabsContent value="privacy" className="mt-0">
+              <PrivacyPolicyTab />
+            </TabsContent>
 
-          <TabsContent value="terms" className="mt-6">
-            <TermsConditionsTab />
-          </TabsContent>
+            <TabsContent value="terms" className="mt-0">
+              <TermsConditionsTab />
+            </TabsContent>
 
-          <TabsContent value="contact" className="mt-6">
-            <ContactSupportTab />
-          </TabsContent>
+            <TabsContent value="contact" className="mt-0">
+              <ContactSupportTab />
+            </TabsContent>
 
-          <TabsContent value="resources" className="mt-6">
-            <ResourcesTab />
-          </TabsContent>
+            <TabsContent value="resources" className="mt-0">
+              <ResourcesTab />
+            </TabsContent>
+          </div>
         </Tabs>
       </div>
     </AppLayout>
