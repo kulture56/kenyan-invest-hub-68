@@ -86,8 +86,7 @@ export const AnalyticsPreferencesTab: React.FC<AnalyticsPreferencesTabProps> = (
             gender={formData.gender}
             ageGroup={formData.age_group}
             location={formData.location}
-            onFieldChange={handleInputChange}
-            onLocationRequest={handleLocationRequest}
+            onInputChange={handleInputChange}
           />
         )}
 
