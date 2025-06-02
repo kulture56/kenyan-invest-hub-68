@@ -112,7 +112,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {/* Trending Categories for desktop */}
           {(isOpen || isMobile) && !isMobile && <div className="p-3">
               <div className="flex items-center gap-2 mb-3">
-                <h3 className="font-medium text-primary text-sm">Trending Categories</h3>
+                <h3 className="font-medium text-sm text-purple-800">Trending Categories</h3>
                 
               </div>
               <ul className="space-y-1">
