@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import StreaksOverview from "./streaks/StreaksOverview";
 import GroupStreaks from "./streaks/GroupStreaks";
@@ -9,7 +8,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Trophy, Target } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-
 interface Challenge {
   id: string;
   title: string;
@@ -19,7 +17,6 @@ interface Challenge {
   reward: string;
   deadline: string;
 }
-
 interface StreaksData {
   currentStreak: number;
   longestStreak: number;
@@ -29,12 +26,10 @@ interface StreaksData {
   weeklyPoints: number[];
   upcomingChallenges: Challenge[];
 }
-
 interface StreaksTabProps {
   streaksData: StreaksData;
   weekDays: string[];
 }
-
 interface ThemedStreak {
   id: string;
   title: string;
@@ -45,159 +40,101 @@ interface ThemedStreak {
 }
 
 // Mock data for leaderboards
-const individualLeaderboard = [
-  {
-    id: 1,
-    position: 1,
-    username: "JaneInvestor",
-    avatar: "/placeholder.svg",
-    points: 892
-  },
-  {
-    id: 2,
-    position: 2,
-    username: "InvestKing",
-    avatar: "/placeholder.svg", 
-    points: 756
-  },
-  {
-    id: 3,
-    position: 3,
-    username: "MoneyMaker",
-    avatar: "/placeholder.svg",
-    points: 701
-  },
-  {
-    id: 4,
-    position: 4,
-    username: "FinanceGuru",
-    avatar: "/placeholder.svg",
-    points: 645
-  },
-  {
-    id: 5,
-    position: 5,
-    username: "StockWhiz",
-    avatar: "/placeholder.svg",
-    points: 590
-  }
-];
-
-const institutionLeaderboard = [
-  {
-    id: 1,
-    position: 1,
-    name: "Equity Bank",
-    avatar: "/placeholder.svg",
-    points: 1245
-  },
-  {
-    id: 2,
-    position: 2,
-    name: "KCB Group",
-    avatar: "/placeholder.svg",
-    points: 1120
-  },
-  {
-    id: 3,
-    position: 3,
-    name: "CIC Insurance",
-    avatar: "/placeholder.svg",
-    points: 986
-  },
-  {
-    id: 4,
-    position: 4,
-    name: "Safaricom",
-    avatar: "/placeholder.svg",
-    points: 845
-  },
-  {
-    id: 5,
-    position: 5,
-    name: "Co-op Bank",
-    avatar: "/placeholder.svg",
-    points: 790
-  }
-];
+const individualLeaderboard = [{
+  id: 1,
+  position: 1,
+  username: "JaneInvestor",
+  avatar: "/placeholder.svg",
+  points: 892
+}, {
+  id: 2,
+  position: 2,
+  username: "InvestKing",
+  avatar: "/placeholder.svg",
+  points: 756
+}, {
+  id: 3,
+  position: 3,
+  username: "MoneyMaker",
+  avatar: "/placeholder.svg",
+  points: 701
+}, {
+  id: 4,
+  position: 4,
+  username: "FinanceGuru",
+  avatar: "/placeholder.svg",
+  points: 645
+}, {
+  id: 5,
+  position: 5,
+  username: "StockWhiz",
+  avatar: "/placeholder.svg",
+  points: 590
+}];
+const institutionLeaderboard = [{
+  id: 1,
+  position: 1,
+  name: "Equity Bank",
+  avatar: "/placeholder.svg",
+  points: 1245
+}, {
+  id: 2,
+  position: 2,
+  name: "KCB Group",
+  avatar: "/placeholder.svg",
+  points: 1120
+}, {
+  id: 3,
+  position: 3,
+  name: "CIC Insurance",
+  avatar: "/placeholder.svg",
+  points: 986
+}, {
+  id: 4,
+  position: 4,
+  name: "Safaricom",
+  avatar: "/placeholder.svg",
+  points: 845
+}, {
+  id: 5,
+  position: 5,
+  name: "Co-op Bank",
+  avatar: "/placeholder.svg",
+  points: 790
+}];
 
 // Mock group streaks
-const groupStreaks = [
-  {
-    id: 1,
-    name: "Investment Club",
-    members: 8,
-    streak: 14
-  },
-  {
-    id: 2,
-    name: "Finance Buddies", 
-    members: 5,
-    streak: 7
-  }
-];
-
+const groupStreaks = [{
+  id: 1,
+  name: "Investment Club",
+  members: 8,
+  streak: 14
+}, {
+  id: 2,
+  name: "Finance Buddies",
+  members: 5,
+  streak: 7
+}];
 const DailyQuestionsCard: React.FC = () => {
   const [questionsCompleted, setQuestionsCompleted] = useState(2);
   const maxQuestions = 3;
   const pointsPerQuestion = 1;
-
-  return (
-    <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Target className="h-5 w-5 text-blue-600" />
-          Daily Questions
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Progress Today</span>
-            <Badge variant="secondary">
-              {questionsCompleted}/{maxQuestions} completed
-            </Badge>
-          </div>
-          
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
-              style={{ width: `${(questionsCompleted / maxQuestions) * 100}%` }}
-            />
-          </div>
-          
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>Points earned: {questionsCompleted * pointsPerQuestion}</span>
-            <span>Max: {maxQuestions} points</span>
-          </div>
-          
-          {questionsCompleted < maxQuestions && (
-            <p className="text-sm text-blue-600 font-medium">
-              {maxQuestions - questionsCompleted} question{maxQuestions - questionsCompleted !== 1 ? 's' : ''} remaining today
-            </p>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
+  return;
 };
-
 const ThemedStreaksCard: React.FC = () => {
   const [themedStreaks, setThemedStreaks] = useState<ThemedStreak[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     fetchThemedStreaks();
   }, []);
-
   const fetchThemedStreaks = async () => {
     try {
-      const { data, error } = await supabase
-        .from('streak_themes')
-        .select('*')
-        .eq('is_active', true)
-        .order('start_date', { ascending: true });
-
+      const {
+        data,
+        error
+      } = await supabase.from('streak_themes').select('*').eq('is_active', true).order('start_date', {
+        ascending: true
+      });
       if (error) throw error;
       setThemedStreaks(data || []);
     } catch (error) {
@@ -206,17 +143,14 @@ const ThemedStreaksCard: React.FC = () => {
       setLoading(false);
     }
   };
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric'
     });
   };
-
   if (loading) {
-    return (
-      <Card>
+    return <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
@@ -226,45 +160,10 @@ const ThemedStreaksCard: React.FC = () => {
         <CardContent>
           <p className="text-muted-foreground">Loading themed streaks...</p>
         </CardContent>
-      </Card>
-    );
+      </Card>;
   }
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Calendar className="h-5 w-5" />
-          Themed Streaks
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {themedStreaks.length === 0 ? (
-            <p className="text-muted-foreground text-sm">No active themed streaks at the moment.</p>
-          ) : (
-            themedStreaks.map((streak) => (
-              <div key={streak.id} className="border rounded-lg p-3 bg-gradient-to-r from-green-50 to-emerald-50">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-semibold text-green-800">{streak.title}</h4>
-                  <Badge className="bg-green-100 text-green-800 border-green-300">
-                    Active
-                  </Badge>
-                </div>
-                <p className="text-sm text-green-700 mb-2">{streak.description}</p>
-                <div className="flex justify-between text-xs text-green-600">
-                  <span>{formatDate(streak.start_date)} - {formatDate(streak.end_date)}</span>
-                  <Trophy className="h-4 w-4" />
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
+  return;
 };
-
 const StreaksTab: React.FC<StreaksTabProps> = ({
   streaksData,
   weekDays
@@ -272,12 +171,11 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
   // Update streaksData to ensure max 3 points per day
   const updatedStreaksData = {
     ...streaksData,
-    dailyGoal: 3, // Maximum 3 points per day
+    dailyGoal: 3,
+    // Maximum 3 points per day
     weeklyPoints: streaksData.weeklyPoints.map(points => Math.min(points, 3)) // Cap at 3 points
   };
-
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+  return <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
       <div className="lg:col-span-1 space-y-3">
         <StreaksOverview streaksData={updatedStreaksData} weekDays={weekDays} />
         <DailyQuestionsCard />
@@ -287,15 +185,10 @@ const StreaksTab: React.FC<StreaksTabProps> = ({
       </div>
       
       <div className="lg:col-span-2 space-y-3">
-        <Leaderboards 
-          individualLeaderboard={individualLeaderboard}
-          institutionLeaderboard={institutionLeaderboard}
-        />
+        <Leaderboards individualLeaderboard={individualLeaderboard} institutionLeaderboard={institutionLeaderboard} />
         
         <Challenges challenges={updatedStreaksData.upcomingChallenges} />
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default StreaksTab;
