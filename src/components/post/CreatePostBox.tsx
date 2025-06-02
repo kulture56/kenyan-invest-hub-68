@@ -108,9 +108,5 @@ export const CreatePostBox: React.FC<CreatePostBoxProps> = ({
     setSelectedImage(null);
     setImagePreview(null);
   };
-  return <Card className="mb-2 bg-card shadow-sm hover:shadow-md transition-all border border-primary/10">
-      
-
-      
-    </Card>;
+  return;
 };
