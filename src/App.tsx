@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import TopicPage from "./pages/TopicPage";
-import RafikiPage from "./pages/RafikiPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingsPage from "./pages/SettingsPage";
 import HelpPage from "./pages/HelpPage";
@@ -15,7 +15,6 @@ import NotificationsPage from "./pages/NotificationsPage";
 import BookmarksPage from "./pages/BookmarksPage";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
-import RafikiChatWidget from "./components/rafiki/RafikiChatWidget";
 import LearningHubPage from "./pages/LearningHubPage";
 import ReportPage from "./pages/ReportPage";
 import JobsHubPage from "./pages/JobsHubPage";
@@ -31,7 +30,6 @@ const App = () => (
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<Index />} />
             <Route path="/topics/:topicSlug" element={<TopicPage />} />
-            <Route path="/rafiki" element={<RafikiPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/help" element={<HelpPage />} />
@@ -47,7 +45,6 @@ const App = () => (
             <Route path="/report/:postId" element={<ReportPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <RafikiChatWidget />
         </BrowserRouter>
         <Toaster />
         <Sonner />

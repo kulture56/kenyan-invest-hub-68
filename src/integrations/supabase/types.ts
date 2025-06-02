@@ -156,30 +156,6 @@ export type Database = {
         }
         Relationships: []
       }
-      rafiki_chat_history: {
-        Row: {
-          created_at: string
-          id: string
-          message: string
-          response: string
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          message: string
-          response: string
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          message?: string
-          response?: string
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       saved_jobs: {
         Row: {
           company_name: string
