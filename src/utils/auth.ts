@@ -1,9 +1,15 @@
 
 export const handleLogout = () => {
-  // Clear any stored auth data
-  localStorage.removeItem('auth');
-  sessionStorage.removeItem('auth');
+  // Show confirmation dialog
+  const confirmed = window.confirm("Are you sure you want to log out?");
   
-  // Redirect to login page
-  window.location.href = '/login';
+  if (confirmed) {
+    // Clear any stored auth data
+    localStorage.removeItem('auth');
+    sessionStorage.removeItem('auth');
+    localStorage.removeItem('openai_api_key');
+    
+    // Redirect to login page
+    window.location.href = 'https://preview--gelt.lovable.app/login';
+  }
 };

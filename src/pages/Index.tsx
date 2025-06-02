@@ -8,7 +8,6 @@ import { XStyleNavigation } from "@/components/home/XStyleNavigation";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
 import { CreatePostBox } from "@/components/post/CreatePostBox";
 import SearchResults from "@/components/home/SearchResults";
-import RafikiAIAssistant from "@/components/home/RafikiAIAssistant";
 import { usePosts } from "@/hooks/usePosts";
 import { useHomeData } from "@/hooks/useHomeData";
 import { Card, CardContent } from "@/components/ui/card";
@@ -155,9 +154,6 @@ const Index = () => {
           )}
         </div>
       </div>
-
-      {/* Rafiki AI Assistant */}
-      <RafikiAIAssistant />
     </AppLayout>
   );
 };

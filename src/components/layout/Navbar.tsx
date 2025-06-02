@@ -7,14 +7,13 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { NavbarSearch } from "./NavbarSearch";
+import { handleLogout } from "@/utils/auth";
 
 interface NavbarProps {
   toggleSidebar: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({
-  toggleSidebar
-}) => {
+export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
   const isMobile = useIsMobile();
 
   return (
@@ -78,7 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer flex items-center gap-2 text-red-500">
+              <DropdownMenuItem onClick={handleLogout} className="cursor-pointer flex items-center gap-2 text-red-500">
                 <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-4 w-4" /> Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
