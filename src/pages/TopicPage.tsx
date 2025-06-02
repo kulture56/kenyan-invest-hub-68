@@ -121,9 +121,12 @@ const mockPostsByTopic = {
   }],
   default: []
 };
-
 const TopicPage = () => {
-  const { topicSlug } = useParams<{ topicSlug: string; }>();
+  const {
+    topicSlug
+  } = useParams<{
+    topicSlug: string;
+  }>();
   const topic = topicInfo[topicSlug as keyof typeof topicInfo] || {
     name: topicSlug?.charAt(0).toUpperCase() + topicSlug?.slice(1),
     icon: <Info className="h-5 w-5 text-primary" />
@@ -135,17 +138,13 @@ const TopicPage = () => {
 
   // Check if this is the jobs topic
   const isJobsTopic = topicSlug === 'jobs';
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       {/* Optimized layout - removed unnecessary sidebar and improved spacing */}
       <div className="max-w-4xl mx-auto space-y-4">
         {/* Display the stock ticker prominently for stocks topic */}
-        {shouldShowProminentTicker && (
-          <div className="w-full">
+        {shouldShowProminentTicker && <div className="w-full">
             <StockTicker />
-          </div>
-        )}
+          </div>}
         
         {/* Topic header */}
         <div className="flex items-center gap-3">
@@ -158,50 +157,25 @@ const TopicPage = () => {
         </div>
 
         {/* Show compact ticker for non-stock topics */}
-        {!shouldShowProminentTicker && (
-          <div className="w-full">
+        {!shouldShowProminentTicker && <div className="w-full">
             <StockTicker compact={true} />
-          </div>
-        )}
+          </div>}
 
         {/* Show jobs filter if this is the jobs topic */}
-        {isJobsTopic && (
-          <Card>
+        {isJobsTopic && <Card>
             <CardContent className="p-4">
               <h3 className="text-lg font-medium mb-3">Filter Jobs</h3>
               <JobsFilter />
             </CardContent>
-          </Card>
-        )}
+          </Card>}
 
         {/* Main content tabs */}
         <Tabs defaultValue="latest">
-          <TabsContent value="latest" className="space-y-4">
-            <CreatePostBox defaultTopic={topic.name.toUpperCase()} />
-            
-            {posts.length > 0 ? (
-              <div className="space-y-4">
-                {posts.map(post => (
-                  <PostCard key={post.id} {...post} />
-                ))}
-              </div>
-            ) : (
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center py-8">
-                  <h3 className="text-lg font-medium mb-2">No posts yet</h3>
-                  <p className="text-sm text-muted-foreground text-center">
-                    Be the first to share something about {topic.name}
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
+          
         </Tabs>
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 function getTopicDescription(topicSlug?: string): string {
   switch (topicSlug) {
     case 'stocks':
@@ -234,5 +208,4 @@ function getRafikiInsight(topicSlug?: string): string {
       return 'Market trends show positive movement in this sector. Ask me for more specific insights!';
   }
 }
-
 export default TopicPage;
