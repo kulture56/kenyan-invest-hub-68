@@ -94,7 +94,7 @@ const BookmarksPage = () => {
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <Bookmark className="h-6 w-6 text-primary" />
-          <h1 className="text-2xl font-bold">Your Bookmarks</h1>
+          <h1 className="text-2xl font-bold text-purple-800">Your Bookmarks</h1>
         </div>
 
         {/* Stats Cards */}
