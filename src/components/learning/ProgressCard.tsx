@@ -16,9 +16,6 @@ const ProgressCard: React.FC<ProgressCardProps> = ({
   badgesEarned
 }) => {
   const progressPercentage = Math.round(completedModules / totalModules * 100);
-  return <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
-      
-      
-    </Card>;
+  return;
 };
 export default ProgressCard;
