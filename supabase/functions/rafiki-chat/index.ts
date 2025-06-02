@@ -18,19 +18,29 @@ serve(async (req) => {
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     
     if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY is not set in Supabase secrets');
+      console.error('OPENAI_API_KEY is not set in Supabase secrets');
+      return new Response(JSON.stringify({ 
+        error: 'OpenAI API key is not configured. Please add your OpenAI API key in the Supabase secrets.' 
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
     
     const requestData = await req.json();
     const { query, contextPrompt = "", formatting = {} } = requestData;
     
     if (!query) {
-      throw new Error('Query is required');
+      return new Response(JSON.stringify({ 
+        error: 'Query is required' 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log("Received query:", query);
-    console.log("Context prompt:", contextPrompt);
-    console.log("Formatting options:", formatting);
+    console.log("Using GPT-4o model with new API key");
 
     // Build the system prompt with context
     let systemPrompt = `You are Rafiki, a knowledgeable AI investment assistant specialized in Kenyan financial markets.
@@ -58,6 +68,8 @@ When appropriate, suggest relevant learning modules or career opportunities:
       systemPrompt += `\n\nThe user is requesting chart data. Please provide relevant statistics and numerical data that could be visualized in a chart, along with your analysis.`;
     }
 
+    console.log("Making request to OpenAI with GPT-4o model...");
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -80,8 +92,23 @@ When appropriate, suggest relevant learning modules or career opportunities:
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('OpenAI API error:', errorData);
-      throw new Error(`OpenAI API error: ${errorData.error?.message || 'Unknown error'}`);
+      console.error('OpenAI API error details:', errorData);
+      
+      let errorMessage = 'Failed to get response from OpenAI';
+      if (errorData.error?.code === 'insufficient_quota') {
+        errorMessage = 'OpenAI API quota exceeded. Please check your API key billing and usage limits.';
+      } else if (errorData.error?.code === 'invalid_api_key') {
+        errorMessage = 'Invalid OpenAI API key. Please check your API key configuration.';
+      } else if (errorData.error?.message) {
+        errorMessage = errorData.error.message;
+      }
+      
+      return new Response(JSON.stringify({ 
+        error: errorMessage 
+      }), {
+        status: response.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const responseData = await response.json();
@@ -91,7 +118,13 @@ When appropriate, suggest relevant learning modules or career opportunities:
     const assistantReply = responseData.choices?.[0]?.message?.content;
     
     if (!assistantReply) {
-      throw new Error('No response content received from OpenAI');
+      console.error('No response content received from OpenAI');
+      return new Response(JSON.stringify({ 
+        error: 'No response content received from OpenAI' 
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     return new Response(JSON.stringify({ response: assistantReply }), {
@@ -101,7 +134,7 @@ When appropriate, suggest relevant learning modules or career opportunities:
     console.error('Error in rafiki-chat function:', error);
     
     return new Response(JSON.stringify({ 
-      error: error.message || 'An unexpected error occurred'
+      error: `Server error: ${error.message || 'An unexpected error occurred'}`
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
