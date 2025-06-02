@@ -1,18 +1,22 @@
+
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Calendar, Clock, Mail, LogOut, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
+
 interface UserProfile {
   created_at: string;
   last_login: string | null;
 }
+
 interface AccountOverviewTabProps {
   profile: UserProfile | null;
   userEmail: string;
   onLogout: () => void;
 }
+
 export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
   profile,
   userEmail,
@@ -26,7 +30,9 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
       return "Invalid date";
     }
   };
-  return <div className="space-y-6">
+
+  return (
+    <div className="space-y-6">
       {/* Account Information */}
       <Card>
         <CardHeader>
@@ -105,7 +111,10 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
           <div className="pt-4 border-t">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                
+                <Button variant="destructive" className="gap-2">
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -155,5 +164,6 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
           </div>
         </CardContent>
       </Card>
-    </div>;
+    </div>
+  );
 };

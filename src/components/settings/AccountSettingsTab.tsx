@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Save, ExternalLink, User, Globe, Clock } from "lucide-react";
+import { Save, User, Globe, Clock, Mail, Lock } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 export const AccountSettingsTab = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
+    email: "john.doe@example.com",
+    username: "john_doe",
     language: "en",
     timezone: "Africa/Nairobi"
   });
@@ -46,39 +48,65 @@ export const AccountSettingsTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Account Management Delegation */}
+      {/* Account Information */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <User className="h-5 w-5" />
-            Account Management
+            Account Information
           </CardTitle>
           <CardDescription>
-            Manage your core account settings including username, email, and password
+            Manage your GELT Platform account details
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="p-6 border rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-blue-100 dark:bg-blue-900/50 rounded-lg">
-                <ExternalLink className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-lg mb-2">External Account Settings</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Username, email, and password settings are managed through your X account for enhanced security and convenience.
-                </p>
-                <Button className="gap-2 bg-blue-600 hover:bg-blue-700">
-                  <ExternalLink className="h-4 w-4" />
-                  Go to X Settings
-                </Button>
-              </div>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                Email Address
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange("email", e.target.value)}
+              />
+              <p className="text-sm text-muted-foreground">
+                Your primary email for GELT Platform notifications
+              </p>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="username" className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                Username
+              </Label>
+              <Input
+                id="username"
+                type="text"
+                value={formData.username}
+                onChange={(e) => handleInputChange("username", e.target.value)}
+              />
+              <p className="text-sm text-muted-foreground">
+                Your unique username on GELT Platform
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Button variant="outline" className="gap-2">
+              <Lock className="h-4 w-4" />
+              Change Password
+            </Button>
+            <p className="text-sm text-muted-foreground">
+              Update your account password for enhanced security
+            </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* GELT Platform Preferences */}
+      {/* Platform Preferences */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
