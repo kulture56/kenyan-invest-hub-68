@@ -8,6 +8,7 @@ import { XStyleNavigation } from "@/components/home/XStyleNavigation";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
 import { CreatePostBox } from "@/components/post/CreatePostBox";
 import SearchResults from "@/components/home/SearchResults";
+import { AIChatbox } from "@/components/home/AIChatbox";
 import { usePosts } from "@/hooks/usePosts";
 import { useHomeData } from "@/hooks/useHomeData";
 import { Card, CardContent } from "@/components/ui/card";
@@ -73,7 +74,7 @@ const Index = () => {
       </div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="md:grid md:grid-cols-4 gap-3 mt-1">
+        <div className="md:grid md:grid-cols-4 gap-4 mt-1">
           {/* Main content */}
           <div className="md:col-span-3 space-y-1">
             {/* Search Bar - Mobile only (desktop search is in navbar) */}
@@ -154,6 +155,9 @@ const Index = () => {
           )}
         </div>
       </div>
+
+      {/* AI Chatbox */}
+      <AIChatbox />
     </AppLayout>
   );
 };
