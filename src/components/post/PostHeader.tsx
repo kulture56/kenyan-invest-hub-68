@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { MoreHorizontal, Flag, UserX, VolumeX, Share, Copy } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
-
 interface PostHeaderProps {
   author: {
     id: string;
@@ -21,7 +19,6 @@ interface PostHeaderProps {
   postId: string;
   onMuteClick?: () => void;
 }
-
 export const PostHeader: React.FC<PostHeaderProps> = ({
   author,
   createdAt,
@@ -31,27 +28,23 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
   onMuteClick
 }) => {
   const [isBlocked, setIsBlocked] = useState(false);
-
   const handleBlockUser = () => {
     setIsBlocked(true);
     toast({
-      description: `Blocked ${author.name}. You won't see their posts anymore.`,
+      description: `Blocked ${author.name}. You won't see their posts anymore.`
     });
   };
-
   const handleReportPost = () => {
     toast({
-      description: "Post reported. We'll review it shortly.",
+      description: "Post reported. We'll review it shortly."
     });
   };
-
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`${window.location.origin}/post/${postId}`);
     toast({
-      description: "Post link copied to clipboard",
+      description: "Post link copied to clipboard"
     });
   };
-
   const handleSharePost = () => {
     if (navigator.share) {
       navigator.share({
@@ -62,11 +55,8 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
       handleCopyLink();
     }
   };
-
   const createdAtDate = typeof createdAt === 'string' ? new Date(createdAt) : createdAt;
-
-  return (
-    <div className="flex items-start justify-between">
+  return <div className="flex items-start justify-between">
       <div className="flex items-center gap-3">
         <Avatar className="h-10 w-10">
           <AvatarImage src={author.avatar} alt={author.name} />
@@ -79,24 +69,22 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             <span className="font-semibold hover:underline cursor-pointer">
               {author.name}
             </span>
-            {isVerified && (
-              <Badge variant="secondary" className="text-xs px-1.5 py-0.5">
+            {isVerified && <Badge variant="secondary" className="text-xs px-1.5 py-0.5">
                 ✓
-              </Badge>
-            )}
+              </Badge>}
             <span className="text-sm text-muted-foreground">
               @{author.username}
             </span>
             <span className="text-sm text-muted-foreground">•</span>
             <span className="text-sm text-muted-foreground">
-              {formatDistanceToNow(createdAtDate, { addSuffix: true })}
+              {formatDistanceToNow(createdAtDate, {
+              addSuffix: true
+            })}
             </span>
           </div>
-          {topic && (
-            <Badge variant="outline" className="text-xs w-fit mt-1">
+          {topic && <Badge variant="outline" className="text-xs w-fit mt-1">
               {topic}
-            </Badge>
-          )}
+            </Badge>}
         </div>
       </div>
 
@@ -107,10 +95,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
-          <DropdownMenuItem onClick={handleSharePost}>
-            <Share className="h-4 w-4 mr-2" />
-            Share post
-          </DropdownMenuItem>
+          
           <DropdownMenuItem onClick={handleCopyLink}>
             <Copy className="h-4 w-4 mr-2" />
             Copy link
@@ -120,23 +105,16 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             <VolumeX className="h-4 w-4 mr-2" />
             Mute {author.name}
           </DropdownMenuItem>
-          <DropdownMenuItem 
-            onClick={handleBlockUser}
-            className="text-red-600 focus:text-red-600"
-          >
+          <DropdownMenuItem onClick={handleBlockUser} className="text-red-600 focus:text-red-600">
             <UserX className="h-4 w-4 mr-2" />
             Block {author.name}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem 
-            onClick={handleReportPost}
-            className="text-red-600 focus:text-red-600"
-          >
+          <DropdownMenuItem onClick={handleReportPost} className="text-red-600 focus:text-red-600">
             <Flag className="h-4 w-4 mr-2" />
             Report post
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
-  );
+    </div>;
 };
