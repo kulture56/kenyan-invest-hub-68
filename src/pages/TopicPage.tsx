@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -58,7 +59,7 @@ const topicInfo = {
   }
 };
 
-// Mock data for different topics
+// Mock data for different topics with verification examples
 const mockPostsByTopic = {
   stocks: [{
     id: "s1",
@@ -69,11 +70,12 @@ const mockPostsByTopic = {
       avatar: "/placeholder.svg"
     },
     content: "Safaricom shares are up 2.3% today following the announcement of their new mobile banking initiative. This could be a game changer for their fintech division.",
-    topic: "STOCKS",
+    topic: "Investments",
     createdAt: new Date(Date.now() - 1000000),
     likes: 34,
     comments: 12,
-    shares: 5
+    shares: 5,
+    isVerified: true
   }, {
     id: "s2",
     author: {
@@ -83,11 +85,12 @@ const mockPostsByTopic = {
       avatar: "/placeholder.svg"
     },
     content: "What are your thoughts on KCB's new rights issue? I'm considering participating but want to hear from others who follow banking stocks closely.",
-    topic: "STOCKS",
+    topic: "Market News",
     createdAt: new Date(Date.now() - 8000000),
     likes: 21,
     comments: 18,
-    shares: 2
+    shares: 2,
+    isVerified: false
   }],
   banks: [{
     id: "b1",
@@ -98,11 +101,12 @@ const mockPostsByTopic = {
       avatar: "/placeholder.svg"
     },
     content: "Equity Bank has just announced a new SME loan package with reduced interest rates. This could be great for small business owners looking to scale.",
-    topic: "BANKS",
+    topic: "Financial Education",
     createdAt: new Date(Date.now() - 3000000),
     likes: 27,
     comments: 9,
-    shares: 6
+    shares: 6,
+    isVerified: true
   }],
   crypto: [{
     id: "c1",
@@ -113,20 +117,18 @@ const mockPostsByTopic = {
       avatar: "/placeholder.svg"
     },
     content: "With the new Central Bank directive on cryptocurrency, what's everyone's take on the future of Bitcoin and other cryptocurrencies in Kenya?",
-    topic: "CRYPTOCURRENCIES",
+    topic: "Cryptocurrency",
     createdAt: new Date(Date.now() - 4000000),
     likes: 45,
     comments: 32,
-    shares: 7
+    shares: 7,
+    isVerified: false
   }],
   default: []
 };
+
 const TopicPage = () => {
-  const {
-    topicSlug
-  } = useParams<{
-    topicSlug: string;
-  }>();
+  const { topicSlug } = useParams<{ topicSlug: string }>();
   const topic = topicInfo[topicSlug as keyof typeof topicInfo] || {
     name: topicSlug?.charAt(0).toUpperCase() + topicSlug?.slice(1),
     icon: <Info className="h-5 w-5 text-primary" />
@@ -138,15 +140,16 @@ const TopicPage = () => {
 
   // Check if this is the jobs topic
   const isJobsTopic = topicSlug === 'jobs';
-  return <AppLayout>
-      {/* Optimized layout - removed unnecessary sidebar and improved spacing */}
+
+  return (
+    <AppLayout>
       <div className="max-w-4xl mx-auto space-y-4">
-        {/* Display the stock ticker prominently for stocks topic */}
-        {shouldShowProminentTicker && <div className="w-full">
+        {shouldShowProminentTicker && (
+          <div className="w-full">
             <StockTicker />
-          </div>}
+          </div>
+        )}
         
-        {/* Topic header */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
             {topic.icon}
@@ -156,26 +159,61 @@ const TopicPage = () => {
           </div>
         </div>
 
-        {/* Show compact ticker for non-stock topics */}
-        {!shouldShowProminentTicker && <div className="w-full">
+        {!shouldShowProminentTicker && (
+          <div className="w-full">
             <StockTicker compact={true} />
-          </div>}
+          </div>
+        )}
 
-        {/* Show jobs filter if this is the jobs topic */}
-        {isJobsTopic && <Card>
+        {isJobsTopic && (
+          <Card>
             <CardContent className="p-4">
               <h3 className="text-lg font-medium mb-3">Filter Jobs</h3>
               <JobsFilter />
             </CardContent>
-          </Card>}
+          </Card>
+        )}
 
-        {/* Main content tabs */}
+        <CreatePostBox />
+
         <Tabs defaultValue="latest">
-          
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="latest">Latest</TabsTrigger>
+            <TabsTrigger value="popular">Popular</TabsTrigger>
+          </TabsList>
+          <TabsContent value="latest" className="space-y-4 mt-4">
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <PostCard key={post.id} {...post} />
+              ))
+            ) : (
+              <Card>
+                <CardContent className="flex flex-col items-center justify-center py-12">
+                  <h3 className="text-lg font-medium mb-2">No posts yet</h3>
+                  <p className="text-sm text-muted-foreground text-center max-w-md">
+                    {getTopicDescription(topicSlug)}
+                  </p>
+                  <Button className="mt-4">Create First Post</Button>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
+          <TabsContent value="popular" className="space-y-4 mt-4">
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-12">
+                <h3 className="text-lg font-medium mb-2">Popular Posts</h3>
+                <p className="text-sm text-muted-foreground text-center max-w-md">
+                  Popular posts will appear here based on engagement metrics.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
       </div>
-    </AppLayout>;
+    </AppLayout>
+  );
 };
+
 function getTopicDescription(topicSlug?: string): string {
   switch (topicSlug) {
     case 'stocks':
@@ -192,20 +230,5 @@ function getTopicDescription(topicSlug?: string): string {
       return 'Join discussions, share insights, and discover investment opportunities in this topic.';
   }
 }
-function getRafikiInsight(topicSlug?: string): string {
-  switch (topicSlug) {
-    case 'stocks':
-      return 'The NSE-20 index has shown a 3.2% increase over the past month, with technology and banking sectors showing strongest performance.';
-    case 'banks':
-      return 'Kenya\'s banking sector profitability increased by 16.7% in Q2 2023, driven by increased digital banking adoption and higher interest income.';
-    case 'crypto':
-      return 'Bitcoin has seen a 12% increase this week, while regulatory developments in Kenya could impact cryptocurrency adoption.';
-    case 'jobs':
-      return 'Finance sector hiring in Kenya has increased by 8% in the last quarter, with fintech companies leading recruitment.';
-    case 'saccos':
-      return 'SACCO dividend rates are trending between 8-14% this year, with the top performers focusing on digital transformation.';
-    default:
-      return 'Market trends show positive movement in this sector. Ask me for more specific insights!';
-  }
-}
+
 export default TopicPage;

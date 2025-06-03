@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -15,38 +16,72 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
+// Mock example posts with topics and verification
+const examplePosts = [
+  {
+    id: "example1",
+    user_id: "user1",
+    content: "Just closed a fantastic investment opportunity in renewable energy. The future is green and profitable! 🌱💰",
+    topic: "Investments",
+    timestamp: new Date(Date.now() - 2000000).toISOString(),
+    created_at: new Date(Date.now() - 2000000).toISOString(),
+    updated_at: new Date(Date.now() - 2000000).toISOString(),
+    likes: 42,
+    comments: 15,
+    shares: 8,
+    author_name: "Alice Wanjiku",
+    author_username: "alicew",
+    author_avatar: "/placeholder.svg",
+    is_verified: true
+  },
+  {
+    id: "example2",
+    user_id: "user2",
+    content: "Breaking: New fintech regulations announced by CBK. This will reshape the digital payments landscape in Kenya.",
+    topic: "Market News",
+    timestamp: new Date(Date.now() - 5000000).toISOString(),
+    created_at: new Date(Date.now() - 5000000).toISOString(),
+    updated_at: new Date(Date.now() - 5000000).toISOString(),
+    likes: 28,
+    comments: 12,
+    shares: 6,
+    author_name: "John Muthuri",
+    author_username: "johnm",
+    author_avatar: "/placeholder.svg",
+    is_verified: false
+  }
+];
+
 const Index = () => {
   const [activeTab, setActiveTab] = useState("for-you");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const {
-    posts,
-    loading,
-    error
-  } = usePosts(activeTab);
-  const {
-    trendingTopics,
-    suggestedQuestions,
-    topInsights,
-    selectedTopic
-  } = useHomeData();
+  const { posts, loading, error } = usePosts(activeTab);
+  const { trendingTopics, suggestedQuestions, topInsights, selectedTopic } = useHomeData();
   const isMobile = useIsMobile();
+
+  // Combine example posts with real posts
+  const allPosts = [...examplePosts, ...posts];
+
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-    setSearchQuery(""); // Clear search when changing tabs
+    setSearchQuery("");
   };
+
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     if (query) {
       setIsSearching(true);
-      // Simulate search delay
       setTimeout(() => setIsSearching(false), 500);
     } else {
       setIsSearching(false);
     }
   };
-  const renderPostsSkeleton = () => <div className="space-y-1">
-      {[1, 2, 3].map(i => <Card key={i} className="p-3">
+
+  const renderPostsSkeleton = () => (
+    <div className="space-y-1">
+      {[1, 2, 3].map(i => (
+        <Card key={i} className="p-3">
           <div className="flex items-center space-x-3 mb-3">
             <Skeleton className="h-8 w-8 rounded-full" />
             <div className="space-y-1">
@@ -56,67 +91,80 @@ const Index = () => {
           </div>
           <Skeleton className="h-3 w-full mb-1" />
           <Skeleton className="h-3 w-3/4" />
-        </Card>)}
-    </div>;
-  return <AppLayout>
-      {/* Fixed Navigation Bar directly below header */}
+        </Card>
+      ))}
+    </div>
+  );
+
+  return (
+    <AppLayout>
       <div className="sticky top-14 z-30 bg-background border-b border-border/30 -mt-2">
         <XStyleNavigation activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 
       <div className="max-w-6xl mx-auto">
         <div className="md:grid md:grid-cols-4 gap-4 mt-1">
-          {/* Main content */}
           <div className="md:col-span-3 space-y-1">
-            {/* Search Bar - Mobile only (desktop search is in navbar) */}
-            {isMobile && <Card>
+            {isMobile && (
+              <Card>
                 <CardContent className="p-3">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                    <Input placeholder="Search topics, posts, or users..." className="pl-9" value={searchQuery} onChange={e => handleSearch(e.target.value)} />
+                    <Input 
+                      placeholder="Search topics, posts, or users..." 
+                      className="pl-9" 
+                      value={searchQuery} 
+                      onChange={e => handleSearch(e.target.value)} 
+                    />
                   </div>
                 </CardContent>
-              </Card>}
+              </Card>
+            )}
 
-            {/* Search Results */}
-            {searchQuery && <SearchResults query={searchQuery} posts={posts} loading={isSearching} />}
+            {searchQuery && (
+              <SearchResults query={searchQuery} posts={allPosts} loading={isSearching} />
+            )}
 
-            {/* Regular content - only show if not searching */}
-            {!searchQuery && <>
-                {/* Top Insights Section - only show on For You tab */}
+            {!searchQuery && (
+              <>
                 {activeTab === "for-you" && <TopInsightsCard insights={topInsights} />}
 
-                {/* Create Post Box */}
                 <CreatePostBox />
 
-                {/* Posts Feed */}
                 <div className="space-y-1">
-                  {loading ? renderPostsSkeleton() : error ? <Card>
-                      <CardContent className="flex flex-col items-center justify-center py-6">
-                        <h3 className="text-lg font-medium mb-1 text-red-500">Error loading posts</h3>
-                        <p className="text-sm text-muted-foreground text-center">
-                          {error}
-                        </p>
-                      </CardContent>
-                    </Card> : posts.length > 0 ? posts.map(post => <FeedPostCard key={post.id} post={post} />) : <Card>
-                      <CardContent className="flex flex-col items-center justify-center py-6">
-                        <h3 className="text-lg font-medium mb-1">No posts yet</h3>
-                        <p className="text-sm text-muted-foreground text-center">
-                          Be the first to share something in this topic
-                        </p>
-                      </CardContent>
-                    </Card>}
+                  {loading ? renderPostsSkeleton() : 
+                   error ? (
+                     <Card>
+                       <CardContent className="flex flex-col items-center justify-center py-6">
+                         <h3 className="text-lg font-medium mb-1 text-red-500">Error loading posts</h3>
+                         <p className="text-sm text-muted-foreground text-center">{error}</p>
+                       </CardContent>
+                     </Card>
+                   ) : 
+                   allPosts.length > 0 ? (
+                     allPosts.map(post => <FeedPostCard key={post.id} post={post} />)
+                   ) : (
+                     <Card>
+                       <CardContent className="flex flex-col items-center justify-center py-6">
+                         <h3 className="text-lg font-medium mb-1">No posts yet</h3>
+                         <p className="text-sm text-muted-foreground text-center">
+                           Be the first to share something in this topic
+                         </p>
+                       </CardContent>
+                     </Card>
+                   )}
                 </div>
-              </>}
+              </>
+            )}
           </div>
           
-          {/* Right sidebar content */}
           {!isMobile}
         </div>
       </div>
 
-      {/* AI Chatbox */}
       <AIChatbox />
-    </AppLayout>;
+    </AppLayout>
+  );
 };
+
 export default Index;
