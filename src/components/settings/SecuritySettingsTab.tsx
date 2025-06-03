@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Save, Shield, Smartphone, Monitor, LogOut, Key, QrCode, AlertTriangle } from "lucide-react";
+import { Save, Shield, Smartphone, Monitor, Key, QrCode, AlertTriangle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { LogoutDialog } from "@/components/auth/LogoutDialog";
 
 export const SecuritySettingsTab = () => {
   const { toast } = useToast();
@@ -167,15 +168,12 @@ export const SecuritySettingsTab = () => {
                   {connectedDevices.length} device(s) connected
                 </p>
               </div>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={logoutAllDevices}
-                className="gap-2"
-              >
-                <LogOut className="h-4 w-4" />
-                Log Out All
-              </Button>
+              <LogoutDialog>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-4 w-4" />
+                  Log Out All
+                </Button>
+              </LogoutDialog>
             </div>
 
             {connectedDevices.map((device) => (
@@ -208,7 +206,7 @@ export const SecuritySettingsTab = () => {
                     onClick={() => logoutDevice(device.id, device.name)}
                     className="gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
                   >
-                    <LogOut className="h-4 w-4" />
+                    <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-4 w-4" />
                     Log Out
                   </Button>
                 )}

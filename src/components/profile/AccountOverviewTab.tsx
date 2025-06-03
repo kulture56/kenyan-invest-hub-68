@@ -2,9 +2,9 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Calendar, Clock, Mail, LogOut, ExternalLink } from "lucide-react";
+import { Calendar, Clock, Mail, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
+import { LogoutDialog } from "@/components/auth/LogoutDialog";
 
 interface UserProfile {
   created_at: string;
@@ -109,28 +109,12 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
           </div>
           
           <div className="pt-4 border-t">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive" className="gap-2">
-                  <LogOut className="h-4 w-4" />
-                  Sign Out
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Sign Out</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Are you sure you want to sign out? You'll need to log in again to access your account.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={onLogout}>
-                    Sign Out
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+            <LogoutDialog>
+              <Button variant="destructive" className="gap-2">
+                <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-4 w-4" />
+                Sign Out
+              </Button>
+            </LogoutDialog>
           </div>
         </CardContent>
       </Card>
