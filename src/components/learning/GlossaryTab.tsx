@@ -59,9 +59,7 @@ const GlossaryTab: React.FC<GlossaryTabProps> = ({
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <CardTitle className="text-base">{term.term}</CardTitle>
-                          <Badge variant="outline" className="mt-1 text-xs">
-                            {term.category}
-                          </Badge>
+                          
                         </div>
                       </div>
                     </CardHeader>
