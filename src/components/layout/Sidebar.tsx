@@ -65,7 +65,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <span className="font-bold text-primary-foreground">G</span>
             </div>
             {(isOpen || isMobile) && <div className="flex flex-col">
-                <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">GELT</span>
+                <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-purple-700">GELT</span>
                 <span className="text-[10px] leading-tight text-muted-foreground">Grow. Empower. Learn. Thrive</span>
               </div>}
           </a>
