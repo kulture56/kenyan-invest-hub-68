@@ -101,86 +101,8 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({
     setPollOptions(newOptions);
   };
   return <Card className="mb-2">
-      <CardHeader className="pb-2">
-        <Input placeholder="What's the title of your post?" value={title} onChange={e => setTitle(e.target.value)} className="text-sm font-semibold border-0 px-0 focus-visible:ring-0 placeholder:text-muted-foreground" style={{
-        fontSize: '14px'
-      }} />
-      </CardHeader>
-      <CardContent className="pt-0 space-y-2">
-        <Select value={selectedTopic} onValueChange={setSelectedTopic}>
-          <SelectTrigger className="text-sm">
-            <SelectValue placeholder="Select a topic" />
-          </SelectTrigger>
-          <SelectContent>
-            {topics.map(topic => <SelectItem key={topic} value={topic} className="text-sm">
-                {topic}
-              </SelectItem>)}
-          </SelectContent>
-        </Select>
-
-        {selectedTopic && <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Topic:</span>
-            <Badge variant="outline" className="font-bold" style={{
-          fontSize: '14px'
-        }}>
-              {selectedTopic}
-            </Badge>
-          </div>}
-
-        <Textarea placeholder="Share your thoughts..." value={content} onChange={e => setContent(e.target.value)} className="min-h-20 resize-none text-sm" />
-
-        {postType === 'image' && <div className="space-y-2">
-            <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" id="image-upload" />
-            <label htmlFor="image-upload">
-              <Button type="button" variant="outline" size="sm" asChild>
-                <span className="cursor-pointer">
-                  <Image className="h-4 w-4 mr-2" />
-                  Choose Image
-                </span>
-              </Button>
-            </label>
-            {imagePreview && <div className="relative">
-                <img src={imagePreview} alt="Preview" className="max-h-48 rounded-md" />
-                <Button variant="ghost" size="sm" onClick={() => {
-            setSelectedImage(null);
-            setImagePreview(null);
-          }} className="absolute top-2 right-2">
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>}
-          </div>}
-
-        {postType === 'poll' && <div className="space-y-2">
-            <p className="text-sm font-medium">Poll Options (Maximum 3):</p>
-            {pollOptions.map((option, index) => <div key={index} className="flex gap-2">
-                <Input placeholder={`Option ${index + 1}`} value={option} onChange={e => updatePollOption(index, e.target.value)} className="text-sm" />
-                {pollOptions.length > 2 && <Button variant="ghost" size="sm" onClick={() => removePollOption(index)}>
-                    <X className="h-4 w-4" />
-                  </Button>}
-              </div>)}
-          </div>}
-
-        <div className="flex items-center justify-between pt-1">
-          <div className="flex gap-2">
-            <Button variant={postType === 'text' ? 'default' : 'ghost'} size="sm" onClick={() => setPostType('text')} className="text-sm">
-              Text
-            </Button>
-            <Button variant={postType === 'image' ? 'default' : 'ghost'} size="sm" onClick={() => setPostType('image')} className="text-sm">
-              <Image className="h-4 w-4 mr-1" />
-              Image
-            </Button>
-            <Button variant={postType === 'poll' ? 'default' : 'ghost'} size="sm" onClick={() => setPostType('poll')} className="text-sm">
-              <Vote className="h-4 w-4 mr-1" />
-              Poll
-            </Button>
-            
-          </div>
-
-          <Button onClick={handleSubmit} className="text-sm">
-            Post
-          </Button>
-        </div>
-      </CardContent>
+      
+      
     </Card>;
 };
 export default CreatePostBox;
