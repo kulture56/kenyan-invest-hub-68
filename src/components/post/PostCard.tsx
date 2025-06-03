@@ -73,7 +73,7 @@ export const PostCard: React.FC<PostProps> = ({
   };
 
   const handleShare = () => {
-    // Share functionality
+    // Share functionality handled by ShareDialog
   };
 
   const handleReply = (content: string) => {
@@ -111,7 +111,7 @@ export const PostCard: React.FC<PostProps> = ({
 
   return (
     <Card className="mb-4 animate-fade-in border border-primary/10 hover:border-primary/30 transition-all">
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-3">
         <PostHeader
           author={author}
           createdAt={createdAt}
@@ -136,6 +136,9 @@ export const PostCard: React.FC<PostProps> = ({
           onReply={handleReplyClick}
           onBookmark={handleBookmark}
           onShare={handleShare}
+          postId={id}
+          postContent={content}
+          authorName={author.name}
         />
       </CardFooter>
       

@@ -98,12 +98,12 @@ const Index = () => {
 
   return (
     <AppLayout>
-      <div className="sticky top-14 z-30 bg-background border-b border-border/30 -mt-2">
+      <div className="sticky top-14 z-30 bg-background border-b border-border/30">
         <XStyleNavigation activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="md:grid md:grid-cols-4 gap-4 mt-1">
+        <div className="md:grid md:grid-cols-4 gap-4">
           <div className="md:col-span-3 space-y-1">
             {isMobile && (
               <Card>
