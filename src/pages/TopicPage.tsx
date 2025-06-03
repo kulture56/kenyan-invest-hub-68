@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { CreatePostBox } from "@/components/post/CreatePostBox";
+import CreatePostBox from "@/components/post/CreatePostBox";
 import { PostCard } from "@/components/post/PostCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

@@ -5,7 +5,7 @@ import TopInsightsCard from "@/components/home/TopInsightsCard";
 import TrendingSidebar from "@/components/home/TrendingSidebar";
 import { XStyleNavigation } from "@/components/home/XStyleNavigation";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
-import { CreatePostBox } from "@/components/post/CreatePostBox";
+import CreatePostBox from "@/components/post/CreatePostBox";
 import SearchResults from "@/components/home/SearchResults";
 import { AIChatbox } from "@/components/home/AIChatbox";
 import { usePosts } from "@/hooks/usePosts";
@@ -14,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+
 const Index = () => {
   const [activeTab, setActiveTab] = useState("for-you");
   const [searchQuery, setSearchQuery] = useState("");

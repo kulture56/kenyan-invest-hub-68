@@ -3,7 +3,7 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { TrendingUp } from "lucide-react";
-import { CreatePostBox } from "@/components/post/CreatePostBox";
+import CreatePostBox from "@/components/post/CreatePostBox";
 import { PostCard } from "@/components/post/PostCard";
 
 interface Post {
