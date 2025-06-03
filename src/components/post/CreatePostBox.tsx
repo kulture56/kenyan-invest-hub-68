@@ -10,7 +10,7 @@ import { Image, BarChart3, Vote, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface CreatePostBoxProps {
-  onPost: (content: string, title: string, topic: string, type: 'text' | 'image' | 'poll' | 'chart') => void;
+  onPost?: (content: string, title: string, topic: string, type: 'text' | 'image' | 'poll' | 'chart') => void;
 }
 
 const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
@@ -55,7 +55,9 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
       return;
     }
 
-    onPost(content, title, selectedTopic, postType);
+    if (onPost) {
+      onPost(content, title, selectedTopic, postType);
+    }
     setTitle("");
     setContent("");
     setSelectedTopic("");
@@ -87,8 +89,8 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
   };
 
   return (
-    <Card className="mb-4">
-      <CardHeader className="pb-3">
+    <Card className="mb-2">
+      <CardHeader className="pb-2">
         <Input
           placeholder="What's the title of your post?"
           value={title}
@@ -97,7 +99,7 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
           style={{ fontSize: '14px' }}
         />
       </CardHeader>
-      <CardContent className="pt-0 space-y-3">
+      <CardContent className="pt-0 space-y-2">
         <Select value={selectedTopic} onValueChange={setSelectedTopic}>
           <SelectTrigger className="text-sm">
             <SelectValue placeholder="Select a topic" />
@@ -148,7 +150,7 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
           </div>
         )}
 
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-1">
           <div className="flex gap-2">
             <Button
               variant={postType === 'text' ? 'default' : 'ghost'}
