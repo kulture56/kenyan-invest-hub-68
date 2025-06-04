@@ -18,7 +18,7 @@ export const PostTopicSelector: React.FC<PostTopicSelectorProps> = ({
     <div className="flex items-center gap-3 flex-wrap">
       <Select value={selectedTopic} onValueChange={onTopicChange}>
         <SelectTrigger className="w-full sm:w-48 text-purple-600 font-bold">
-          <SelectValue placeholder="Select a topic" />
+          <SelectValue placeholder="Select one topic" />
         </SelectTrigger>
         <SelectContent>
           {topics.map((topic) => (

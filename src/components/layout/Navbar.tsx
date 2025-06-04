@@ -37,8 +37,8 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               <img 
                 src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" 
                 alt="Bookmarks" 
-                className="h-6 w-6 opacity-80 hover:opacity-100 transition-opacity" 
-                style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} 
+                className="h-6 w-6" 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} 
               />
             </Link>
           </Button>
@@ -48,8 +48,8 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               <img 
                 src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" 
                 alt="Notifications" 
-                className="h-6 w-6 opacity-80 hover:opacity-100 transition-opacity" 
-                style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} 
+                className="h-6 w-6" 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} 
               />
               <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-purple-600 rounded-full animate-pulse-gentle"></span>
             </Link>
@@ -60,8 +60,8 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               <img 
                 src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" 
                 alt="Messages" 
-                className="h-6 w-6 opacity-80 hover:opacity-100 transition-opacity" 
-                style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} 
+                className="h-6 w-6" 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} 
               />
             </Link>
           </Button>
@@ -78,17 +78,17 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link to="/profile" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/82820a12-afcc-4c47-bce5-7898436e3135.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} /> Profile
+                  <img src="/lovable-uploads/82820a12-afcc-4c47-bce5-7898436e3135.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} alt="Profile" /> Profile
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/settings" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/5e177755-4876-42aa-953a-36cee4079784.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} /> Settings
+                  <img src="/lovable-uploads/5e177755-4876-42aa-953a-36cee4079784.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} alt="Settings" /> Settings
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/help" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/602cec52-f456-44c8-9fef-dc523c21efed.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} /> Help
+                  <img src="/lovable-uploads/602cec52-f456-44c8-9fef-dc523c21efed.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} alt="Help" /> Help
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
                   onSelect={(e) => e.preventDefault()} 
                   className="cursor-pointer flex items-center gap-2 text-red-500 focus:text-red-600"
                 >
-                  <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-5 w-5" /> Logout
+                  <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-5 w-5" alt="Logout" /> Logout
                 </DropdownMenuItem>
               </LogoutDialog>
             </DropdownMenuContent>

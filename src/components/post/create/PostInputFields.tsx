@@ -22,8 +22,8 @@ export const PostInputFields: React.FC<PostInputFieldsProps> = ({
         placeholder="Title (optional)"
         value={title}
         onChange={(e) => onTitleChange(e.target.value)}
-        className="border-none text-base font-bold placeholder:text-muted-foreground placeholder:font-bold focus:ring-0"
-        style={{ fontSize: '16px' }}
+        className="border-none text-xl font-bold placeholder:text-muted-foreground placeholder:font-bold focus:ring-0"
+        style={{ fontSize: '20px' }}
       />
       
       <Textarea
