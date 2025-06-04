@@ -114,7 +114,12 @@ export const PostCard: React.FC<PostProps> = ({
     setShowReplyBox(false);
     
     toast({
-      description: "Reply posted",
+      description: (
+        <div className="flex items-center gap-2">
+          <img src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" alt="Check" className="h-4 w-4" />
+          Reply posted
+        </div>
+      ),
       duration: 2000
     });
   };

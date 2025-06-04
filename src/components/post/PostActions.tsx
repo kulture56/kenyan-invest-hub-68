@@ -41,7 +41,12 @@ export const PostActions: React.FC<PostActionsProps> = ({
   const handleLike = () => {
     onLike();
     toast({
-      description: liked ? "Unliked" : "Liked",
+      description: (
+        <div className="flex items-center gap-2">
+          <img src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" alt="Check" className="h-4 w-4" />
+          {liked ? "Unliked" : "Liked"}
+        </div>
+      ),
       duration: 2000
     });
   };
@@ -54,7 +59,12 @@ export const PostActions: React.FC<PostActionsProps> = ({
   const handleRepost = () => {
     onRepost();
     toast({
-      description: isReposted ? "Repost removed" : "Reposted",
+      description: (
+        <div className="flex items-center gap-2">
+          <img src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" alt="Check" className="h-4 w-4" />
+          {isReposted ? "Repost removed" : "Reposted"}
+        </div>
+      ),
       duration: 2000
     });
   };
@@ -62,7 +72,12 @@ export const PostActions: React.FC<PostActionsProps> = ({
   const handleBookmark = () => {
     onBookmark();
     toast({
-      description: isBookmarked ? "Removed from bookmarks" : "Added to bookmarks",
+      description: (
+        <div className="flex items-center gap-2">
+          <img src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" alt="Check" className="h-4 w-4" />
+          {isBookmarked ? "Removed from bookmarks" : "Added to bookmarks"}
+        </div>
+      ),
       duration: 2000
     });
   };

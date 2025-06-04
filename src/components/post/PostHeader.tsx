@@ -37,7 +37,12 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
   const handleBlockUser = () => {
     setIsBlocked(true);
     toast({
-      description: `Blocked ${author.name}. You won't see their posts anymore.`
+      description: (
+        <div className="flex items-center gap-2">
+          <img src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" alt="Check" className="h-4 w-4" />
+          Blocked {author.name}. You won't see their posts anymore.
+        </div>
+      )
     });
   };
 
@@ -48,7 +53,12 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`${window.location.origin}/post/${postId}`);
     toast({
-      description: "Post link copied to clipboard"
+      description: (
+        <div className="flex items-center gap-2">
+          <img src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" alt="Check" className="h-4 w-4" />
+          Post link copied to clipboard
+        </div>
+      )
     });
   };
 
@@ -80,9 +90,11 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
               {author.name}
             </span>
             {isVerified && (
-              <Badge variant="secondary" className="text-xs px-1.5 py-0.5 bg-purple-100 text-purple-700 border-purple-200">
-                ✓
-              </Badge>
+              <img 
+                src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" 
+                alt="Verified" 
+                className="h-5 w-5"
+              />
             )}
             <span className="text-sm text-muted-foreground">
               @{author.username}
@@ -93,7 +105,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             </span>
           </div>
           {topic && (
-            <Badge variant="outline" className="text-xs w-fit mt-1 font-bold" style={{ fontSize: '14px' }}>
+            <Badge variant="outline" className="text-xs w-fit mt-1 font-bold" style={{ fontSize: '16px' }}>
               {topic}
             </Badge>
           )}

@@ -22,7 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         <div className="flex items-center gap-3">
           {isMobile && (
             <Button variant="ghost" size="icon" onClick={toggleSidebar} className="h-10 w-10">
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6 text-primary" />
             </Button>
           )}
         </div>
@@ -34,20 +34,20 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
 
           <Button variant="ghost" size="icon" className="hover:bg-secondary/50 h-11 w-11" asChild>
             <Link to="/bookmarks">
-              <img src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" alt="Bookmarks" className="h-6 w-6 text-foreground/80" />
+              <img src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" alt="Bookmarks" className="h-7 w-7 opacity-80 hover:opacity-100 transition-opacity" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} />
             </Link>
           </Button>
           
           <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50 h-11 w-11" asChild>
             <Link to="/notifications">
-              <img src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" alt="Notifications" className="h-6 w-6 text-foreground/80" />
-              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-accent rounded-full animate-pulse-gentle"></span>
+              <img src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" alt="Notifications" className="h-7 w-7 opacity-80 hover:opacity-100 transition-opacity" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} />
+              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-primary rounded-full animate-pulse-gentle"></span>
             </Link>
           </Button>
           
           <Button variant="ghost" size="icon" className="hover:bg-secondary/50 h-11 w-11" asChild>
             <Link to="/messages">
-              <img src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" alt="Messages" className="h-6 w-6 text-foreground/80" />
+              <img src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" alt="Messages" className="h-7 w-7 opacity-80 hover:opacity-100 transition-opacity" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} />
             </Link>
           </Button>
           
@@ -63,17 +63,17 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link to="/profile" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/82820a12-afcc-4c47-bce5-7898436e3135.png" className="h-5 w-5" /> Profile
+                  <img src="/lovable-uploads/82820a12-afcc-4c47-bce5-7898436e3135.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} /> Profile
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/settings" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/5e177755-4876-42aa-953a-36cee4079784.png" className="h-5 w-5" /> Settings
+                  <img src="/lovable-uploads/5e177755-4876-42aa-953a-36cee4079784.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} /> Settings
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/help" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/602cec52-f456-44c8-9fef-dc523c21efed.png" className="h-5 w-5" /> Help
+                  <img src="/lovable-uploads/602cec52-f456-44c8-9fef-dc523c21efed.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} /> Help
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
