@@ -31,7 +31,7 @@ export const PostActionButtons: React.FC<PostActionButtonsProps> = ({
         <label htmlFor="image-upload">
           <div className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group">
             <FileImage className="h-4 w-4 text-purple-600 group-hover:text-purple-700" />
-            <span className="text-xs text-muted-foreground hidden sm:block">Photo</span>
+            <span className="text-xs text-purple-600 font-bold hidden sm:block">Photo</span>
           </div>
         </label>
         
@@ -42,7 +42,7 @@ export const PostActionButtons: React.FC<PostActionButtonsProps> = ({
             className="h-4 w-4 opacity-80 group-hover:opacity-100 transition-opacity" 
             style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }}
           />
-          <span className="text-xs text-muted-foreground hidden sm:block">GIF</span>
+          <span className="text-xs text-purple-600 font-bold hidden sm:block">GIF</span>
         </div>
         
         <div 
@@ -50,14 +50,14 @@ export const PostActionButtons: React.FC<PostActionButtonsProps> = ({
           onClick={onTogglePoll}
         >
           <Vote className="h-4 w-4 text-purple-600 group-hover:text-purple-700" />
-          <span className="text-xs text-muted-foreground hidden sm:block">Poll</span>
+          <span className="text-xs text-purple-600 font-bold hidden sm:block">Poll</span>
         </div>
       </div>
       
       <Button 
         onClick={onSubmit}
         disabled={isDisabled}
-        className="bg-purple-600 hover:bg-purple-700 rounded-full px-4 sm:px-6 text-sm sm:text-base"
+        className="bg-purple-600 hover:bg-purple-700 rounded-full px-4 sm:px-6 text-sm sm:text-base font-bold"
       >
         Post
       </Button>

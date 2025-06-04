@@ -17,19 +17,19 @@ export const PostTopicSelector: React.FC<PostTopicSelectorProps> = ({
   return (
     <div className="flex items-center gap-3 flex-wrap">
       <Select value={selectedTopic} onValueChange={onTopicChange}>
-        <SelectTrigger className="w-full sm:w-48 text-muted-foreground">
+        <SelectTrigger className="w-full sm:w-48 text-purple-600 font-bold">
           <SelectValue placeholder="Select a topic" />
         </SelectTrigger>
         <SelectContent>
           {topics.map((topic) => (
-            <SelectItem key={topic} value={topic}>
+            <SelectItem key={topic} value={topic} className="font-bold">
               {topic}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
       {selectedTopic && (
-        <Badge className="font-bold text-base bg-primary/10 text-primary border-primary/20" style={{ fontSize: '16px' }}>
+        <Badge className="font-bold text-base bg-purple-600/10 text-purple-600 border-purple-600/20" style={{ fontSize: '16px' }}>
           {selectedTopic}
         </Badge>
       )}

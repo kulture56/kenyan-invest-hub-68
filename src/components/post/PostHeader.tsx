@@ -86,7 +86,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
         </Avatar>
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <span className="font-semibold hover:underline cursor-pointer">
+            <span className="font-bold hover:underline cursor-pointer text-purple-600">
               {author.name}
             </span>
             {isVerified && (
@@ -96,16 +96,16 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
                 className="h-5 w-5"
               />
             )}
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-muted-foreground font-bold">
               @{author.username}
             </span>
             <span className="text-sm text-muted-foreground">•</span>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-muted-foreground font-bold">
               {formatDistanceToNow(createdAtDate, { addSuffix: true })}
             </span>
           </div>
           {topic && (
-            <Badge variant="outline" className="text-xs w-fit mt-1 font-bold" style={{ fontSize: '16px' }}>
+            <Badge variant="outline" className="text-xs w-fit mt-1 font-bold text-purple-600 border-purple-600" style={{ fontSize: '16px' }}>
               {topic}
             </Badge>
           )}
@@ -115,27 +115,27 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="h-8 w-8">
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="h-4 w-4 text-purple-600" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuItem onClick={handleCopyLink}>
-            <Copy className="h-4 w-4 mr-2" />
-            Copy link
+            <Copy className="h-4 w-4 mr-2 text-purple-600" />
+            <span className="font-bold">Copy link</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={onMuteClick}>
-            <VolumeX className="h-4 w-4 mr-2" />
-            Mute {author.name}
+            <VolumeX className="h-4 w-4 mr-2 text-purple-600" />
+            <span className="font-bold">Mute {author.name}</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleBlockUser} className="text-red-600 focus:text-red-600">
             <UserX className="h-4 w-4 mr-2" />
-            Block {author.name}
+            <span className="font-bold">Block {author.name}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleReportPost} className="text-red-600 focus:text-red-600">
             <Flag className="h-4 w-4 mr-2" />
-            Report post
+            <span className="font-bold">Report post</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
