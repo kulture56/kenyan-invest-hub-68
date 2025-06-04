@@ -109,12 +109,6 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
     setPollOptions(newOptions);
   };
 
-  const addPollOption = () => {
-    if (pollOptions.length < 5) {
-      setPollOptions([...pollOptions, '']);
-    }
-  };
-
   return (
     <Card className="mb-4 border border-primary/10">
       <CardHeader className="pb-3">
@@ -125,9 +119,9 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
           </Avatar>
           <div className="flex-1 space-y-3">
             {/* Topic Selection at the top */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               <Select value={selectedTopic} onValueChange={setSelectedTopic}>
-                <SelectTrigger className="w-48 text-muted-foreground">
+                <SelectTrigger className="w-full sm:w-48 text-muted-foreground">
                   <SelectValue placeholder="Select a topic" />
                 </SelectTrigger>
                 <SelectContent>
@@ -145,12 +139,13 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
               )}
             </div>
             
-            {/* Title Input */}
+            {/* Title Input with automatic 16px font size */}
             <Input
               placeholder="Title (optional)"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="border-none text-lg font-medium placeholder:text-muted-foreground focus:ring-0"
+              className="border-none text-base font-medium placeholder:text-muted-foreground focus:ring-0"
+              style={{ fontSize: '16px' }}
             />
             
             {/* Content Textarea */}
@@ -180,7 +175,7 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
           </div>
         )}
 
-        {/* Poll Options */}
+        {/* Poll Options - Limited to 3 */}
         {postType === 'poll' && (
           <div className="space-y-2">
             <h4 className="font-medium">Poll Options:</h4>
@@ -199,17 +194,12 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
                 )}
               </div>
             ))}
-            {pollOptions.length < 5 && (
-              <Button variant="outline" size="sm" onClick={addPollOption}>
-                Add Option
-              </Button>
-            )}
           </div>
         )}
 
         {/* Action Buttons */}
         <div className="flex items-center justify-between pt-3 border-t">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 sm:gap-6">
             <input
               type="file"
               accept="image/*"
@@ -218,30 +208,35 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
               id="image-upload"
             />
             <label htmlFor="image-upload">
-              <div className="flex flex-col items-center gap-1 cursor-pointer hover:bg-muted p-2 rounded-lg transition-colors">
-                <FileImage className="h-6 w-6 text-primary" />
-                <span className="text-xs text-muted-foreground">Image</span>
+              <div className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group">
+                <FileImage className="h-5 w-5 text-purple-600 group-hover:text-purple-700" />
+                <span className="text-xs text-muted-foreground hidden sm:block">Photo</span>
               </div>
             </label>
             
-            <div className="flex flex-col items-center gap-1 cursor-pointer hover:bg-muted p-2 rounded-lg transition-colors">
-              <img src="/lovable-uploads/e185559d-e241-40b2-8d0b-d25079f6212e.png" alt="GIF" className="h-6 w-6" />
-              <span className="text-xs text-muted-foreground">GIF</span>
+            <div className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group">
+              <img 
+                src="/lovable-uploads/e185559d-e241-40b2-8d0b-d25079f6212e.png" 
+                alt="GIF" 
+                className="h-5 w-5 opacity-80 group-hover:opacity-100 transition-opacity" 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }}
+              />
+              <span className="text-xs text-muted-foreground hidden sm:block">GIF</span>
             </div>
             
             <div 
-              className="flex flex-col items-center gap-1 cursor-pointer hover:bg-muted p-2 rounded-lg transition-colors"
+              className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group"
               onClick={() => setPostType(postType === 'poll' ? 'text' : 'poll')}
             >
-              <Vote className="h-6 w-6 text-primary" />
-              <span className="text-xs text-muted-foreground">Poll</span>
+              <Vote className="h-5 w-5 text-purple-600 group-hover:text-purple-700" />
+              <span className="text-xs text-muted-foreground hidden sm:block">Poll</span>
             </div>
           </div>
           
           <Button 
             onClick={handleSubmit}
             disabled={!content.trim() || !selectedTopic}
-            className="bg-primary hover:bg-primary/90 rounded-full px-6"
+            className="bg-purple-600 hover:bg-purple-700 rounded-full px-4 sm:px-6 text-sm sm:text-base"
           >
             Post
           </Button>

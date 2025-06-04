@@ -35,9 +35,11 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       >
         <Navbar toggleSidebar={toggleSidebar} />
         <main className={`flex-1 p-2 md:p-4 overflow-auto max-w-full ${
-          isMobile ? 'pb-20' : 'pb-4'
+          isMobile ? 'pb-24' : 'pb-4'
         }`}>
-          {children}
+          <div className={`${isMobile ? 'px-1' : 'px-0'}`}>
+            {children}
+          </div>
         </main>
       </div>
       

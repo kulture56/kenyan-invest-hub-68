@@ -83,53 +83,53 @@ export const PostActions: React.FC<PostActionsProps> = ({
   };
 
   return (
-    <div className="px-4 py-3 flex justify-between text-muted-foreground">
-      <div className="flex gap-6">
+    <div className="px-2 sm:px-4 py-3 flex justify-between text-muted-foreground">
+      <div className="flex gap-3 sm:gap-6">
         <Button 
           variant="ghost" 
           size="sm" 
-          className={`flex items-center gap-2 text-sm rounded-full px-4 py-2 ${
-            liked ? "text-red-500 bg-red-50 hover:bg-red-100" : "hover:bg-red-50 hover:text-red-500"
+          className={`flex items-center gap-1 sm:gap-2 text-sm rounded-full px-2 sm:px-4 py-2 ${
+            liked ? "text-purple-600 bg-purple-50 hover:bg-purple-100" : "hover:bg-purple-50 hover:text-purple-600"
           }`} 
           onClick={handleLike}
         >
-          <Heart className={`h-5 w-5 ${liked ? "fill-red-500 text-red-500" : ""}`} />
-          <span className="font-medium">{likeCount}</span>
+          <Heart className={`h-4 sm:h-5 w-4 sm:w-5 ${liked ? "fill-purple-600 text-purple-600" : "text-purple-600"}`} />
+          <span className="font-medium text-xs sm:text-sm">{likeCount}</span>
         </Button>
         
         <Button 
           variant="ghost" 
           size="sm" 
-          className="flex items-center gap-2 text-sm rounded-full px-4 py-2 hover:bg-blue-50 hover:text-blue-500" 
+          className="flex items-center gap-1 sm:gap-2 text-sm rounded-full px-2 sm:px-4 py-2 hover:bg-purple-50 hover:text-purple-600" 
           onClick={handleReply}
         >
-          <MessageSquare className="h-5 w-5" />
-          <span className="font-medium">{repliesCount}</span>
+          <MessageSquare className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600" />
+          <span className="font-medium text-xs sm:text-sm">{repliesCount}</span>
         </Button>
 
         <Button 
           variant="ghost" 
           size="sm" 
-          className={`flex items-center gap-2 text-sm rounded-full px-4 py-2 ${
-            isReposted ? "text-purple-500 bg-purple-50 hover:bg-purple-100" : "hover:bg-purple-50 hover:text-purple-500"
+          className={`flex items-center gap-1 sm:gap-2 text-sm rounded-full px-2 sm:px-4 py-2 ${
+            isReposted ? "text-purple-600 bg-purple-50 hover:bg-purple-100" : "hover:bg-purple-50 hover:text-purple-600"
           }`} 
           onClick={handleRepost}
         >
-          <Repeat2 className={`h-5 w-5 ${isReposted ? "text-purple-500" : ""}`} />
-          <span className="font-medium">{repostCount}</span>
+          <Repeat2 className={`h-4 sm:h-5 w-4 sm:w-5 text-purple-600`} />
+          <span className="font-medium text-xs sm:text-sm">{repostCount}</span>
         </Button>
       </div>
       
-      <div className="flex gap-3">
+      <div className="flex gap-2 sm:gap-3">
         <Button 
           variant="ghost" 
           size="sm" 
-          className={`flex items-center text-sm rounded-full p-2 hover:bg-blue-50 hover:text-blue-500 ${
-            isBookmarked ? "text-blue-500 bg-blue-50" : ""
+          className={`flex items-center text-sm rounded-full p-2 hover:bg-purple-50 hover:text-purple-600 ${
+            isBookmarked ? "text-purple-600 bg-purple-50" : ""
           }`} 
           onClick={handleBookmark}
         >
-          <Bookmark className={`h-5 w-5 ${isBookmarked ? "fill-blue-500" : ""}`} />
+          <Bookmark className={`h-4 sm:h-5 w-4 sm:w-5 text-purple-600 ${isBookmarked ? "fill-purple-600" : ""}`} />
           <span className="sr-only">Bookmark</span>
         </Button>
         
@@ -137,9 +137,9 @@ export const PostActions: React.FC<PostActionsProps> = ({
           <Button 
             variant="ghost" 
             size="sm" 
-            className="flex items-center text-sm rounded-full p-2 hover:bg-green-50 hover:text-green-500"
+            className="flex items-center text-sm rounded-full p-2 hover:bg-purple-50 hover:text-purple-600"
           >
-            <Share className="h-5 w-5" />
+            <Share className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600" />
             <span className="sr-only">Share</span>
           </Button>
         </ShareDialog>

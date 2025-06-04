@@ -22,40 +22,55 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         <div className="flex items-center gap-3">
           {isMobile && (
             <Button variant="ghost" size="icon" onClick={toggleSidebar} className="h-10 w-10">
-              <Menu className="h-6 w-6 text-primary" />
+              <Menu className="h-6 w-6 text-purple-600" />
             </Button>
           )}
         </div>
 
         {/* Right side with search and user actions */}
-        <div className="flex items-center gap-3 ml-auto">
+        <div className="flex items-center gap-2 sm:gap-3 ml-auto">
           {/* Search bar */}
           {!isMobile && <NavbarSearch />}
 
-          <Button variant="ghost" size="icon" className="hover:bg-secondary/50 h-11 w-11" asChild>
+          <Button variant="ghost" size="icon" className="hover:bg-purple-50 h-10 w-10" asChild>
             <Link to="/bookmarks">
-              <img src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" alt="Bookmarks" className="h-7 w-7 opacity-80 hover:opacity-100 transition-opacity" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} />
+              <img 
+                src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" 
+                alt="Bookmarks" 
+                className="h-6 w-6 opacity-80 hover:opacity-100 transition-opacity" 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} 
+              />
             </Link>
           </Button>
           
-          <Button variant="ghost" size="icon" className="relative hover:bg-secondary/50 h-11 w-11" asChild>
+          <Button variant="ghost" size="icon" className="relative hover:bg-purple-50 h-10 w-10" asChild>
             <Link to="/notifications">
-              <img src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" alt="Notifications" className="h-7 w-7 opacity-80 hover:opacity-100 transition-opacity" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} />
-              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-primary rounded-full animate-pulse-gentle"></span>
+              <img 
+                src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" 
+                alt="Notifications" 
+                className="h-6 w-6 opacity-80 hover:opacity-100 transition-opacity" 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} 
+              />
+              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-purple-600 rounded-full animate-pulse-gentle"></span>
             </Link>
           </Button>
           
-          <Button variant="ghost" size="icon" className="hover:bg-secondary/50 h-11 w-11" asChild>
+          <Button variant="ghost" size="icon" className="hover:bg-purple-50 h-10 w-10" asChild>
             <Link to="/messages">
-              <img src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" alt="Messages" className="h-7 w-7 opacity-80 hover:opacity-100 transition-opacity" style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} />
+              <img 
+                src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" 
+                alt="Messages" 
+                className="h-6 w-6 opacity-80 hover:opacity-100 transition-opacity" 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }} 
+              />
             </Link>
           </Button>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar className="h-10 w-10 border-2 border-primary/20 hover:border-primary/50 transition-colors cursor-pointer">
+              <Avatar className="h-9 w-9 border-2 border-purple-600/20 hover:border-purple-600/50 transition-colors cursor-pointer">
                 <AvatarImage src="/lovable-uploads/92d3bdce-9360-486e-8617-373fba41fb1f.png" alt="User" />
-                <AvatarFallback className="bg-primary/10 text-primary">U</AvatarFallback>
+                <AvatarFallback className="bg-purple-600/10 text-purple-600">U</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
@@ -83,7 +98,8 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
                   className="cursor-pointer flex items-center gap-2 text-red-500 focus:text-red-600"
                 >
                   <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-5 w-5" /> Logout
-                </DropdownMenuItem>
+                </Link>
+              </DropdownMenuItem>
               </LogoutDialog>
             </DropdownMenuContent>
           </DropdownMenu>
