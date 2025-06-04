@@ -182,7 +182,7 @@ const Index = () => {
             )}
           </div>
           
-          {!isMobile && <TrendingSidebar trendingTopics={trendingTopics} />}
+          {!isMobile && <TrendingSidebar trendingTopics={trendingTopics} suggestedQuestions={suggestedQuestions} />}
         </div>
       </div>
 
