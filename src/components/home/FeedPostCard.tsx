@@ -4,7 +4,11 @@ import { PostCard } from "@/components/post/PostCard";
 import { Post } from "@/hooks/usePosts";
 
 interface FeedPostCardProps {
-  post: Post;
+  post: Post & {
+    reposts?: number;
+    mediaUrl?: string;
+    mediaType?: 'youtube' | 'tiktok' | 'gif';
+  };
 }
 
 export const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
@@ -26,7 +30,10 @@ export const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
       likes={post.likes}
       comments={post.comments}
       shares={post.shares}
+      reposts={post.reposts || 0}
       isVerified={post.is_verified}
+      mediaUrl={post.mediaUrl}
+      mediaType={post.mediaType}
     />
   );
 };

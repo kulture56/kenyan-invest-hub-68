@@ -16,7 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
-// Mock example posts with topics and verification
+// Enhanced example posts with new features
 const examplePosts = [
   {
     id: "example1",
@@ -29,15 +29,17 @@ const examplePosts = [
     likes: 42,
     comments: 15,
     shares: 8,
+    reposts: 12,
     author_name: "Alice Wanjiku",
     author_username: "alicew",
     author_avatar: "/placeholder.svg",
-    is_verified: true
+    is_verified: true,
+    image_url: "/lovable-uploads/photo-1518770660439-4636190af475"
   },
   {
     id: "example2",
     user_id: "user2",
-    content: "Breaking: New fintech regulations announced by CBK. This will reshape the digital payments landscape in Kenya.",
+    content: "Breaking: New fintech regulations announced by CBK. This will reshape the digital payments landscape in Kenya. What are your thoughts?",
     topic: "Market News",
     timestamp: new Date(Date.now() - 5000000).toISOString(),
     created_at: new Date(Date.now() - 5000000).toISOString(),
@@ -45,10 +47,32 @@ const examplePosts = [
     likes: 28,
     comments: 12,
     shares: 6,
+    reposts: 8,
     author_name: "John Muthuri",
     author_username: "johnm",
     author_avatar: "/placeholder.svg",
-    is_verified: false
+    is_verified: false,
+    mediaUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    mediaType: "youtube" as const
+  },
+  {
+    id: "example3",
+    user_id: "user3",
+    content: "Check out this amazing explanation of cryptocurrency trends! Perfect for beginners 📈",
+    topic: "Cryptocurrency",
+    timestamp: new Date(Date.now() - 7200000).toISOString(),
+    created_at: new Date(Date.now() - 7200000).toISOString(),
+    updated_at: new Date(Date.now() - 7200000).toISOString(),
+    likes: 35,
+    comments: 18,
+    shares: 10,
+    reposts: 15,
+    author_name: "Sarah Tech",
+    author_username: "sarahtech",
+    author_avatar: "/placeholder.svg",
+    is_verified: true,
+    mediaUrl: "https://media.giphy.com/media/26BRrSvJUa0crqw4E/giphy.gif",
+    mediaType: "gif" as const
   }
 ];
 
@@ -158,7 +182,7 @@ const Index = () => {
             )}
           </div>
           
-          {!isMobile}
+          {!isMobile && <TrendingSidebar trendingTopics={trendingTopics} />}
         </div>
       </div>
 
