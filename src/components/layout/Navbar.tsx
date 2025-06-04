@@ -98,8 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
                   className="cursor-pointer flex items-center gap-2 text-red-500 focus:text-red-600"
                 >
                   <img src="/lovable-uploads/97ca5c92-1503-4118-b777-81719c28be6f.png" className="h-5 w-5" /> Logout
-                </Link>
-              </DropdownMenuItem>
+                </DropdownMenuItem>
               </LogoutDialog>
             </DropdownMenuContent>
           </DropdownMenu>

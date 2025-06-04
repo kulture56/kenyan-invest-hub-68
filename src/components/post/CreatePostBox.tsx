@@ -1,14 +1,13 @@
 
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { X, FileImage, Vote } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PostTopicSelector } from "./create/PostTopicSelector";
+import { PostInputFields } from "./create/PostInputFields";
+import { PollOptions } from "./create/PollOptions";
+import { PostMediaPreview } from "./create/PostMediaPreview";
+import { PostActionButtons } from "./create/PostActionButtons";
 
 interface CreatePostBoxProps {
   onPost?: (content: string, title: string, topic: string, type: 'text' | 'image' | 'poll', imageUrl?: string, pollOptions?: string[]) => void;
@@ -23,8 +22,6 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const { toast } = useToast();
-
-  const topics = ["Investments", "Financial Education", "Market News", "Technology", "Trading", "Career Development", "Personal Finance", "Cryptocurrency", "Real Estate"];
 
   const handleSubmit = () => {
     if (!selectedTopic) {
@@ -109,6 +106,16 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
     setPollOptions(newOptions);
   };
 
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setSelectedImage(null);
+    setPostType('text');
+  };
+
+  const handleTogglePoll = () => {
+    setPostType(postType === 'poll' ? 'text' : 'poll');
+  };
+
   return (
     <Card className="mb-4 border border-primary/10">
       <CardHeader className="pb-3">
@@ -118,129 +125,42 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
             <AvatarFallback className="bg-primary/10 text-primary">U</AvatarFallback>
           </Avatar>
           <div className="flex-1 space-y-3">
-            {/* Topic Selection at the top */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <Select value={selectedTopic} onValueChange={setSelectedTopic}>
-                <SelectTrigger className="w-full sm:w-48 text-muted-foreground">
-                  <SelectValue placeholder="Select a topic" />
-                </SelectTrigger>
-                <SelectContent>
-                  {topics.map((topic) => (
-                    <SelectItem key={topic} value={topic}>
-                      {topic}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {selectedTopic && (
-                <Badge className="font-bold text-base bg-primary/10 text-primary border-primary/20" style={{ fontSize: '16px' }}>
-                  {selectedTopic}
-                </Badge>
-              )}
-            </div>
-            
-            {/* Title Input with automatic 16px font size */}
-            <Input
-              placeholder="Title (optional)"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="border-none text-base font-medium placeholder:text-muted-foreground focus:ring-0"
-              style={{ fontSize: '16px' }}
+            <PostTopicSelector
+              selectedTopic={selectedTopic}
+              onTopicChange={setSelectedTopic}
             />
             
-            {/* Content Textarea */}
-            <Textarea
-              placeholder="What's happening?"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="min-h-[100px] border-none resize-none focus:ring-0 text-base placeholder:text-muted-foreground"
+            <PostInputFields
+              title={title}
+              content={content}
+              onTitleChange={setTitle}
+              onContentChange={setContent}
             />
           </div>
         </div>
       </CardHeader>
       
       <CardContent className="space-y-4">
-        {/* Image Preview */}
-        {imagePreview && (
-          <div className="relative">
-            <img src={imagePreview} alt="Preview" className="w-full max-h-64 object-cover rounded-lg" />
-            <Button 
-              variant="secondary" 
-              size="sm" 
-              className="absolute top-2 right-2"
-              onClick={() => { setImagePreview(null); setSelectedImage(null); setPostType('text'); }}
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
+        <PostMediaPreview
+          imagePreview={imagePreview}
+          onRemoveImage={handleRemoveImage}
+        />
 
-        {/* Poll Options - Limited to 3 */}
         {postType === 'poll' && (
-          <div className="space-y-2">
-            <h4 className="font-medium">Poll Options:</h4>
-            {pollOptions.map((option, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <Input
-                  placeholder={`Option ${index + 1}`}
-                  value={option}
-                  onChange={(e) => updatePollOption(index, e.target.value)}
-                  className="flex-1"
-                />
-                {pollOptions.length > 2 && (
-                  <Button variant="ghost" size="sm" onClick={() => removePollOption(index)}>
-                    <X className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-            ))}
-          </div>
+          <PollOptions
+            pollOptions={pollOptions}
+            onUpdateOption={updatePollOption}
+            onRemoveOption={removePollOption}
+          />
         )}
 
-        {/* Action Buttons */}
-        <div className="flex items-center justify-between pt-3 border-t">
-          <div className="flex items-center gap-3 sm:gap-6">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-              id="image-upload"
-            />
-            <label htmlFor="image-upload">
-              <div className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group">
-                <FileImage className="h-5 w-5 text-purple-600 group-hover:text-purple-700" />
-                <span className="text-xs text-muted-foreground hidden sm:block">Photo</span>
-              </div>
-            </label>
-            
-            <div className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group">
-              <img 
-                src="/lovable-uploads/e185559d-e241-40b2-8d0b-d25079f6212e.png" 
-                alt="GIF" 
-                className="h-5 w-5 opacity-80 group-hover:opacity-100 transition-opacity" 
-                style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }}
-              />
-              <span className="text-xs text-muted-foreground hidden sm:block">GIF</span>
-            </div>
-            
-            <div 
-              className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group"
-              onClick={() => setPostType(postType === 'poll' ? 'text' : 'poll')}
-            >
-              <Vote className="h-5 w-5 text-purple-600 group-hover:text-purple-700" />
-              <span className="text-xs text-muted-foreground hidden sm:block">Poll</span>
-            </div>
-          </div>
-          
-          <Button 
-            onClick={handleSubmit}
-            disabled={!content.trim() || !selectedTopic}
-            className="bg-purple-600 hover:bg-purple-700 rounded-full px-4 sm:px-6 text-sm sm:text-base"
-          >
-            Post
-          </Button>
-        </div>
+        <PostActionButtons
+          postType={postType}
+          onImageUpload={handleImageUpload}
+          onTogglePoll={handleTogglePoll}
+          onSubmit={handleSubmit}
+          isDisabled={!content.trim() || !selectedTopic}
+        />
       </CardContent>
     </Card>
   );
