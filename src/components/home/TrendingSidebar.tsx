@@ -15,18 +15,6 @@ const TrendingSidebar: React.FC<TrendingSidebarProps> = ({
   trendingTopics,
   suggestedQuestions
 }) => {
-  return <div className="space-y-4">
-      {/* Trending Topics */}
-      <Card>
-        
-        
-      </Card>
-
-      {/* Suggested Questions */}
-      <Card>
-        
-        
-      </Card>
-    </div>;
+  return;
 };
 export default TrendingSidebar;
