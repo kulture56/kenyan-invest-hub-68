@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -11,15 +10,14 @@ import StreaksTab from "@/components/learning/StreaksTab";
 import ProgressCard from "@/components/learning/ProgressCard";
 import RecommendedContent from "@/components/learning/RecommendedContent";
 import { learningPaths, glossaryTerms, streaksData, weekDays } from "@/components/learning/mockData";
-
 interface LearningHubPageProps {
   initialTab?: string;
 }
-
-const LearningHubPage: React.FC<LearningHubPageProps> = ({ initialTab }) => {
+const LearningHubPage: React.FC<LearningHubPageProps> = ({
+  initialTab
+}) => {
   const [activeTab, setActiveTab] = useState(initialTab || "learn");
   const location = useLocation();
-
   useEffect(() => {
     const path = location.pathname;
     if (path === "/glossary") {
@@ -28,15 +26,11 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({ initialTab }) => {
       setActiveTab("streaks");
     }
   }, [location]);
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="max-w-4xl mx-auto space-y-2">
         <StockTicker compact={true} />
         
-        <div className="flex justify-end">
-          <DailyStreakProgress questionsAnswered={2} dailyGoal={3} currentStreak={streaksData.currentStreak} />
-        </div>
+        
         
         <ProgressCard completedModules={5} totalModules={26} quizzesCompleted={4} badgesEarned={2} />
         
@@ -56,8 +50,6 @@ const LearningHubPage: React.FC<LearningHubPageProps> = ({ initialTab }) => {
         
         <RecommendedContent />
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 export default LearningHubPage;
