@@ -122,7 +122,7 @@ const Index = () => {
 
   return (
     <AppLayout>
-      <div className="sticky top-14 z-30 bg-background border-b border-border/30 -mt-2">
+      <div className="sticky top-0 z-30 bg-background border-b border-border/30">
         <XStyleNavigation activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 

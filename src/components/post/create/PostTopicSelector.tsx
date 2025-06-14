@@ -2,7 +2,6 @@
 import React from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { ChevronDown } from "lucide-react";
 
 interface PostTopicSelectorProps {
   selectedTopic: string;
@@ -32,8 +31,7 @@ export const PostTopicSelector: React.FC<PostTopicSelectorProps> = ({
     <div className="flex items-center gap-3 flex-wrap">
       <Select value={selectedTopic} onValueChange={onTopicChange}>
         <SelectTrigger className="w-full sm:w-64 text-purple-600 font-bold border-purple-200 hover:border-purple-300 focus:border-purple-500 focus:ring-purple-200 transition-colors">
-          <SelectValue placeholder="📂 Select one topic" />
-          <ChevronDown className="h-4 w-4 text-purple-600 ml-2" />
+          <SelectValue placeholder="Select one topic" />
         </SelectTrigger>
         <SelectContent 
           className="z-[100] max-h-72 w-full min-w-[var(--radix-select-trigger-width)] bg-white border border-purple-200 shadow-xl rounded-lg overflow-hidden"
