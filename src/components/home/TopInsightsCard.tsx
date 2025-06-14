@@ -18,9 +18,6 @@ const TopInsightsCard: React.FC<TopInsightsCardProps> = ({
   insights
 }) => {
   const navigate = useNavigate();
-  return <Card className="mb-6 border border-primary/10">
-      
-      
-    </Card>;
+  return;
 };
 export default TopInsightsCard;
