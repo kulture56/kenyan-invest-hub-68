@@ -120,7 +120,7 @@ const MobileTopicsBar: React.FC<MobileTopicsBarProps> = ({
                 key={topic.name} 
                 variant={selectedTopic === topic.slug ? "default" : "outline"}
                 onClick={() => handleTopicClick(topic.slug)}
-                className="cursor-pointer hover:scale-105 transition-transform px-2 py-0.5 text-xs whitespace-nowrap bg-yellow-500 flex-shrink-0"
+                className="cursor-pointer hover:scale-105 transition-transform px-2 py-0.5 text-xs whitespace-nowrap bg-purple-500 flex-shrink-0"
               >
                 {topic.name}
               </Badge>
