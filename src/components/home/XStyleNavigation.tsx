@@ -22,7 +22,7 @@ const mainTabs = [
   { id: "topics", label: "Topics" }
 ];
 
-// Updated topic tabs with new names
+// Updated topic tabs to match current topics
 const topicTabs = [
   { id: "stocks", label: "Stocks" },
   { id: "securities", label: "Securities" },

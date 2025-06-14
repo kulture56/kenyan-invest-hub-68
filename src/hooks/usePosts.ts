@@ -58,27 +58,26 @@ export const usePosts = (activeTab: string) => {
         .order('timestamp', { ascending: false });
 
       // Filter based on active tab
-      if (activeTab !== 'for-you') {
-        if (activeTab === 'following') {
-          // For now, show all posts for following (would need user relationships)
-          // In a real app, this would filter by followed users
-        } else {
-          // Map navigation tab to database topic
-          const topicMap: { [key: string]: string } = {
-            'institutions': 'institutions',
-            'trading': 'trading',
-            'news': 'news',
-            'technology': 'technology',
-            'businesses': 'businesses',
-            'real-estate': 'real estate',
-            'financial-education': 'financial education',
-            'investments': 'investments'
-          };
-          
-          const dbTopic = topicMap[activeTab];
-          if (dbTopic) {
-            query = query.eq('topic', dbTopic);
-          }
+      if (activeTab !== 'for-you' && activeTab !== 'following') {
+        // Map navigation tab to database topic
+        const topicMap: { [key: string]: string } = {
+          'stocks': 'Stocks',
+          'securities': 'Securities',
+          'funds': 'Funds',
+          'saccos': 'Saccos',
+          'insurance': 'Insurance',
+          'real-estate': 'Real Estate',
+          'technology': 'Technology',
+          'biz': 'Biz',
+          'entrepreneurship': 'Entrepreneurship',
+          'trading': 'Trading',
+          'market-analysis': 'Market Analysis',
+          'news': 'News'
+        };
+        
+        const dbTopic = topicMap[activeTab];
+        if (dbTopic) {
+          query = query.eq('topic', dbTopic);
         }
       }
 

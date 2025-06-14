@@ -19,7 +19,7 @@ const topics = [
   "Biz", 
   "Entrepreneurship", 
   "Trading", 
-  "Market analysis", 
+  "Market Analysis", 
   "News"
 ];
 
@@ -31,7 +31,7 @@ export const PostTopicSelector: React.FC<PostTopicSelectorProps> = ({
     <div className="flex items-center gap-3 flex-wrap">
       <Select value={selectedTopic} onValueChange={onTopicChange}>
         <SelectTrigger className="w-full sm:w-64 text-purple-600 font-bold border-purple-200 hover:border-purple-300 focus:border-purple-500 focus:ring-purple-200 transition-colors">
-          <SelectValue placeholder="Select one topic" />
+          <SelectValue placeholder="Select topic" />
         </SelectTrigger>
         <SelectContent 
           className="z-[100] max-h-72 w-full min-w-[var(--radix-select-trigger-width)] bg-white border border-purple-200 shadow-xl rounded-lg overflow-hidden"
