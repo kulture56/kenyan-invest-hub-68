@@ -1,10 +1,10 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Home, ChevronLeft, ChevronRight, Menu, ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLocation } from "react-router-dom";
+
 interface SidebarProps {
   isOpen: boolean;
   toggle: () => void;
@@ -103,7 +103,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
           {/* Main Navigation - Hidden on mobile since it's in footer */}
           {!isMobile && <nav className="space-y-1 mb-6">
-              <NavItem icon={<Home className="w-4 h-4 text-primary" />} label={isOpen || isMobile ? "Home" : ""} href="/" active={getActiveState("/")} />
+              <NavItem icon={<Home className="w-4 h-4 text-purple-600" />} label={isOpen || isMobile ? "Home" : ""} href="/" active={getActiveState("/")} />
               <NavItem icon={<img src="/lovable-uploads/8b623f45-b9b4-48ee-a02a-8e8ebd58c7e0.png" alt="Jobs" className="w-4 h-4" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} />} label={isOpen || isMobile ? "Career Hub" : ""} href="/topics/jobs" active={getActiveState("/topics/jobs")} />
               <NavItem icon={<img src="/lovable-uploads/800e50e9-0765-41ca-9728-eb655c16f679.png" alt="Learn" className="w-4 h-4" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} />} label={isOpen || isMobile ? "Learning Center" : ""} href="/learn" active={getActiveState("/learn")} />
               <NavItem icon={<img src="/lovable-uploads/b2fe3736-d342-4f1d-b060-8bb25c5271de.png" alt="Glossary" className="w-4 h-4" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} />} label={isOpen || isMobile ? "Financial Glossary" : ""} href="/glossary" active={getActiveState("/glossary")} />

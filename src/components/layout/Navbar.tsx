@@ -38,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
                 src="/lovable-uploads/bac16f6d-604a-453b-8cd0-834a2b12a3df.png" 
                 alt="Bookmarks" 
                 className="h-6 w-6" 
-                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} 
               />
             </Link>
           </Button>
@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
                 src="/lovable-uploads/d28d989c-e282-47dd-8e05-6184295539da.png" 
                 alt="Notifications" 
                 className="h-6 w-6" 
-                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} 
               />
               <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-purple-600 rounded-full animate-pulse-gentle"></span>
             </Link>
@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
                 src="/lovable-uploads/00a39066-81b7-4a6e-83d3-1822d5588aa0.png" 
                 alt="Messages" 
                 className="h-6 w-6" 
-                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} 
+                style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} 
               />
             </Link>
           </Button>
@@ -78,17 +78,17 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link to="/profile" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/82820a12-afcc-4c47-bce5-7898436e3135.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} alt="Profile" /> Profile
+                  <img src="/lovable-uploads/82820a12-afcc-4c47-bce5-7898436e3135.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} alt="Profile" /> Profile
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/settings" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/5e177755-4876-42aa-953a-36cee4079784.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} alt="Settings" /> Settings
+                  <img src="/lovable-uploads/5e177755-4876-42aa-953a-36cee4079784.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} alt="Settings" /> Settings
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/help" className="cursor-pointer flex items-center gap-2">
-                  <img src="/lovable-uploads/602cec52-f456-44c8-9fef-dc523c21efed.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.7)' }} alt="Help" /> Help
+                  <img src="/lovable-uploads/602cec52-f456-44c8-9fef-dc523c21efed.png" className="h-5 w-5" style={{ filter: 'hue-rotate(260deg) saturate(1.5) brightness(0.8)' }} alt="Help" /> Help
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
