@@ -73,7 +73,34 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
     }
   };
 
-  const createdAtDate = typeof createdAt === 'string' ? new Date(createdAt) : createdAt;
+  // Safely parse and validate the date
+  const getValidDate = (dateInput: Date | string): Date => {
+    if (dateInput instanceof Date) {
+      return isNaN(dateInput.getTime()) ? new Date() : dateInput;
+    }
+    
+    // Try to parse string as date
+    const parsedDate = new Date(dateInput);
+    if (!isNaN(parsedDate.getTime())) {
+      return parsedDate;
+    }
+    
+    // If parsing fails, return current date as fallback
+    console.warn(`Invalid date format: ${dateInput}, using current date as fallback`);
+    return new Date();
+  };
+
+  const createdAtDate = getValidDate(createdAt);
+  
+  // Format the time with error handling
+  const formatTime = (date: Date): string => {
+    try {
+      return formatDistanceToNow(date, { addSuffix: true });
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return 'just now';
+    }
+  };
 
   return (
     <div className="flex items-start justify-between">
@@ -86,7 +113,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
         </Avatar>
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <span className="font-bold hover:underline cursor-pointer text-purple-600">
+            <span className="font-bold hover:underline cursor-pointer text-purple-600" style={{ fontSize: '20px' }}>
               {author.name}
             </span>
             {isVerified && (
@@ -101,7 +128,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             </span>
             <span className="text-sm text-muted-foreground">•</span>
             <span className="text-sm text-muted-foreground font-bold">
-              {formatDistanceToNow(createdAtDate, { addSuffix: true })}
+              {formatTime(createdAtDate)}
             </span>
           </div>
           {topic && (
