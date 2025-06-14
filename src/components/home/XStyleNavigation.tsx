@@ -109,7 +109,7 @@ export const XStyleNavigation: React.FC<XStyleNavigationProps> = ({
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent 
-                      className="w-48 max-h-80 overflow-y-auto z-50 bg-white border border-gray-200 shadow-lg"
+                      className="w-48 max-h-80 overflow-y-auto z-50 bg-background border border-border shadow-lg"
                       align="center"
                     >
                       {topicTabs.map((topic) => (
@@ -117,7 +117,7 @@ export const XStyleNavigation: React.FC<XStyleNavigationProps> = ({
                           key={topic.id}
                           onClick={() => handleTopicClick(topic.id)}
                           className={cn(
-                            "cursor-pointer px-3 py-2 text-sm hover:bg-accent",
+                            "cursor-pointer px-3 py-2 text-sm hover:bg-accent focus:bg-accent",
                             activeTab === topic.id && "bg-accent text-accent-foreground font-medium"
                           )}
                         >
