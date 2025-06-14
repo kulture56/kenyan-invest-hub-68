@@ -1,3 +1,4 @@
+
 import React from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -82,12 +83,12 @@ const BookmarksPage = () => {
     {
       name: "Investment Strategies",
       count: 12,
-      color: "bg-blue-500"
+      color: "bg-purple-500"
     },
     {
       name: "Market Analysis",
       count: 8,
-      color: "bg-green-500"
+      color: "bg-purple-500"
     },
     {
       name: "Educational Content",
@@ -97,7 +98,7 @@ const BookmarksPage = () => {
     {
       name: "Expert Insights",
       count: 6,
-      color: "bg-orange-500"
+      color: "bg-purple-500"
     }
   ];
 
@@ -106,7 +107,7 @@ const BookmarksPage = () => {
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <Bookmark className="h-6 w-6 text-primary" />
+          <Bookmark className="h-6 w-6 text-purple-600" />
           <h1 className="text-2xl font-bold text-purple-800">Your Bookmarks</h1>
         </div>
 

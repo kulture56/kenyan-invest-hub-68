@@ -80,13 +80,13 @@ const MobileTopicsBar: React.FC<MobileTopicsBarProps> = ({
           <TabsList className="grid w-full grid-cols-2 p-0.5 bg-secondary/50 h-7">
             <TabsTrigger 
               value="for-you"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white text-xs py-0.5"
+              className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs py-0.5"
             >
               For You
             </TabsTrigger>
             <TabsTrigger 
               value="following" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-white text-xs py-0.5"
+              className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs py-0.5"
             >
               Following
             </TabsTrigger>
@@ -104,7 +104,7 @@ const MobileTopicsBar: React.FC<MobileTopicsBarProps> = ({
             onClick={scrollLeft}
             className="absolute left-0 z-10 h-6 w-6 p-0 bg-background/80 backdrop-blur-sm border border-border/50 rounded-full"
           >
-            <ChevronLeft className="h-3 w-3" />
+            <ChevronLeft className="h-3 w-3 text-purple-600" />
           </Button>
         )}
 
@@ -120,7 +120,7 @@ const MobileTopicsBar: React.FC<MobileTopicsBarProps> = ({
                 key={topic.name} 
                 variant={selectedTopic === topic.slug ? "default" : "outline"}
                 onClick={() => handleTopicClick(topic.slug)}
-                className="cursor-pointer hover:scale-105 transition-transform px-2 py-0.5 text-xs whitespace-nowrap bg-purple-500 flex-shrink-0"
+                className="cursor-pointer hover:scale-105 transition-transform px-2 py-0.5 text-xs whitespace-nowrap bg-purple-500 text-white hover:bg-purple-600 flex-shrink-0"
               >
                 {topic.name}
               </Badge>
@@ -136,7 +136,7 @@ const MobileTopicsBar: React.FC<MobileTopicsBarProps> = ({
             onClick={scrollRight}
             className="absolute right-0 z-10 h-6 w-6 p-0 bg-background/80 backdrop-blur-sm border border-border/50 rounded-full"
           >
-            <ChevronRight className="h-3 w-3" />
+            <ChevronRight className="h-3 w-3 text-purple-600" />
           </Button>
         )}
       </div>
