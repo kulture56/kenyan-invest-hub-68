@@ -104,10 +104,6 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({
   const handleTogglePoll = () => {
     setPostType(postType === 'poll' ? 'text' : 'poll');
   };
-  return <Card className="mb-4 border border-primary/10">
-      
-      
-      
-    </Card>;
+  return;
 };
 export default CreatePostBox;

@@ -19,17 +19,7 @@ const TopInsightsCard: React.FC<TopInsightsCardProps> = ({
 }) => {
   const navigate = useNavigate();
   return <Card className="mb-6 border border-primary/10">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-md flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
-            Top Insights
-          </CardTitle>
-          <Button variant="ghost" size="sm" className="h-8 gap-1 text-xs text-primary">
-            View all <ArrowRight className="h-3 w-3" />
-          </Button>
-        </div>
-      </CardHeader>
+      
       
     </Card>;
 };
