@@ -8,7 +8,20 @@ interface PostTopicSelectorProps {
   onTopicChange: (topic: string) => void;
 }
 
-const topics = ["Investments", "Financial Education", "Market News", "Technology", "Trading", "Career Development", "Personal Finance", "Cryptocurrency", "Real Estate"];
+const topics = [
+  "Stocks", 
+  "Securities", 
+  "Funds", 
+  "Saccos", 
+  "Insurance", 
+  "Real Estate", 
+  "Technology", 
+  "Biz", 
+  "Entrepreneurship", 
+  "Trading", 
+  "Market analysis", 
+  "News"
+];
 
 export const PostTopicSelector: React.FC<PostTopicSelectorProps> = ({
   selectedTopic,
@@ -20,9 +33,17 @@ export const PostTopicSelector: React.FC<PostTopicSelectorProps> = ({
         <SelectTrigger className="w-full sm:w-48 text-purple-600 font-bold">
           <SelectValue placeholder="Select one topic" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent 
+          className="z-50 max-h-60 overflow-auto bg-background border border-border shadow-lg"
+          position="popper"
+          sideOffset={4}
+        >
           {topics.map((topic) => (
-            <SelectItem key={topic} value={topic} className="font-bold">
+            <SelectItem 
+              key={topic} 
+              value={topic} 
+              className="font-bold hover:bg-purple-50 focus:bg-purple-50 cursor-pointer"
+            >
               {topic}
             </SelectItem>
           ))}

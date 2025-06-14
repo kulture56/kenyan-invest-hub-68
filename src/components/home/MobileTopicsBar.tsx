@@ -33,16 +33,20 @@ const MobileTopicsBar: React.FC<MobileTopicsBarProps> = ({
     navigate(`/topics/${topicSlug}`);
   };
 
+  // Updated topic categories with new names
   const topicCategories: Topic[] = [
-    { name: "Investments", slug: "investments" },
-    { name: "Institutions", slug: "institutions" },
-    { name: "Savings & Financial Wellness", slug: "savings-financial-wellness" },
-    { name: "Trading", slug: "trading" },
-    { name: "Community & Social", slug: "community-social" },
-    { name: "Financial Education", slug: "financial-education" },
-    { name: "Market News", slug: "market-news" },
+    { name: "Stocks", slug: "stocks" },
+    { name: "Securities", slug: "securities" },
+    { name: "Funds", slug: "funds" },
+    { name: "Saccos", slug: "saccos" },
+    { name: "Insurance", slug: "insurance" },
+    { name: "Real Estate", slug: "real-estate" },
     { name: "Technology", slug: "technology" },
-    { name: "Businesses", slug: "businesses" }
+    { name: "Biz", slug: "biz" },
+    { name: "Entrepreneurship", slug: "entrepreneurship" },
+    { name: "Trading", slug: "trading" },
+    { name: "Market analysis", slug: "market-analysis" },
+    { name: "News", slug: "news" }
   ];
 
   const checkScrollability = () => {

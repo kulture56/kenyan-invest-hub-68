@@ -16,17 +16,20 @@ const mainTabs = [
   { id: "topics", label: "Topics" }
 ];
 
+// Updated topic tabs with new names
 const topicTabs = [
-  { id: "institutions", label: "Institutions" },
-  { id: "trading", label: "Trading" },
-  { id: "news", label: "News" },
-  { id: "technology", label: "Technology" },
-  { id: "businesses", label: "Businesses" },
+  { id: "stocks", label: "Stocks" },
+  { id: "securities", label: "Securities" },
+  { id: "funds", label: "Funds" },
+  { id: "saccos", label: "Saccos" },
+  { id: "insurance", label: "Insurance" },
   { id: "real-estate", label: "Real Estate" },
-  { id: "financial-education", label: "Financial Education" },
-  { id: "investments", label: "Investments" },
-  { id: "savings", label: "Savings" },
-  { id: "market-analysis", label: "Market Analysis" }
+  { id: "technology", label: "Technology" },
+  { id: "biz", label: "Biz" },
+  { id: "entrepreneurship", label: "Entrepreneurship" },
+  { id: "trading", label: "Trading" },
+  { id: "market-analysis", label: "Market Analysis" },
+  { id: "news", label: "News" }
 ];
 
 export const XStyleNavigation: React.FC<XStyleNavigationProps> = ({
