@@ -31,7 +31,7 @@ export const TopicTabs: React.FC<TopicTabsProps> = ({
   return <Tabs defaultValue="latest">
       
       <TabsContent value="latest" className="space-y-4 mt-4">
-        {posts.length > 0 ? posts.map(post => <PostCard key={post.id} {...post} />) : <Card>
+        {posts.length > 0 ? posts.map(post => {}) : <Card>
             
           </Card>}
       </TabsContent>

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -8,12 +7,12 @@ import { PostInputFields } from "./create/PostInputFields";
 import { PollOptions } from "./create/PollOptions";
 import { PostMediaPreview } from "./create/PostMediaPreview";
 import { PostActionButtons } from "./create/PostActionButtons";
-
 interface CreatePostBoxProps {
   onPost?: (content: string, title: string, topic: string, type: 'text' | 'image' | 'poll', imageUrl?: string, pollOptions?: string[]) => void;
 }
-
-const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
+const CreatePostBox: React.FC<CreatePostBoxProps> = ({
+  onPost
+}) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("");
@@ -21,8 +20,9 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
   const [pollOptions, setPollOptions] = useState<string[]>(['', '', '']);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleSubmit = () => {
     if (!selectedTopic) {
       toast({
@@ -32,7 +32,6 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
       });
       return;
     }
-
     if (!content.trim()) {
       toast({
         title: "Content Required",
@@ -41,7 +40,6 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
       });
       return;
     }
-
     if (postType === 'poll') {
       const validOptions = pollOptions.filter(option => option.trim() !== '');
       if (validOptions.length < 2) {
@@ -53,7 +51,6 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
         return;
       }
     }
-
     if (onPost) {
       const imageUrl = imagePreview || undefined;
       const validPollOptions = postType === 'poll' ? pollOptions.filter(option => option.trim() !== '') : undefined;
@@ -68,102 +65,49 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
     setPollOptions(['', '', '']);
     setSelectedImage(null);
     setImagePreview(null);
-    
     toast({
       title: "Posted successfully",
-      description: (
-        <div className="flex items-center gap-2">
+      description: <div className="flex items-center gap-2">
           <img src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" alt="Check" className="h-4 w-4" />
           Your post has been shared successfully!
-        </div>
-      ),
+        </div>,
       duration: 3000
     });
   };
-
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setSelectedImage(file);
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         setImagePreview(e.target?.result as string);
       };
       reader.readAsDataURL(file);
       setPostType('image');
     }
   };
-
   const removePollOption = (index: number) => {
     if (pollOptions.length > 2) {
       setPollOptions(pollOptions.filter((_, i) => i !== index));
     }
   };
-
   const updatePollOption = (index: number, value: string) => {
     const newOptions = [...pollOptions];
     newOptions[index] = value;
     setPollOptions(newOptions);
   };
-
   const handleRemoveImage = () => {
     setImagePreview(null);
     setSelectedImage(null);
     setPostType('text');
   };
-
   const handleTogglePoll = () => {
     setPostType(postType === 'poll' ? 'text' : 'poll');
   };
-
-  return (
-    <Card className="mb-4 border border-primary/10">
-      <CardHeader className="pb-3">
-        <div className="flex items-start gap-3">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src="/lovable-uploads/92d3bdce-9360-486e-8617-373fba41fb1f.png" alt="User" />
-            <AvatarFallback className="bg-primary/10 text-primary">U</AvatarFallback>
-          </Avatar>
-          <div className="flex-1 space-y-3">
-            <PostTopicSelector
-              selectedTopic={selectedTopic}
-              onTopicChange={setSelectedTopic}
-            />
-            
-            <PostInputFields
-              title={title}
-              content={content}
-              onTitleChange={setTitle}
-              onContentChange={setContent}
-            />
-          </div>
-        </div>
-      </CardHeader>
+  return <Card className="mb-4 border border-primary/10">
       
-      <CardContent className="space-y-4">
-        <PostMediaPreview
-          imagePreview={imagePreview}
-          onRemoveImage={handleRemoveImage}
-        />
-
-        {postType === 'poll' && (
-          <PollOptions
-            pollOptions={pollOptions}
-            onUpdateOption={updatePollOption}
-            onRemoveOption={removePollOption}
-          />
-        )}
-
-        <PostActionButtons
-          postType={postType}
-          onImageUpload={handleImageUpload}
-          onTogglePoll={handleTogglePoll}
-          onSubmit={handleSubmit}
-          isDisabled={!content.trim() || !selectedTopic}
-        />
-      </CardContent>
-    </Card>
-  );
+      
+      
+    </Card>;
 };
-
 export default CreatePostBox;
