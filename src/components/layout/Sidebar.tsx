@@ -1,11 +1,9 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Home, ChevronLeft, ChevronRight, Menu, ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLocation } from "react-router-dom";
-
 interface SidebarProps {
   isOpen: boolean;
   toggle: () => void;
@@ -104,11 +102,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
           {/* Main Navigation - Hidden on mobile since it's in footer */}
           {!isMobile && <nav className="space-y-1 mb-6">
-              <NavItem icon={<Home className="w-4 h-4 text-purple-600" />} label={isOpen || isMobile ? "Home" : ""} href="/" active={getActiveState("/")} />
-              <NavItem icon={<img src="/lovable-uploads/8b623f45-b9b4-48ee-a02a-8e8ebd58c7e0.png" alt="Jobs" className="w-4 h-4" style={{ filter: 'brightness(0) saturate(100%) invert(52%) sepia(96%) saturate(5894%) hue-rotate(267deg) brightness(99%) contrast(89%)' }} />} label={isOpen || isMobile ? "Career Hub" : ""} href="/topics/jobs" active={getActiveState("/topics/jobs")} />
-              <NavItem icon={<img src="/lovable-uploads/800e50e9-0765-41ca-9728-eb655c16f679.png" alt="Learn" className="w-4 h-4" style={{ filter: 'brightness(0) saturate(100%) invert(52%) sepia(96%) saturate(5894%) hue-rotate(267deg) brightness(99%) contrast(89%)' }} />} label={isOpen || isMobile ? "Learning Center" : ""} href="/learn" active={getActiveState("/learn")} />
-              <NavItem icon={<img src="/lovable-uploads/b2fe3736-d342-4f1d-b060-8bb25c5271de.png" alt="Glossary" className="w-4 h-4" style={{ filter: 'brightness(0) saturate(100%) invert(52%) sepia(96%) saturate(5894%) hue-rotate(267deg) brightness(99%) contrast(89%)' }} />} label={isOpen || isMobile ? "Financial Glossary" : ""} href="/glossary" active={getActiveState("/glossary")} />
-              <NavItem icon={<img src="/lovable-uploads/83f25885-3df9-41ea-9f73-30dc81a20434.png" alt="Streaks" className="w-4 h-4" style={{ filter: 'brightness(0) saturate(100%) invert(52%) sepia(96%) saturate(5894%) hue-rotate(267deg) brightness(99%) contrast(89%)' }} />} label={isOpen || isMobile ? "Streaks" : ""} href="/streaks" active={getActiveState("/streaks")} />
+              <NavItem icon={<Home className="w-4 h-4 text-purple-600" />} label={isOpen || isMobile ? "Home" : ""} href="/" active={getActiveState("/")} className="bg-blue-300" />
+              <NavItem icon={<img src="/lovable-uploads/8b623f45-b9b4-48ee-a02a-8e8ebd58c7e0.png" alt="Jobs" className="w-4 h-4" style={{
+            filter: 'brightness(0) saturate(100%) invert(52%) sepia(96%) saturate(5894%) hue-rotate(267deg) brightness(99%) contrast(89%)'
+          }} />} label={isOpen || isMobile ? "Career Hub" : ""} href="/topics/jobs" active={getActiveState("/topics/jobs")} className="object-fill" />
+              <NavItem icon={<img src="/lovable-uploads/800e50e9-0765-41ca-9728-eb655c16f679.png" alt="Learn" className="w-4 h-4" style={{
+            filter: 'brightness(0) saturate(100%) invert(52%) sepia(96%) saturate(5894%) hue-rotate(267deg) brightness(99%) contrast(89%)'
+          }} />} label={isOpen || isMobile ? "Learning Center" : ""} href="/learn" active={getActiveState("/learn")} className="object-fill" />
+              <NavItem icon={<img src="/lovable-uploads/b2fe3736-d342-4f1d-b060-8bb25c5271de.png" alt="Glossary" className="w-4 h-4" style={{
+            filter: 'brightness(0) saturate(100%) invert(52%) sepia(96%) saturate(5894%) hue-rotate(267deg) brightness(99%) contrast(89%)'
+          }} />} label={isOpen || isMobile ? "Financial Glossary" : ""} href="/glossary" active={getActiveState("/glossary")} className="object-fill" />
+              <NavItem icon={<img src="/lovable-uploads/83f25885-3df9-41ea-9f73-30dc81a20434.png" alt="Streaks" className="w-4 h-4" style={{
+            filter: 'brightness(0) saturate(100%) invert(52%) sepia(96%) saturate(5894%) hue-rotate(267deg) brightness(99%) contrast(89%)'
+          }} />} label={isOpen || isMobile ? "Streaks" : ""} href="/streaks" active={getActiveState("/streaks")} className="object-fill" />
             </nav>}
 
           {/* Trending Categories for desktop */}
