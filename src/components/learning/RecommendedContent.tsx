@@ -26,12 +26,6 @@ const RecommendedContent = () => {
     difficulty: "Advanced",
     trending: true
   }];
-  return <Card className="mt-6">
-      
-      
-      <CardFooter>
-        
-      </CardFooter>
-    </Card>;
+  return;
 };
 export default RecommendedContent;
