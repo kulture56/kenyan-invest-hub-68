@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { FileImage, Vote } from "lucide-react";
@@ -56,7 +57,8 @@ export const PostActionButtons: React.FC<PostActionButtonsProps> = ({
       <Button 
         onClick={onSubmit}
         disabled={isDisabled}
-        className="bg-purple-600 hover:bg-purple-700 rounded-full px-4 sm:px-6 text-sm sm:text-base font-bold"
+        className="bg-[#7446C6] hover:bg-[#653aba] rounded-full px-4 sm:px-6 text-sm sm:text-base font-bold text-white transition-colors"
+        // use white text for contrast on the more vibrant purple
       >
         Post
       </Button>
