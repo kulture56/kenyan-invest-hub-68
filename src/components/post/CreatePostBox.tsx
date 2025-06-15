@@ -63,7 +63,8 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
     }
   };
 
-  const handlePollOptionChange = (value: string, idx: number) => {
+  // ---- FIXED: change parameter order ----
+  const handlePollOptionChange = (idx: number, value: string) => {
     const copy = [...pollOptions];
     copy[idx] = value;
     setPollOptions(copy);
