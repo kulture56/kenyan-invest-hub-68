@@ -19,7 +19,8 @@ export const PostInputFields: React.FC<PostInputFieldsProps> = ({
   return (
     <>
       <Input
-        placeholder="Title (optional)"
+        required
+        placeholder="Title"
         value={title}
         onChange={(e) => onTitleChange(e.target.value)}
         className="border-none text-xl font-bold placeholder:text-muted-foreground placeholder:font-bold focus:ring-0"

@@ -35,6 +35,15 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({
       return;
     }
 
+    if (!title.trim()) {
+      toast({
+        title: "Title Required",
+        description: "Please add a title to your post",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!content.trim()) {
       toast({
         title: "Content Required",
