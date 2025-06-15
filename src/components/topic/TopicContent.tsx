@@ -55,7 +55,8 @@ export const TopicContent: React.FC<TopicContentProps> = ({ topicSlug, posts }) 
         </Card>
       )}
 
-      <CreatePostBox />
+      {/* Only show CreatePostBox if not on the jobs topic */}
+      {!isJobsTopic && <CreatePostBox />}
 
       <TopicTabs posts={posts} topicSlug={topicSlug} />
     </>
