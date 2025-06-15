@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast, toast } from "@/hooks/use-toast";
@@ -162,9 +161,8 @@ const CreatePostBox: React.FC<CreatePostBoxProps> = ({ onPost }) => {
 
         {postType === "poll" && (
           <PollOptions
-            options={pollOptions}
-            onOptionChange={handlePollOptionChange}
-            onAddOption={handleAddPollOption}
+            pollOptions={pollOptions}
+            onUpdateOption={handlePollOptionChange}
             onRemoveOption={handleRemovePollOption}
           />
         )}
