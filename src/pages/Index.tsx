@@ -1,9 +1,9 @@
-
 import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { useIsMobile } from "@/hooks/use-mobile";
 import TopInsightsCard from "@/components/home/TopInsightsCard";
-import TrendingSidebar from "@/components/home/TrendingSidebar";
+// Remove TrendingSidebar import
+// import TrendingSidebar from "@/components/home/TrendingSidebar";
 import { XStyleNavigation } from "@/components/home/XStyleNavigation";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
 import CreatePostBox from "@/components/post/CreatePostBox";
@@ -182,7 +182,8 @@ const Index = () => {
             )}
           </div>
           
-          {!isMobile && <TrendingSidebar trendingTopics={trendingTopics} suggestedQuestions={suggestedQuestions} />}
+          {/* Remove TrendingSidebar completely */}
+          {/* {!isMobile && <TrendingSidebar trendingTopics={trendingTopics} suggestedQuestions={suggestedQuestions} />} */}
         </div>
       </div>
 
