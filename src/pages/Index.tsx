@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { useIsMobile } from "@/hooks/use-mobile";
 import TopInsightsCard from "@/components/home/TopInsightsCard";
-// Remove TrendingSidebar import
-// import TrendingSidebar from "@/components/home/TrendingSidebar";
 import { XStyleNavigation } from "@/components/home/XStyleNavigation";
 import { FeedPostCard } from "@/components/home/FeedPostCard";
 import CreatePostBox from "@/components/post/CreatePostBox";
@@ -126,67 +124,62 @@ const Index = () => {
         <XStyleNavigation activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 
-      <div className="max-w-6xl mx-auto">
-        <div className="md:grid md:grid-cols-4 gap-4">
-          <div className="md:col-span-3 space-y-1">
-            {isMobile && (
-              <Card>
-                <CardContent className="p-3">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                    <Input 
-                      placeholder="Search topics, posts, or users..." 
-                      className="pl-9" 
-                      value={searchQuery} 
-                      onChange={e => handleSearch(e.target.value)} 
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {searchQuery && (
-              <SearchResults query={searchQuery} posts={allPosts} loading={isSearching} />
-            )}
-
-            {!searchQuery && (
-              <>
-                {activeTab === "for-you" && <TopInsightsCard insights={topInsights} />}
-
-                <CreatePostBox />
-
-                <div className="space-y-1">
-                  {loading ? renderPostsSkeleton() : 
-                   error ? (
-                     <Card>
-                       <CardContent className="flex flex-col items-center justify-center py-6">
-                         <h3 className="text-lg font-medium mb-1 text-red-500">Error loading posts</h3>
-                         <p className="text-sm text-muted-foreground text-center">{error}</p>
-                       </CardContent>
-                     </Card>
-                   ) : 
-                   allPosts.length > 0 ? (
-                     allPosts.map(post => <FeedPostCard key={post.id} post={post} />)
-                   ) : (
-                     <Card>
-                       <CardContent className="flex flex-col items-center justify-center py-6">
-                         <h3 className="text-lg font-medium mb-1">No posts yet</h3>
-                         <p className="text-sm text-muted-foreground text-center">
-                           Be the first to share something in this topic
-                         </p>
-                       </CardContent>
-                     </Card>
-                   )}
+      {/* Make max width larger and drop grid columns for trending sidebar */}
+      <div className="w-full max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
+        <div className="space-y-1"> {/* Removed grid, make everything full width inside */}
+          {isMobile && (
+            <Card>
+              <CardContent className="p-3">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input 
+                    placeholder="Search topics, posts, or users..." 
+                    className="pl-9" 
+                    value={searchQuery} 
+                    onChange={e => handleSearch(e.target.value)} 
+                  />
                 </div>
-              </>
-            )}
-          </div>
-          
-          {/* Remove TrendingSidebar completely */}
-          {/* {!isMobile && <TrendingSidebar trendingTopics={trendingTopics} suggestedQuestions={suggestedQuestions} />} */}
+              </CardContent>
+            </Card>
+          )}
+
+          {searchQuery && (
+            <SearchResults query={searchQuery} posts={allPosts} loading={isSearching} />
+          )}
+
+          {!searchQuery && (
+            <>
+              {activeTab === "for-you" && <TopInsightsCard insights={topInsights} />}
+
+              <CreatePostBox />
+
+              <div className="space-y-1">
+                {loading ? renderPostsSkeleton() : 
+                  error ? (
+                    <Card>
+                      <CardContent className="flex flex-col items-center justify-center py-6">
+                        <h3 className="text-lg font-medium mb-1 text-red-500">Error loading posts</h3>
+                        <p className="text-sm text-muted-foreground text-center">{error}</p>
+                      </CardContent>
+                    </Card>
+                  ) : 
+                  allPosts.length > 0 ? (
+                    allPosts.map(post => <FeedPostCard key={post.id} post={post} />)
+                  ) : (
+                    <Card>
+                      <CardContent className="flex flex-col items-center justify-center py-6">
+                        <h3 className="text-lg font-medium mb-1">No posts yet</h3>
+                        <p className="text-sm text-muted-foreground text-center">
+                          Be the first to share something in this topic
+                        </p>
+                      </CardContent>
+                    </Card>
+                  )}
+              </div>
+            </>
+          )}
         </div>
       </div>
-
       <AIChatbox />
     </AppLayout>
   );
