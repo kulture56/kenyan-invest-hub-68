@@ -16,9 +16,6 @@ const ProgressCard: React.FC<ProgressCardProps> = ({
   badgesEarned
 }) => {
   const progressPercentage = Math.round(completedModules / totalModules * 100);
-  return <Card className="mb-4">
-      
-      
-    </Card>;
+  return;
 };
 export default ProgressCard;
