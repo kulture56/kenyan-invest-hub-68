@@ -39,12 +39,20 @@ const NavItem: React.FC<NavItemProps> = ({
   </a>
 );
 
+// Use Topics navigation section (order: "Stocks", "Securities", "Funds", "Saccos", ...)
 const trendingTopics = [
-  { name: "Investments", posts: 254 },
-  { name: "Financial Education", posts: 187 },
-  { name: "Market News", posts: 143 },
-  { name: "Technology", posts: 98 },
-  { name: "Trading", posts: 76 }
+  { name: "Stocks", posts: 254 },
+  { name: "Securities", posts: 187 },
+  { name: "Funds", posts: 143 },
+  { name: "Saccos", posts: 98 },
+  { name: "Insurance", posts: 76 },
+  { name: "Real Estate", posts: 51 },
+  { name: "Technology", posts: 45 },
+  { name: "Biz", posts: 33 },
+  { name: "Entrepreneurship", posts: 29 },
+  { name: "Trading", posts: 16 },
+  { name: "Market Analysis", posts: 12 },
+  { name: "News", posts: 7 },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
