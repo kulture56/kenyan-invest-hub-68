@@ -56,8 +56,8 @@ export const LogoutDialog: React.FC<LogoutDialogProps> = ({
         description: "You have been safely logged out of your account.",
       });
       
-      // Redirect to login page
-      window.location.href = 'https://preview--gelt.lovable.app/login';
+      // Redirect to custom landing page
+      window.location.href = 'https://preview--geltlandingpage-76.lovable.app/';
     } catch (error) {
       console.error('Logout error:', error);
       toast({
