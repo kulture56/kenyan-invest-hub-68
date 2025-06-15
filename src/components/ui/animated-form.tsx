@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { memo, ReactNode, useState, ChangeEvent, FormEvent } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { BoxReveal } from './box-reveal';
