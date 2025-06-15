@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -20,15 +21,25 @@ interface PostHeaderProps {
   isVerified?: boolean;
   postId: string;
   onMuteClick?: () => void;
+  // Optional: Allow passing a verified badge color from parent (e.g., sampled from avatar image)
+  verifiedColor?: string;
 }
 
+// Utility: get good contrast color
+const getContrastColor = (theme: string) => (theme === "dark" ? "#fff" : "#000");
+
+// Utility: fallback purple for check if we do not have a sampled color
+const CHECKMARK_PURPLE = "#7446C6";
+
+// Change below: add conditional color classes to username, and allow check mark to take a color.
 export const PostHeader: React.FC<PostHeaderProps> = ({
   author,
   createdAt,
   topic,
   isVerified = false,
   postId,
-  onMuteClick
+  onMuteClick,
+  verifiedColor,
 }) => {
   const [isBlocked, setIsBlocked] = useState(false);
   const navigate = useNavigate();
@@ -101,6 +112,9 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
     }
   };
 
+  // Check: If dark mode, className = text-white; otherwise text-black
+  // Tailwind + dark mode classes: dark:text-white text-black
+
   return (
     <div className="flex items-start justify-between">
       <div className="flex items-center gap-3">
@@ -112,15 +126,32 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
         </Avatar>
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <span className="font-bold hover:underline cursor-pointer" style={{ fontSize: '20px', color: "var(--icon-color)" }}>
+            {/* Username: dynamic color */}
+            <span
+              className={`
+                font-bold hover:underline cursor-pointer
+                text-black dark:text-white
+              `}
+              style={{ fontSize: '20px' }}
+            >
               {author.name}
             </span>
             {isVerified && (
-              <img 
-                src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" 
-                alt="Verified" 
+              <img
+                src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png"
+                alt="Verified"
                 className="h-5 w-5"
-                style={{ filter: 'none', color: "var(--icon-color)" }}
+                style={{
+                  // Use user-sampled color if provided, otherwise fallback purple
+                  filter: 'none',
+                  color: verifiedColor ?? CHECKMARK_PURPLE,
+                  // actual img tinting is tricky with images, so optionally use a border or drop-shadow if needed
+                  borderColor: verifiedColor ?? CHECKMARK_PURPLE,
+                  borderWidth: verifiedColor ? 2 : 0,
+                  borderStyle: verifiedColor ? "solid" : "none",
+                  borderRadius: "50%",
+                  boxShadow: verifiedColor ? `0 0 8px 0 ${verifiedColor}` : "none"
+                }}
               />
             )}
             <span className="text-sm text-muted-foreground font-bold">
@@ -169,3 +200,4 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
     </div>
   );
 };
+
