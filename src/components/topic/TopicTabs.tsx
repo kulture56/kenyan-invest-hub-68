@@ -32,7 +32,7 @@ export const TopicTabs: React.FC<TopicTabsProps> = ({
       
       
       <TabsContent value="latest" className="space-y-4 mt-4">
-        {posts.length > 0 ? posts.map(post => <PostCard key={post.id} id={post.id} author={post.author} content={post.content} topic={post.topic} createdAt={post.createdAt} likes={post.likes} comments={post.comments} shares={post.shares} isVerified={post.isVerified} />) : <Card>
+        {posts.length > 0 ? posts.map(post => {}) : <Card>
             
           </Card>}
       </TabsContent>
