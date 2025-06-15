@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +18,6 @@ interface ChallengesProps {
 const Challenges: React.FC<ChallengesProps> = ({
   challenges
 }) => {
-  return;
+  return <></>;
 };
 export default Challenges;

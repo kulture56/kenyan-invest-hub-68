@@ -28,24 +28,5 @@ export const TopicTabs: React.FC<TopicTabsProps> = ({
   posts,
   topicSlug
 }) => {
-  return <Tabs defaultValue="latest">
-      
-      
-      <TabsContent value="latest" className="space-y-4 mt-4">
-        {posts.length > 0 ? posts.map(post => {}) : <Card>
-            
-          </Card>}
-      </TabsContent>
-      
-      <TabsContent value="popular" className="space-y-4 mt-4">
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-8">
-            <h3 className="text-lg font-medium mb-2">Popular posts coming soon</h3>
-            <p className="text-sm text-muted-foreground text-center">
-              We're working on showing the most popular posts in this topic
-            </p>
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>;
+  return <></>;
 };
