@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { FileImage, Vote } from "lucide-react";
@@ -30,7 +29,7 @@ export const PostActionButtons: React.FC<PostActionButtonsProps> = ({
         />
         <label htmlFor="image-upload">
           <div className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group">
-            <FileImage className="h-4 w-4 text-purple-600 group-hover:text-purple-700" />
+            <FileImage className="h-4 w-4" style={{ color: "var(--icon-color)" }} />
             <span className="text-xs text-purple-600 font-bold hidden sm:block">Photo</span>
           </div>
         </label>
@@ -40,7 +39,7 @@ export const PostActionButtons: React.FC<PostActionButtonsProps> = ({
             src="/lovable-uploads/e185559d-e241-40b2-8d0b-d25079f6212e.png" 
             alt="GIF" 
             className="h-4 w-4 opacity-80 group-hover:opacity-100 transition-opacity" 
-            style={{ filter: 'hue-rotate(260deg) saturate(1.5)' }}
+            style={{ filter: 'none', color: "var(--icon-color)" }}
           />
           <span className="text-xs text-purple-600 font-bold hidden sm:block">GIF</span>
         </div>
@@ -49,7 +48,7 @@ export const PostActionButtons: React.FC<PostActionButtonsProps> = ({
           className="flex flex-col items-center gap-1 cursor-pointer hover:bg-purple-50 p-2 rounded-lg transition-colors group"
           onClick={onTogglePoll}
         >
-          <Vote className="h-4 w-4 text-purple-600 group-hover:text-purple-700" />
+          <Vote className="h-4 w-4" style={{ color: "var(--icon-color)" }} />
           <span className="text-xs text-purple-600 font-bold hidden sm:block">Poll</span>
         </div>
       </div>

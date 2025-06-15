@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -63,7 +62,7 @@ export const PostReply: React.FC<ReplyProps> = ({ reply }) => {
               className={`flex items-center gap-1 px-2 py-1 h-auto text-xs rounded-full ${liked ? "text-accent" : ""}`}
               onClick={handleLike}
             >
-              <Heart className={`h-3 w-3 ${liked ? "fill-accent text-accent" : ""}`} />
+              <Heart className={`h-3 w-3${liked ? " fill-accent" : ""}`} style={{ color: "var(--icon-color)" }} />
               <span>{likeCount}</span>
             </Button>
           </div>

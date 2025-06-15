@@ -32,6 +32,7 @@
     --chart-5: 27 87% 67%;
     --skeleton: 0 0% 90%;
     --btn-border: 214.3 31.8% 91.4%;
+    --icon-color: #7446C6; /* GELT Purple from user image */
   }
 
   .dark {
@@ -61,6 +62,7 @@
     --chart-5: 340 75% 55%;
     --skeleton: 218 36% 16%;
     --btn-border: 217.2 32.6% 13%;
+    --icon-color: #7446C6; /* Consistent GELT purple for dark theme */
   }
 }
 

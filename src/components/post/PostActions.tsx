@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Heart, MessageSquare, Bookmark, Share, Repeat2 } from "lucide-react";
@@ -93,7 +92,7 @@ export const PostActions: React.FC<PostActionsProps> = ({
           }`} 
           onClick={handleLike}
         >
-          <Heart className={`h-4 sm:h-5 w-4 sm:w-5 ${liked ? "fill-purple-600 text-purple-600" : "text-purple-600"}`} />
+          <Heart className={`h-4 sm:h-5 w-4 sm:w-5${liked ? " fill-purple-600" : ""}`} style={{ color: "var(--icon-color)" }} />
           <span className="font-medium text-xs sm:text-sm">{likeCount}</span>
         </Button>
         
@@ -103,7 +102,7 @@ export const PostActions: React.FC<PostActionsProps> = ({
           className="flex items-center gap-1 sm:gap-2 text-sm rounded-full px-2 sm:px-4 py-2 hover:bg-purple-50 hover:text-purple-600" 
           onClick={handleReply}
         >
-          <MessageSquare className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600" />
+          <MessageSquare className="h-4 sm:h-5 w-4 sm:w-5" style={{ color: "var(--icon-color)" }} />
           <span className="font-medium text-xs sm:text-sm">{repliesCount}</span>
         </Button>
 
@@ -115,7 +114,7 @@ export const PostActions: React.FC<PostActionsProps> = ({
           }`} 
           onClick={handleRepost}
         >
-          <Repeat2 className={`h-4 sm:h-5 w-4 sm:w-5 text-purple-600`} />
+          <Repeat2 className="h-4 sm:h-5 w-4 sm:w-5" style={{ color: "var(--icon-color)" }} />
           <span className="font-medium text-xs sm:text-sm">{repostCount}</span>
         </Button>
       </div>
@@ -129,7 +128,7 @@ export const PostActions: React.FC<PostActionsProps> = ({
           }`} 
           onClick={handleBookmark}
         >
-          <Bookmark className={`h-4 sm:h-5 w-4 sm:w-5 text-purple-600 ${isBookmarked ? "fill-purple-600" : ""}`} />
+          <Bookmark className={`h-4 sm:h-5 w-4 sm:w-5${isBookmarked ? " fill-purple-600" : ""}`} style={{ color: "var(--icon-color)" }} />
           <span className="sr-only">Bookmark</span>
         </Button>
         
@@ -139,7 +138,7 @@ export const PostActions: React.FC<PostActionsProps> = ({
             size="sm" 
             className="flex items-center text-sm rounded-full p-2 hover:bg-purple-50 hover:text-purple-600"
           >
-            <Share className="h-4 sm:h-5 w-4 sm:w-5 text-purple-600" />
+            <Share className="h-4 sm:h-5 w-4 sm:w-5" style={{ color: "var(--icon-color)" }} />
             <span className="sr-only">Share</span>
           </Button>
         </ShareDialog>

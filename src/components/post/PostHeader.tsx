@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -113,7 +112,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
         </Avatar>
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <span className="font-bold hover:underline cursor-pointer text-purple-600" style={{ fontSize: '20px' }}>
+            <span className="font-bold hover:underline cursor-pointer" style={{ fontSize: '20px', color: "var(--icon-color)" }}>
               {author.name}
             </span>
             {isVerified && (
@@ -121,6 +120,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
                 src="/lovable-uploads/c83d693e-8083-4894-bfbe-b02fbd08bc43.png" 
                 alt="Verified" 
                 className="h-5 w-5"
+                style={{ filter: 'none', color: "var(--icon-color)" }}
               />
             )}
             <span className="text-sm text-muted-foreground font-bold">
@@ -142,26 +142,26 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="h-8 w-8">
-            <MoreHorizontal className="h-4 w-4 text-purple-600" />
+            <MoreHorizontal className="h-4 w-4" style={{ color: "var(--icon-color)" }} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuItem onClick={handleCopyLink}>
-            <Copy className="h-4 w-4 mr-2 text-purple-600" />
+            <Copy className="h-4 w-4 mr-2" style={{ color: "var(--icon-color)" }} />
             <span className="font-bold">Copy link</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={onMuteClick}>
-            <VolumeX className="h-4 w-4 mr-2 text-purple-600" />
+            <VolumeX className="h-4 w-4 mr-2" style={{ color: "var(--icon-color)" }} />
             <span className="font-bold">Mute {author.name}</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleBlockUser} className="text-red-600 focus:text-red-600">
-            <UserX className="h-4 w-4 mr-2" />
+            <UserX className="h-4 w-4 mr-2" style={{ color: "var(--icon-color)" }} />
             <span className="font-bold">Block {author.name}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleReportPost} className="text-red-600 focus:text-red-600">
-            <Flag className="h-4 w-4 mr-2" />
+            <Flag className="h-4 w-4 mr-2" style={{ color: "var(--icon-color)" }} />
             <span className="font-bold">Report post</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
